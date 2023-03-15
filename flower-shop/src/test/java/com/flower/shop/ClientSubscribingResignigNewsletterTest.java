@@ -3,7 +3,7 @@ package com.flower.shop;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
-public class ClientSubscribingResignigNewsletter {
+public class ClientSubscribingResignigNewsletterTest {
     @Test
     public void shouldReturnBadRequestBecauseBodyIsInvalid() {
         HttpStatus result = HttpStatus.BAD_REQUEST;
