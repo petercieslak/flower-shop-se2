@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
-public class DeliveryManGettingListOfOrders {
+public class DeliveryManGettingListOfOrdersTest {
     @Test
     public void shouldReturnUnauthorizedBecauseBearerTokenIsInvalid() {
         HttpStatus result = HttpStatus.UNAUTHORIZED;
