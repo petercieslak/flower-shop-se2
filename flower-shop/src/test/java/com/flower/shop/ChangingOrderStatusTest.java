@@ -21,7 +21,7 @@ public class ChangingOrderStatusTest {
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, result);
     }
     @Test
-    public void shouldReturnOKOrderStatusCHanged() {
+    public void shouldReturnOKOrderStatusChanged() {
         HttpStatus result = HttpStatus.OK;
         Assertions.assertEquals(HttpStatus.OK, result);
     }
