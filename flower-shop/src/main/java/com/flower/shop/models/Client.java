@@ -1,5 +1,6 @@
 package com.flower.shop.models;
 
+import lombok.AllArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 @Entity
 @Table(name = "client")
-public class Client {
+public @AllArgsConstructor class Client {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -39,11 +40,6 @@ public class Client {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Complaint> complaints;
 
-    public void createAccount(Boolean hasNewsletterOn, Person person) {
-        this.hasNewsletterOn=hasNewsletterOn;
-        this.person=person;
+    public Client(){
     }
-    public void createOrder(){}
-    public void signUpForNewsletter(){ this.hasNewsletterOn=true; }
-    public void fileComplaint(String topic, String description){}
 }
