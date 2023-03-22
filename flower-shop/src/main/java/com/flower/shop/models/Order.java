@@ -20,9 +20,6 @@ public class Order {
     )
     private UUID id;
 
-    @Column(columnDefinition = "BINARY(16) DEFAULT (UUID_TO_BIN(UUID()))")
-    private UUID clientId;
-
     @Column
     private String status;
 
@@ -30,4 +27,12 @@ public class Order {
     @JoinColumn(name = "address_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Address deliveryAddress;
+
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "client_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Client client;
+
+    
 }
