@@ -2,6 +2,8 @@ package com.flower.shop.models;
 
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -11,7 +13,10 @@ import java.util.List;
 import java.util.UUID;
 @Entity
 @Table(name = "complaint")
-public @AllArgsConstructor class Complaint {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Complaint {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -28,6 +33,4 @@ public @AllArgsConstructor class Complaint {
     @OnDelete(action = OnDeleteAction.NO_ACTION)
     private Client client;
 
-    public Complaint(){
-    }
 }
