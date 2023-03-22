@@ -5,30 +5,28 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.UUID;
 
-@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
-@Table(name = "persons")
+@Table(name = "product")
 @Data
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Person {
+public class Product {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    private UUID id;
+    private UUID productId;
 
     @Column
-    private String firstName;
+    private String name;
 
     @Column
-    private String lastName;
+    private String description;
+
+    @Lob
+    @Column(name = "image", columnDefinition = "BLOB")
+    private byte[] image;
 
     @Column
-    private String emailAddress;
-
-    @Column
-    private String password;
-
+    private double price;
 }
