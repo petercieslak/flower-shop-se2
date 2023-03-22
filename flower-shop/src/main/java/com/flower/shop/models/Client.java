@@ -20,7 +20,7 @@ public class Client {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private UUID id;
+    private Person person;
 
     @Column
     private Boolean hasNewsletterOn;
