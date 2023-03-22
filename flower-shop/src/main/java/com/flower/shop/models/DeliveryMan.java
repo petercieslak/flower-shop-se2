@@ -15,6 +15,6 @@ public class DeliveryMan {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    private UUID productId;
+    private UUID deliveryManId;
 }
 
