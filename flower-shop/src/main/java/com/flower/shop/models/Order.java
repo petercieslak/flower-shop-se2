@@ -1,5 +1,6 @@
 package com.flower.shop.models;
 
+import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -9,6 +10,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "orders")
+@Data
 public class Order {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -26,32 +28,11 @@ public class Order {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Address deliveryAddress;
 
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "client_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Client client;
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id){
-        this.id = id;
-    }
-
-
-    public String getStatus(){
-        return status;
-    }
-    public void setStatus(String status){
-        this.status = status;
-    }
-
-    public Address getDeliveryAddress(){
-        return deliveryAddress;
-    }
-    public void setDeliveryAddress(Address deliveryAddress){
-        this.deliveryAddress = deliveryAddress;
-    }
-
+    
 }
