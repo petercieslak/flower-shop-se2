@@ -6,8 +6,9 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "person")
+@Table(name = "persons")
 @Data
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Person {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -16,10 +17,6 @@ public class Person {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     private UUID id;
-
-    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private Employee employee;
 
     @Column
     private String firstName;

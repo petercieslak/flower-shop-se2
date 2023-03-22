@@ -11,28 +11,10 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 @Entity
-@Table(name = "client")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class Client {
-    @Id
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "person_id", referencedColumnName = "id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Person person;
-
+public class Client extends Person {
     @Column
     private Boolean hasNewsletterOn;
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<Order> order;
 
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "complaint_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<Complaint> complaints;
 
 }
