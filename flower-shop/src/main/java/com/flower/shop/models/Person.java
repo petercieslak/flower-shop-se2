@@ -3,6 +3,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(name = "person")
 @Data
