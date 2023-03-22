@@ -5,7 +5,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.UUID;
 
-@Inheritance(strategy = InheritanceType.JOINED)
 @Entity
 @Table(name = "persons")
 @Data

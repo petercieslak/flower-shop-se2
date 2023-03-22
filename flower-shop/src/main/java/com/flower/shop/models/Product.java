@@ -3,6 +3,7 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -29,4 +30,5 @@ public class Product {
 
     @Column
     private double price;
+
 }

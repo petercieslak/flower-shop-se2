@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -33,6 +34,7 @@ public class Order {
     @JoinColumn(name = "client_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Client client;
-
+    @ManyToMany
+    private List<Product> products;
     
 }
