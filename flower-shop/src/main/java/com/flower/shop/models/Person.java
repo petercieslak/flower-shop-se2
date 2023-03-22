@@ -1,15 +1,25 @@
 package com.flower.shop.models;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "person")
 @Data
 public class Person {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    private UUID id;
+
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Employee employee;
 
     @Column
     private String firstName;
@@ -19,4 +29,8 @@ public class Person {
 
     @Column
     private String emailAddress;
+
+    @Column
+    private String password;
+
 }
