@@ -1,9 +1,7 @@
-package com.flower.shop.models;
+package com.flower.shop.data.models;
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Data

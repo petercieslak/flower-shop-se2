@@ -1,34 +1,33 @@
-package com.flower.shop.models;
+package com.flower.shop.data.models;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "product")
+@Table(name = "persons")
 @Data
-public class Product {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Person {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    private UUID productId;
+    private UUID id;
 
     @Column
-    private String name;
+    private String firstName;
 
     @Column
-    private String description;
-
-    @Lob
-    @Column(name = "image", columnDefinition = "BLOB")
-    private byte[] image;
+    private String lastName;
 
     @Column
-    private double price;
+    private String emailAddress;
+
+    @Column
+    private String password;
 
 }

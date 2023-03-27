@@ -1,4 +1,4 @@
-package com.flower.shop.models;
+package com.flower.shop.data.models;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;

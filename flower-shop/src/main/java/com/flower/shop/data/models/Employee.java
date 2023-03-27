@@ -1,9 +1,6 @@
-package com.flower.shop.models;
-
-import lombok.Data;
+package com.flower.shop.data.models;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 public class Employee extends Person {
