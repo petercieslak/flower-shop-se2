@@ -1,12 +1,12 @@
 import LoginForm from "../Components/LoginForm"
-import LoginInput from "../Components/LoginInput"
 
 function LoginPage() {
   return (
-    <div className="bg-[#f5f5f5] w-screen h-screen">
-        <div className="w-2/5 h-screen outline flex justify-center items-center flex-col">
+    <div className="bg-[#f5f5f5] w-screen h-screen flex">
+        <div className="w-2/5 h-screen flex justify-center items-center flex-col">
           <LoginForm/>
         </div>
+        <div className="w-3/5 h-screen bg-leaves-pattern bg-cover"/>
       </div>
   );
 }

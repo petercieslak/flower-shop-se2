@@ -1,9 +1,12 @@
-import LoginPage from './Pages/LoginPage'
+import LoginPage from "./Pages/LoginPage";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <LoginPage/>
-  )
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
