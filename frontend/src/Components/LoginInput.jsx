@@ -15,12 +15,12 @@ function LoginInput(props) {
         autoComplete="off"
         id={props.type}
         type={show ? "text" : props.type}
-        className="peer bg-transparent font-montserrat placeholder-transparent border-b-2 border-gray-300 h-9 w-full text-gray-900 focus:outline-none focus:borer-rose-600"
+        className="peer bg-transparent font-montserrat placeholder-transparent border-b-2 border-text-[#3B1F2B] h-9 w-full text-gray-900 focus:outline-none focus:border-[#3B1F2B]"
         placeholder={props.placeholder}
       />
       <label
         htmlFor={props.type}
-        className="absolute left-0 -top-3.5 text-gray-600 font-montserrat text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
+        className="absolute left-0 -top-3.5 text-[#3B1F2B] font-montserrat text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
       >
         {props.placeholder}
       </label>
