@@ -2,11 +2,11 @@ version: "3.8"
 
 services:
   flower-shop-db:
-    image: mysql:8.0.32
+    image: mysql:8.0.3
     restart: unless-stopped
     env_file: ./.env
     environment:
-      - MYSQL_ROOT_PASSWORD=$ROOT_PASSWORD
-      - MYSQL_DATABASE=$DATABASE
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=SAstudent1
     ports:
-      - 3306:3306
+      - 3366:3306

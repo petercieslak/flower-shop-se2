@@ -1,5 +1,8 @@
 package com.flower.shop.data.models;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,6 +17,9 @@ import java.util.UUID;
 @Table(name = "persons")
 @Data
 @Inheritance(strategy = InheritanceType.JOINED)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Person implements UserDetails {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -30,7 +36,7 @@ public class Person implements UserDetails {
     private String lastName;
 
     @Column
-    private String emailAddress;
+    private String email;
 
     @Column
     private String password;
@@ -38,20 +44,23 @@ public class Person implements UserDetails {
     @Column
     private boolean accountNonLocked;
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
 
+
     @Override
     public String getUsername() {
-        return emailAddress;
+        return email;
     }
 
     @Override
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
