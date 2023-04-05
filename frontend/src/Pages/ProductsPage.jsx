@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function HomePage() {
+function ProductsPage() {
   const [products, setProducts] = useState([]);
 
   const fetchProducts = () => {
@@ -27,4 +27,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default ProductsPage;
