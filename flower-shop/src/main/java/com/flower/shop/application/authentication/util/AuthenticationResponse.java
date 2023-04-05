@@ -1,4 +1,4 @@
-package com.flower.shop.rest;
+package com.flower.shop.application.authentication.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

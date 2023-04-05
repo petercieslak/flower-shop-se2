@@ -1,5 +1,6 @@
-package com.flower.shop.config;
+package com.flower.shop.application.authentication.util;
 
+import com.flower.shop.application.authentication.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,7 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             final String authHeader= request.getHeader("Authorization");
             final String jwt;
             final String userEmail;
-            if(authHeader== null|| !authHeader.startsWith("Bearer ")){
+            if(authHeader== null|| !authHeader.startsWith("Bearer")){
                 filterChain.doFilter(request, response);
                 return;
             }

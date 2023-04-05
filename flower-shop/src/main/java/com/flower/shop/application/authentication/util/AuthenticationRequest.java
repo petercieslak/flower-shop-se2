@@ -1,4 +1,4 @@
-package com.flower.shop.rest;
+package com.flower.shop.application.authentication.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
-    private String firstname;
-    private String lastname;
+public class AuthenticationRequest {
+
     private String email;
     private String password;
 }

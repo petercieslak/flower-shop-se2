@@ -1,4 +1,4 @@
-package com.flower.shop.config;
+package com.flower.shop.application.authentication;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

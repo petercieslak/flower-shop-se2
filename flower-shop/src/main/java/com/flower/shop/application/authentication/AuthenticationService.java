@@ -1,9 +1,12 @@
-package com.flower.shop.rest;
+package com.flower.shop.application.authentication;
 
-import com.flower.shop.config.JwtService;
 import com.flower.shop.data.dao.PersonDAO;
 import com.flower.shop.data.models.Person;
+import com.flower.shop.application.authentication.util.AuthenticationRequest;
+import com.flower.shop.application.authentication.util.AuthenticationResponse;
+import com.flower.shop.application.authentication.util.RegisterRequest;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class AuthenticationService {
     private final PersonDAO repository;
     private final PasswordEncoder passwordEncoder;
