@@ -71,7 +71,7 @@ public class Person implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return accountNonLocked;
+        return true;
     }
 
     @Override
@@ -82,9 +82,5 @@ public class Person implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public void setAccountNonLocked(Boolean accountNonLocked) {
-        this.accountNonLocked = accountNonLocked;
     }
 }
