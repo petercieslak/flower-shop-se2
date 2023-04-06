@@ -1,7 +1,7 @@
 package com.flower.shop.application.authentication;
 
-import com.flower.shop.data.dao.PersonDAO;
-import com.flower.shop.data.models.Person;
+import com.flower.shop.data.dao.ClientDAO;
+import com.flower.shop.data.models.Client;
 import com.flower.shop.application.authentication.util.AuthenticationRequest;
 import com.flower.shop.application.authentication.util.AuthenticationResponse;
 import com.flower.shop.application.authentication.util.RegisterRequest;
@@ -16,18 +16,13 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Slf4j
 public class AuthenticationService {
-    private final PersonDAO repository;
+    private final ClientDAO repository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
-        var user = Person.builder()
-                .firstName(request.getFirstname())
-                .lastName(request.getLastname())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .build();
+        Client user = initializeClient(request);
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
@@ -48,5 +43,20 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
+    }
+
+    public boolean userExists(RegisterRequest request) {
+        if(repository.findByEmail(request.getEmail()).isPresent())
+            return true;
+        return false;
+    }
+
+    private Client initializeClient(RegisterRequest request) {
+        Client client = new Client();
+        client.setEmail(request.getEmail());
+        client.setPassword(passwordEncoder.encode(request.getPassword()));
+        client.setFirstName(request.getFirstname());
+        client.setHasNewsletterOn(request.getHasNewsletterOn());
+        return client;
     }
 }

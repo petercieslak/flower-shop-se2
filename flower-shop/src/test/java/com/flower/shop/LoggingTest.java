@@ -1,6 +1,8 @@
 package com.flower.shop;
 
+import com.flower.shop.application.authentication.util.AuthenticationRequest;
 import com.flower.shop.application.authentication.util.RegisterRequest;
+import com.flower.shop.data.models.Client;
 import com.flower.shop.data.models.Person;
 import com.flower.shop.rest.AuthenticationController;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +13,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -25,43 +29,82 @@ public class LoggingTest {
 
     @Test
     public void shouldReturnOKBecauseClientLoggedIn() {
-        HttpStatus result = HttpStatus.OK;
+        Client client = createRandomPerson();
+        authenticationController.register(getRegisterRequest(client));
+
+        HttpStatus result = authenticationController.authenticate(getAuthenticationRequest(client))
+                .getStatusCode();
+
         Assertions.assertEquals(HttpStatus.OK, result);
+    }
+
+    @Test
+    public void shouldNotAuthenticateClientBecauseWrongCredentials() {
+        Client client = createRandomPerson();
+
+        Exception ex = Assertions.assertThrows(BadCredentialsException.class, () -> {
+            authenticationController.authenticate(getAuthenticationRequest(client));
+        });
+        Assertions.assertEquals("Bad credentials", ex.getMessage());
     }
 
     @Test
     public void shouldReturnOKBecauseClientRegistered() {
-        Person person = createRandomPerson();
-        RegisterRequest request = getRegisterRequest(person);
-        log.info("Created random person with email {}", person.getEmail());
+        Client client = createRandomPerson();
+        RegisterRequest request = getRegisterRequest(client);
+
         HttpStatus result = authenticationController.register(request).getStatusCode();
+
         Assertions.assertEquals(HttpStatus.OK, result);
     }
 
     @Test
+    public void shouldNotRegisterBecauseEmailAlreadyOccupied() {
+        Client client = createRandomPerson();
+        RegisterRequest request = getRegisterRequest(client);
+        authenticationController.register(request);
+
+        HttpStatus result = authenticationController.register(request).getStatusCode();
+
+        Assertions.assertEquals(HttpStatus.FORBIDDEN, result);
+    }
+
+    @Test
     public void shouldReturnBadRequestBecauseInputSyntaxIsInvalid() {
-        HttpStatus result = HttpStatus.BAD_REQUEST;
+        Client client = createRandomPerson();
+        client.setEmail("email.com");
+        RegisterRequest request = getRegisterRequest(client);
+
+        HttpStatus result = authenticationController.register(request)
+                .getStatusCode();
+
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, result);
     }
 
+    //is this one really necessary?
     @Test
     public void shouldReturnNotFoundBecauseNoSuchClientExists() {
         HttpStatus result = HttpStatus.NOT_FOUND;
         Assertions.assertEquals(HttpStatus.NOT_FOUND, result);
     }
 
-    private Person createRandomPerson() {
+    private Client createRandomPerson() {
         String email = RandomString.make(6);
-        return Person.builder()
-                .email(email+"@email.com")
-                .firstName("John")
-                .lastName("Doe")
-                .password("password")
-                .build();
+        Client client = new Client();
+        client.setEmail(email+"@email.com");
+        client.setPassword("password");
+        client.setFirstName("John");
+        client.setLastName("Doe");
+        client.setHasNewsletterOn(true);
+        return client;
     }
 
-    private RegisterRequest getRegisterRequest(Person person) {
-        return new RegisterRequest(person.getFirstName(),
-                person.getLastName(), person.getEmail(), person.getPassword());
+    private RegisterRequest getRegisterRequest(Client client) {
+        return new RegisterRequest(client.getFirstName(),
+                client.getLastName(), client.getEmail(), client.getPassword(), client.getHasNewsletterOn());
+    }
+
+    private AuthenticationRequest getAuthenticationRequest(Client client) {
+        return new AuthenticationRequest(client.getEmail(), client.getPassword());
     }
 }
