@@ -35,7 +35,7 @@ function CartPage(props) {
     </div>
     <div className="relative left-40 text-center">
       <p>Total: {total}</p>
-      <Link to={'/Checkout'}>
+      <Link to={'/checkout'}>
         <button>Checkout</button>
       </Link>
       
