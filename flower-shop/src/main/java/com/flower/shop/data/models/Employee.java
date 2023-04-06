@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-public class Employee extends Person implements UserDetails {
+public class Employee extends Person {
 
     @Transient
     @Override
