@@ -10,3 +10,12 @@ services:
       - MYSQL_DATABASE=$DATABASE
     ports:
       - 3306:3306
+  flower-shop-test:
+    image: mysql:8.0.32
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$TEST_PASSWORD
+      - MYSQL_DATABASE=$TEST_DATABASE
+    ports:
+      - 3336:3306

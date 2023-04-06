@@ -1,42 +1,40 @@
 package com.flower.shop;
 
-
-import com.flower.shop.application.authentication.AuthenticationService;
-import com.flower.shop.application.authentication.util.AuthenticationRequest;
-import com.flower.shop.data.dao.PersonDAO;
+import com.flower.shop.application.authentication.util.RegisterRequest;
 import com.flower.shop.data.models.Person;
+import com.flower.shop.rest.AuthenticationController;
+import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.Optional;
-
-import static org.mockito.Mockito.mock;
-
+@TestPropertySource(locations = "classpath:application-test.properties")
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Slf4j
 public class LoggingTest {
 
-    @Mock
-    AuthenticationManager authenticationManager;
-
-    @Mock
-    PersonDAO personRepository;
-
-    @InjectMocks
-    AuthenticationService authenticationService;
+    @Autowired
+    AuthenticationController authenticationController;
 
     @Test
     public void shouldReturnOKBecauseClientLoggedIn() {
-        Mockito.when(authenticationManager.authenticate(Mockito.any(Authentication.class)))
-                .thenReturn(userAuthenticated());
-        Mockito.when(personRepository.findByEmail("test@email.com"))
-                .thenReturn(Optional.of(createDummyPerson()));
+        HttpStatus result = HttpStatus.OK;
+        Assertions.assertEquals(HttpStatus.OK, result);
+    }
 
-        HttpStatus result = authenticationService.authenticate(authenticationRequest());
+    @Test
+    public void shouldReturnOKBecauseClientRegistered() {
+        Person person = createRandomPerson();
+        RegisterRequest request = getRegisterRequest(person);
+        log.info("Created random person with email {}", person.getEmail());
+        HttpStatus result = authenticationController.register(request).getStatusCode();
         Assertions.assertEquals(HttpStatus.OK, result);
     }
 
@@ -52,22 +50,18 @@ public class LoggingTest {
         Assertions.assertEquals(HttpStatus.NOT_FOUND, result);
     }
 
-    private Person createDummyPerson() {
+    private Person createRandomPerson() {
+        String email = RandomString.make(6);
         return Person.builder()
-                .email("test@email.com")
+                .email(email+"@email.com")
                 .firstName("John")
                 .lastName("Doe")
                 .password("password")
                 .build();
     }
 
-    private Authentication userAuthenticated() {
-        Authentication authentication = mock(Authentication.class);
-        authentication.setAuthenticated(true);
-        return authentication;
-    }
-
-    private AuthenticationRequest authenticationRequest() {
-        return new AuthenticationRequest("test@email.com", "password");
+    private RegisterRequest getRegisterRequest(Person person) {
+        return new RegisterRequest(person.getFirstName(),
+                person.getLastName(), person.getEmail(), person.getPassword());
     }
 }

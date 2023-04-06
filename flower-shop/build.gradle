@@ -25,9 +25,11 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-jackson:0.11.5")
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.31'
+    testImplementation 'org.projectlombok:lombok:1.18.22'
 
+    testCompileOnly 'org.projectlombok:lombok:1.18.22'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
     compileOnly 'org.projectlombok:lombok:1.18.22'
-
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
