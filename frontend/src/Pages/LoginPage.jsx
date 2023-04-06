@@ -1,8 +1,9 @@
 import LoginForm from "../Components/LoginForm"
+import Navbar from "./Navbar";
 
 function LoginPage() {
   return (
-    <div className="bg-[#f5f5f5] w-screen h-screen flex">
+    <div className="bg-[#F8F2E9] w-screen h-screen flex">
         <div className="w-2/5 h-screen flex justify-center items-center flex-col">
           <LoginForm/>
           <p>output</p>

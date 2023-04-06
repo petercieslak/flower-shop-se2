@@ -6,7 +6,7 @@ function ClosedEye(props) {
       viewBox="0 0 24 24"
       strokeWidth="1.5"
       stroke="currentColor"
-      className="w-5 h-5 absolute right-2.5 bottom-1.5 cursor-pointer"
+      className="w-5 h-5 absolute right-2.5 bottom-1.5 cursor-pointer stroke-[#3B1F2B]"
       onClick={() => props.showPassword(false)}
     >
       <path
