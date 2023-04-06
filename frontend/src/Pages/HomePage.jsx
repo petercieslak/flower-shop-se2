@@ -17,7 +17,7 @@ function HomePage() {
             dive into our colorful world
           </div>
         </div>
-        <Link to = {"/"} className="flex w-1/3 h-screen 
+        <Link to = {"/products"} className="flex w-1/3 h-screen 
         bg-[#F8F2E9] border-l border-r border-[#014325] 
         text-[#014325] text-7xl
          hover:scale-105 ease-in-out duration-300 
@@ -34,7 +34,7 @@ function HomePage() {
                 <img src="/src/assets/flowers-gift.png" alt="" />
             </div>
         </Link>
-        <Link to = {"/"} className="flex w-1/3 h-screen 
+        <Link to = {"/products"} className="flex w-1/3 h-screen 
         bg-[#F8F2E9] border-l border-r border-[#014325] 
         text-[#014325] text-7xl
          hover:scale-105 ease-in-out duration-300 
@@ -51,7 +51,7 @@ function HomePage() {
                 <img src="/src/assets/flowers-potted.png" alt="" />
             </div>
         </Link>
-        <Link to = {"/"} className="flex w-1/3 h-screen 
+        <Link to = {"/products"} className="flex w-1/3 h-screen 
         bg-[#F8F2E9] border-l border-r border-[#014325] 
         text-[#014325] text-7xl
          hover:scale-105 ease-in-out duration-300 
