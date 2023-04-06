@@ -11,8 +11,7 @@ export default {
       },
       backgroundImage: {
         'leaves-pattern': "url('./src/assets/leaves-bg.png')",
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'test': "url('./src/assets/test.jpg')",
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))'
       },
 
     },
