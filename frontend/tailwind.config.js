@@ -5,7 +5,16 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'montserrat': ['Montserrat', 'sans-serif']
+      },
+      backgroundImage: {
+        'leaves-pattern': "url('./src/assets/leaves-bg.png')",
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))'
+      },
+
+    },
   },
   plugins: [],
 }

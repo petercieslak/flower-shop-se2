@@ -1,9 +1,21 @@
+import ProductsPage from "./Pages/ProductsPage";
+import LoginPage from "./Pages/LoginPage";
+import HomePage from "./Pages/HomePage";
+import Navbar from "./Pages/Navbar";
+
+import { Routes, Route } from "react-router-dom";
+
 function App() {
   return (
-    <div className="bg-[#f5f5f5] w-screem h-screen flex items-center justify-center">
-      <h1 className=" font-bold text-9xl">KWIACIARNIA</h1>
-    </div>
-  )
+    <>
+      {/* <Navbar /> */}
+      <Routes>
+        <Route path="/products" element={<><Navbar /><ProductsPage /></>} />
+        <Route path="/login" element={<><Navbar /><LoginPage /></>} />
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </>
+  );
 }
 
-export default App
+export default App;
