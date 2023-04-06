@@ -3,7 +3,6 @@ package com.flower.shop;
 import com.flower.shop.application.authentication.util.AuthenticationRequest;
 import com.flower.shop.application.authentication.util.RegisterRequest;
 import com.flower.shop.data.models.Client;
-import com.flower.shop.data.models.Person;
 import com.flower.shop.rest.AuthenticationController;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.utility.RandomString;
@@ -13,7 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -96,6 +94,7 @@ public class LoggingTest {
         client.setFirstName("John");
         client.setLastName("Doe");
         client.setHasNewsletterOn(true);
+        log.info("Created random person with email {}", client.getEmail());
         return client;
     }
 
