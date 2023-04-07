@@ -25,7 +25,7 @@ public class SecurityConfiguration {
                 .disable()
                 .authorizeHttpRequests()
                 .antMatchers("/api/v1/auth/**", "/swagger-ui/**",
-                        "/swagger-resources/**", "/webjars/**", "/v2/**")// todo może jebnać
+                        "/swagger-resources/**", "/webjars/**", "/v2/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

@@ -1,6 +1,6 @@
 package com.flower.shop.config;
 
-import com.flower.shop.data.dao.PersonDAO;
+import com.flower.shop.data.dao.ClientDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,12 +12,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.security.authentication.AuthenticationManager;
+
 @Configuration
 @EnableWebMvc
 @RequiredArgsConstructor
 public class ApplicationConfig {
-    private final PersonDAO repository;
+    private final ClientDAO repository;
     @Bean
     public UserDetailsService userDetailsService(){
         return username -> repository.findByEmail(username)
