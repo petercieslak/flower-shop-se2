@@ -5,6 +5,15 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    
+    services:
+      flower-shop-test:
+        image: mysql:8.0.32
+        env:
+          MYSQL_ROOT_PASSWORD: test
+          MYSQL_DATABASE: test
+        ports:
+          - 3336:3306
 
     steps:
       - uses: actions/checkout@v3
@@ -20,3 +29,6 @@ jobs:
           build-root-directory: ./flower-shop
       - name: Run build with Gradle Wrapper
         run: cd ./flower-shop/ && ./gradlew build
+        
+        
+
