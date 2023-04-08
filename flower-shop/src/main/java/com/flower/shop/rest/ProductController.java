@@ -2,13 +2,13 @@ package com.flower.shop.rest;
 
 import com.flower.shop.application.domain.services.ProductService;
 import com.flower.shop.application.dto.ProductDto;
+import com.flower.shop.data.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -23,5 +23,11 @@ public class ProductController {
     public ResponseEntity<List<ProductDto>> getProducts() {
         List<ProductDto> products = productService.getProducts();
         return ResponseEntity.ok(products);
+    }
+
+    @PostMapping()
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public void addProduct( @Valid @RequestBody ProductDto product) {
+        productService.createProduct(product);
     }
 }
