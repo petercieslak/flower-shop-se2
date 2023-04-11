@@ -2,7 +2,6 @@ package com.flower.shop.rest;
 
 import com.flower.shop.application.domain.services.ProductService;
 import com.flower.shop.application.dto.ProductDto;
-import com.flower.shop.data.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
