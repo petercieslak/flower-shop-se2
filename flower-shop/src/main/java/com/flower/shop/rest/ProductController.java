@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -24,9 +25,13 @@ public class ProductController {
         return ResponseEntity.ok(products);
     }
 
+    @CrossOrigin
     @PostMapping()
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public void addProduct( @Valid @RequestBody ProductDto product) {
+    public ResponseEntity<Void> addProduct( @Valid @RequestBody ProductDto product) {
+        if(product.getPrice() < 0){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
         productService.createProduct(product);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
