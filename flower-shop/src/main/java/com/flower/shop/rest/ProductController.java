@@ -3,8 +3,10 @@ package com.flower.shop.rest;
 import com.flower.shop.application.domain.services.ProductService;
 import com.flower.shop.application.dto.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -26,8 +28,9 @@ public class ProductController {
     }
 
     @CrossOrigin
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping()
-    public ResponseEntity<Void> addProduct( @Valid @RequestBody ProductDto product) {
+    public ResponseEntity<Void> addProduct( @Valid @RequestBody ProductDto product, @RequestHeader HttpHeaders headers) {
         if(product.getPrice() < 0){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }

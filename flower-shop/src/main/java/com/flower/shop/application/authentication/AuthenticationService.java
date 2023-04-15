@@ -5,6 +5,7 @@ import com.flower.shop.data.models.Client;
 import com.flower.shop.application.authentication.util.AuthenticationRequest;
 import com.flower.shop.application.authentication.util.AuthenticationResponse;
 import com.flower.shop.application.authentication.util.RegisterRequest;
+import com.flower.shop.data.models.Employee;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -51,12 +52,20 @@ public class AuthenticationService {
         return false;
     }
 
-    private Client initializeClient(RegisterRequest request) {
+    public Client initializeClient(RegisterRequest request) {
         Client client = new Client();
         client.setEmail(request.getEmail());
         client.setPassword(passwordEncoder.encode(request.getPassword()));
         client.setFirstName(request.getFirstname());
         client.setHasNewsletterOn(request.getHasNewsletterOn());
         return client;
+    }
+
+    public Employee initializeEmployee(RegisterRequest request) {
+        Employee emp = new Employee();
+        emp.setEmail(request.getEmail());
+        emp.setPassword(passwordEncoder.encode(request.getPassword()));
+        emp.setFirstName(request.getFirstname());
+        return emp;
     }
 }
