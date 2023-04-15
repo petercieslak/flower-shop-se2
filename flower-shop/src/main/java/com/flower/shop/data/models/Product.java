@@ -27,7 +27,7 @@ public class Product {
     private String description;
 
     @Lob
-    @Column(name = "image", columnDefinition = "BLOB")
+    @Column(name = "image", columnDefinition = "LONGBLOB")
     private byte[] image;
 
     @Column
