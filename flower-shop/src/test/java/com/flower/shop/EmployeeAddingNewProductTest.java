@@ -23,8 +23,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.jdbc.JdbcTestUtils;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -54,6 +56,10 @@ public class EmployeeAddingNewProductTest {
 
     @Autowired
     private ClientDAO clientRepository;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     private final String SECRET_KEY = "4528482B4D6251655468576D597133743677397A24432646294A404E63526655";
 
 
@@ -70,6 +76,11 @@ public class EmployeeAddingNewProductTest {
 
         Client user = authService.initializeClient(userRequest);
         clientRepository.save(user);
+    }
+
+    @AfterAll
+    private void cleanDatabase() {
+        JdbcTestUtils.deleteFromTables(jdbcTemplate, "client", "employee", "persons", "product");
     }
 
     @Test
