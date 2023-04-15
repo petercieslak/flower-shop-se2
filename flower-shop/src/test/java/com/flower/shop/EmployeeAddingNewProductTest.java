@@ -79,7 +79,7 @@ public class EmployeeAddingNewProductTest {
     }
 
     @AfterAll
-    private void cleanDatabase() {
+    private void clearDatabase() {
         JdbcTestUtils.deleteFromTables(jdbcTemplate, "client", "employee", "persons", "product");
     }
 

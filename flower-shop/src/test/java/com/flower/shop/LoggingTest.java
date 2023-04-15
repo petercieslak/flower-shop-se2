@@ -6,24 +6,37 @@ import com.flower.shop.data.models.Client;
 import com.flower.shop.rest.AuthenticationController;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.utility.RandomString;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.jdbc.JdbcTestUtils;
 
 @TestPropertySource(locations = "classpath:application-test.properties")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Slf4j
 public class LoggingTest {
 
     @Autowired
     AuthenticationController authenticationController;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @AfterAll
+    private void clearDatabase() {
+        JdbcTestUtils.deleteFromTables(jdbcTemplate, "client", "persons");
+    }
 
     @Test
     public void shouldReturnOKBecauseClientLoggedIn() {
