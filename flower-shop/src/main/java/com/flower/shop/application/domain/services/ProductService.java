@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -37,4 +39,13 @@ public class ProductService {
                 product.getPrice());
         productRepository.save(newProduct);
     }
+
+    public Optional<Product> findProduct(UUID productID){
+        return productRepository.findById(productID);
+    }
+
+    public void removeProduct(UUID productID){
+        productRepository.deleteById(productID);
+    }
+
 }
