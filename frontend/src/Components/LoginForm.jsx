@@ -1,5 +1,6 @@
 import LoginInput from "./LoginInput";
 import flowersvector from "../assets/flowers-login.png";
+import {Link} from "react-router-dom";
 
 function LoginForm() {
 
@@ -24,7 +25,7 @@ function LoginForm() {
         </button>
         <p className=" font-montserrat font-light mt-2 text-[#3B1F2B]">
           Don't have an account?{" "}
-          <button className=" font-bold text-[#014325]">Sign up here</button>
+          <Link to={"/register"} className="font-bold text-[#014325]">Sign up here</Link>
         </p>
       </form>
     </>
