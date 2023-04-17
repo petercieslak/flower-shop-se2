@@ -3,6 +3,7 @@ package com.flower.shop.application.domain.services;
 import com.flower.shop.application.dto.ProductDto;
 import com.flower.shop.application.dto.mapper.ProductMapper;
 import com.flower.shop.data.dao.ProductDAO;
+import com.flower.shop.data.models.Product;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,14 @@ public class ProductService {
                 .stream()
                 .map(p -> productMapper.mapProduct(p))
                 .collect(Collectors.toList());
+    }
+
+    public void createProduct(ProductDto product){
+        Product newProduct = new Product(product.getProductId(),
+                product.getName(),
+                product.getDescription(),
+                product.getImage(),
+                product.getPrice());
+        productRepository.save(newProduct);
     }
 }
