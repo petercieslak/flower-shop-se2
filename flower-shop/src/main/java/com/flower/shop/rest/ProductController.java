@@ -22,8 +22,11 @@ public class ProductController {
 
     @CrossOrigin
     @GetMapping()
-    public ResponseEntity<List<ProductDto>> getProducts() {
-        List<ProductDto> products = productService.getProducts();
+    public ResponseEntity<List<ProductDto>> getProducts(
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
+    ) {
+        List<ProductDto> products = productService.getProducts(pageNo, pageSize);
         return ResponseEntity.ok(products);
     }
 
