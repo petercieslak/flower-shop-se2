@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import ProductComponent from "../Components/ProductComponent";
 
 function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -19,9 +20,9 @@ function ProductsPage() {
   }, [])
 
   return (
-    <div className="bg-[#F8F2E9] w-screen h-screen flex justify-center items-center">
+    <div className="bg-[#F8F2E9] w-full h-full flex flex-row flex-wrap justify-center items-center p-10">
       {products.map(product => (
-        <div key={product.productId}>{product.name}</div>
+          <ProductComponent image={product.image} name={product.name} price={product.price}/>
       ))}
     </div>
   );
