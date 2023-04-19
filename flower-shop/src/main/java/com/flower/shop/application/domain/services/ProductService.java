@@ -40,6 +40,15 @@ public class ProductService {
         productRepository.save(newProduct);
     }
 
+    public void modifyProduct(ProductDto product, UUID productID){
+        Product modifiedProduct = findProduct(productID).get();
+        modifiedProduct.setName(product.getName());
+        modifiedProduct.setDescription(product.getDescription());
+        modifiedProduct.setImage(product.getImage());
+        modifiedProduct.setPrice(product.getPrice());
+        productRepository.save(modifiedProduct);
+    }
+
     public Optional<Product> findProduct(UUID productID){
         return productRepository.findById(productID);
     }
@@ -47,5 +56,6 @@ public class ProductService {
     public void removeProduct(UUID productID){
         productRepository.deleteById(productID);
     }
+
 
 }

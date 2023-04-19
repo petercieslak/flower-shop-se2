@@ -47,4 +47,20 @@ public class ProductController {
         productService.removeProduct(ID);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @CrossOrigin
+    @PutMapping("/{productID}")
+    public ResponseEntity<Void> modifyProduct(@Valid @RequestBody ProductDto product, @PathVariable String productID ) {
+        UUID ID = UUID.fromString(productID);
+        if(productService.findProduct(ID).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        if(product.getPrice() < 0){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        productService.modifyProduct(product, ID);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+
 }
