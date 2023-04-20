@@ -21,7 +21,7 @@ function CartPage(props) {
   }),[change];
 
   return (
-  <div className="grid-rows-4 absolute top-40 left-1/4">
+  <div className="grid-rows-4 absolute top-40 left-1/4 font-montserrat">
     <div className="columns-3">
       <p className="pl-40">Product</p>
       <p className="pl-28 text-center">Amount</p>
@@ -36,7 +36,7 @@ function CartPage(props) {
     <div className="relative left-40 text-center">
       <p>Total: {total}</p>
       <Link to={'/checkout'}>
-        <button>Checkout</button>
+        <button className="bg-zinc-300 rounded"> Checkout </button>
       </Link>
       
     </div>
