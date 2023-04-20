@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -45,4 +47,23 @@ public class ProductService {
                 product.getPrice());
         productRepository.save(newProduct);
     }
+
+    public void modifyProduct(ProductDto product, UUID productID){
+        Product modifiedProduct = findProduct(productID).get();
+        modifiedProduct.setName(product.getName());
+        modifiedProduct.setDescription(product.getDescription());
+        modifiedProduct.setImage(product.getImage());
+        modifiedProduct.setPrice(product.getPrice());
+        productRepository.save(modifiedProduct);
+    }
+
+    public Optional<Product> findProduct(UUID productID){
+        return productRepository.findById(productID);
+    }
+
+    public void removeProduct(UUID productID){
+        productRepository.deleteById(productID);
+    }
+
+
 }
