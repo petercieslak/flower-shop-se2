@@ -14,8 +14,6 @@ import flower_cart_2 from "./assets/flower-cart-2.png"
 import { Routes, Route } from "react-router-dom";
 import AdminNavbar from "./Pages/AdminNavbar";
 import AddProductPage from "./Pages/AddProductPage";
-import AdminNavbar from "./Pages/AdminNavbar";
-import AddProductPage from "./Pages/AddProductPage";
 
 function App() {
   let one = new CartItemClass(flower_cart, 'jeden', 2, 9.99)
