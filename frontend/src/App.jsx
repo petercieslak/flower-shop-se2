@@ -14,16 +14,22 @@ import flower_cart_2 from "./assets/flower-cart-2.png"
 import { Routes, Route } from "react-router-dom";
 import AdminNavbar from "./Pages/AdminNavbar";
 import AddProductPage from "./Pages/AddProductPage";
+import RegisterPage from "./Pages/RegisterPage";
+import { TokenContext } from "./ContextStore";
+import { useState } from "react";
 
 function App() {
+  const [token, setToken] = useState("");
+
   let one = new CartItemClass(flower_cart, 'jeden', 2, 9.99)
   let two = new CartItemClass(flower_cart_2, "second one", 3, 14.99)
   return (
-    <>
+    <TokenContext.Provider value={{ token, setToken }}>
       {/* <Navbar /> */}
       <Routes>
         <Route path="/products" element={<><Navbar /><ProductsPage /></>} />
         <Route path="/login" element={<><Navbar /><LoginPage /></>} />
+        <Route path="/register" element={<><Navbar /><RegisterPage /></>} />
         <Route path="/cart" element={<><Navbar /><CartPage one={one} two={two}/></>} />
         <Route path="/checkout" element={<><Navbar /><CheckoutPage one={one} two={two}/></>} />
         <Route path="/" element={<HomePage />} />
@@ -32,7 +38,7 @@ function App() {
           <Route path="addproduct" element={<><AdminNavbar/><AddProductPage /></>} />
         </Route>
       </Routes>
-    </>
+    </TokenContext.Provider>
   );
 }
 
