@@ -2,16 +2,18 @@ import LoginInput from "./LoginInput";
 import flowersvector from "../assets/flowers-login.png";
 import { useState, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
-import { TokenContext } from "../ContextStore";
+import { NameContext, TokenContext } from "../ContextStore";
 
 function RegisterForm() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
   const [surname, setSurname] = useState("");
   const [newsletter, setNewsletter] = useState(false);
   const [password, setPassword] = useState("");
   const {token, setToken} = useContext(TokenContext);
+  const {name, setName} = useContext(NameContext);
+
   const [credInvalid, setCredInvalid] = useState(false);
   const [emailTaken, setEmailTaken] = useState(false);
 
@@ -39,9 +41,10 @@ function RegisterForm() {
           setCredInvalid(true);
           throw new Error(response.statusText);
         }
-      }).then((token) => {
-        console.log("Success registering." + token.token);
-        setToken(token.token);
+      }).then((user) => {
+        console.log("Success registering." + user.token);
+        setToken(user.token);
+        setName(user.name);
         navigate('/products');
       }).catch((e) => {
         console.log("Error when trying to sign up: " + e);
@@ -66,7 +69,7 @@ function RegisterForm() {
         className="w-3/4 flex items-center flex-col"
       >
         <LoginInput id="email" type="email" placeholder="Email address" value={email} onChange={(string)=>{setEmail(string);}}/>
-        <LoginInput id="name" type="text" placeholder="First name" value={name} onChange={(string)=>{setName(string);}}/>
+        <LoginInput id="name" type="text" placeholder="First name" value={firstName} onChange={(string)=>{setFirstName(string);}}/>
         <LoginInput id="surname" type="text" placeholder="Last name" value={surname} onChange={(string)=>{setSurname(string);}}/>
         <LoginInput id="password" type="password" placeholder="Password" value={password} onChange={(string)=>{setPassword(string);}}/>
         <div className="self-start mt-6">

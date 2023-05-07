@@ -1,9 +1,13 @@
 import User from "../Icons/User";
 import Cart from "../Icons/Cart";
 import { NavLink, useNavigate } from "react-router-dom";
+import { NameContext } from "../ContextStore";
+import { useContext } from "react";
 
 function Navbar() {
+  const {name, setName} = useContext(NameContext);
   const navigate = useNavigate();
+
   return (
     <nav className=" bg-[#F8F2E9] w-screen fixed flex shadow-xl h-12 px-9 items-center justify-between font-montserrat font-medium text-lg">
       <NavLink to={"/"}>
@@ -27,6 +31,13 @@ function Navbar() {
         </li>
       </ul>
       <ul className="flex gap-5">
+        {
+          name === "" ? "" : 
+          <li className="flex items-center">
+            <p>Hi, {name}</p>
+          </li>   
+        }
+        
         <li>
           <NavLink to={"/cart"}>
             <Cart />

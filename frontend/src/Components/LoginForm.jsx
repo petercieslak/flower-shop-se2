@@ -2,7 +2,7 @@ import LoginInput from "./LoginInput";
 import flowersvector from "../assets/flowers-login.png";
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useState } from "react";
-import { TokenContext } from "../ContextStore";
+import { NameContext, TokenContext } from "../ContextStore";
 
 
 function LoginForm() {
@@ -12,6 +12,7 @@ function LoginForm() {
   const [credInvalid, setCredInvalid] = useState(false);
 
   const {token, setToken} = useContext(TokenContext);
+  const {name, setName} = useContext(NameContext);
 
   const loginHandling = () => {
     fetch("http://localhost:8080/api/v1/auth/authenticate", {
@@ -29,9 +30,10 @@ function LoginForm() {
           return response.json();
         else
           throw new Error(response.statusText);
-      }).then((token) => {
+      }).then((user) => {
         console.log("Success logging in.");
-        setToken(token.token);
+        setToken(user.token);
+        setName(user.name);
         navigate('/products');
       }).catch((e) => {
         console.log("Error when trying to log in: " + e)
