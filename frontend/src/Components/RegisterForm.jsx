@@ -12,6 +12,8 @@ function RegisterForm() {
   const [newsletter, setNewsletter] = useState(false);
   const [password, setPassword] = useState("");
   const {token, setToken} = useContext(TokenContext);
+  const [credInvalid, setCredInvalid] = useState(false);
+  const [emailTaken, setEmailTaken] = useState(false);
 
   const registerHandling = () => {
     fetch("http://localhost:8080/api/v1/auth/register", {
@@ -28,16 +30,27 @@ function RegisterForm() {
     },
     })
       .then(response => {
-        return response.json();
+        if(response.status == 200)
+          return response.json();
+        else if(response.status == 403){
+          setEmailTaken(true);
+          throw new Error(response.statusText);
+        } else{
+          setCredInvalid(true);
+          throw new Error(response.statusText);
+        }
       }).then((token) => {
-        console.log(token.token);
+        console.log("Success registering." + token.token);
         setToken(token.token);
-        console.log("Success registering.");
         navigate('/products');
+      }).catch((e) => {
+        console.log("Error when trying to sign up: " + e);
       })
   }
 
   const handleSubmit = (event) => {
+    setCredInvalid(false);
+    setEmailTaken(false);
     event.preventDefault();
     registerHandling();
   };
@@ -52,15 +65,17 @@ function RegisterForm() {
         onSubmit={handleSubmit}
         className="w-3/4 flex items-center flex-col"
       >
-        <LoginInput type="email" placeholder="Email address" value={email} onChange={(string)=>{setEmail(string);}}/>
-        <LoginInput type="text" placeholder="First name" value={name} onChange={(string)=>{setName(string);}}/>
-        <LoginInput type="text" placeholder="Last name" value={surname} onChange={(string)=>{setSurname(string);}}/>
-        <LoginInput type="password" placeholder="Password" value={password} onChange={(string)=>{setPassword(string);}}/>
+        <LoginInput id="email" type="email" placeholder="Email address" value={email} onChange={(string)=>{setEmail(string);}}/>
+        <LoginInput id="name" type="text" placeholder="First name" value={name} onChange={(string)=>{setName(string);}}/>
+        <LoginInput id="surname" type="text" placeholder="Last name" value={surname} onChange={(string)=>{setSurname(string);}}/>
+        <LoginInput id="password" type="password" placeholder="Password" value={password} onChange={(string)=>{setPassword(string);}}/>
         <div className="self-start mt-6">
           <input onChange={()=>{setNewsletter(!newsletter)}} type="checkbox" id="newsletter" />
-          <label for="newsletter" className="ml-3 text-[#014325] mt-2 font-normal font-montserrat">Sign up for newsletter</label>
+          <label htmlFor="newsletter" className="ml-3 text-[#014325] mt-2 font-normal font-montserrat">Sign up for newsletter</label>
         </div>
-        <button className="w-full h-12 mt-8 bg-[#014325] text-xl font-bold text-white rounded-xl font-montserrat">
+        <p className={`text-[#962b2b] mt-2 font-normal font-montserrat ${credInvalid ? "":"hidden"}`}>Wrong credentials!</p>
+        <p className={`text-[#962b2b] mt-2 font-normal font-montserrat ${emailTaken ? "":"hidden"}`}>User with given email already exist</p>
+        <button className="w-full h-12 mt-4 bg-[#014325] text-xl font-bold text-white rounded-xl font-montserrat">
           Sign Up
         </button>
       </form>

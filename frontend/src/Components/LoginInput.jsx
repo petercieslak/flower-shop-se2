@@ -18,7 +18,7 @@ function LoginInput(props) {
     <div className="relative mt-6 w-full">
       <input
         autoComplete="off"
-        id={props.type}
+        id={props.id}
         type={show ? "text" : props.type}
         className="peer bg-transparent font-montserrat placeholder-transparent border-b-2 border-text-[#3B1F2B] h-9 w-full text-gray-900 focus:outline-none focus:border-[#3B1F2B]"
         placeholder={props.placeholder}
@@ -26,7 +26,7 @@ function LoginInput(props) {
         onChange={changeInputValue} 
       />
       <label
-        htmlFor={props.type}
+        htmlFor={props.id}
         className="absolute left-0 -top-3.5 text-[#3B1F2B] font-montserrat text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
       >
         {props.placeholder}

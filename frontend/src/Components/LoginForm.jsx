@@ -9,6 +9,8 @@ function LoginForm() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [credInvalid, setCredInvalid] = useState(false);
+
   const {token, setToken} = useContext(TokenContext);
 
   const loginHandling = () => {
@@ -23,12 +25,17 @@ function LoginForm() {
     },
     })
       .then(response => {
-        return response.json();
+        if(response.status == 200)
+          return response.json();
+        else
+          throw new Error(response.statusText);
       }).then((token) => {
-        console.log(token.token);
-        setToken(token.token);
         console.log("Success logging in.");
+        setToken(token.token);
         navigate('/products');
+      }).catch((e) => {
+        console.log("Error when trying to log in: " + e)
+        setCredInvalid(true);
       })
   }
 
@@ -42,13 +49,14 @@ function LoginForm() {
       <img src={flowersvector} className=" w-80 -mb-4" />
       <p className="text-3xl font-bold mb-4 font-montserrat text-[#3B1F2B]">Welcome back!</p>
       <form onSubmit={handleSubmit} className="w-3/4 flex items-center flex-col">
-        <LoginInput type="email" placeholder="Email address" value={email} onChange={(string)=>{setEmail(string);}}/>
-        <LoginInput type="password" placeholder="Password" value={password} onChange={(string)=>{setPassword(string);}}/>
+        <LoginInput id="email" type="email" placeholder="Email address" value={email} onChange={(string)=>{setEmail(string);}}/>
+        <LoginInput id="password" type="password" placeholder="Password" value={password} onChange={(string)=>{setPassword(string);}}/>
         <button className=" self-end text-[#014325] mt-2 font-normal font-montserrat">
           Forgot Password?
         </button>
+        <p className={`text-[#962b2b] mt-2 font-normal font-montserrat ${credInvalid ? "":"hidden"}`}>Wrong credentials!</p>
         <button
-          className="w-full h-12 mt-8 bg-[#014325] text-xl font-bold text-white rounded-xl font-montserrat"
+          className="w-full h-12 mt-4 bg-[#014325] text-xl font-bold text-white rounded-xl font-montserrat"
         >
           Sign In
         </button>
