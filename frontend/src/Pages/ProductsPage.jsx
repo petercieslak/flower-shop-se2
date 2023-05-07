@@ -29,7 +29,6 @@ function ProductsPage() {
           <ProductComponent image={product.image} name={product.name} price={product.price}/>
       ))}
       <p className="mx-5 fixed bottom-4 left-96" onClick={()=>{setPageNo(pageNo-1)}}>Previous page</p>
-      <p className="mx-5 fixed bottom-4 left-9">{token}</p>
       <p className="mx-5 fixed bottom-4 right-96" onClick={()=>{setPageNo(pageNo+1)}}>Next page</p>
       
     </div>

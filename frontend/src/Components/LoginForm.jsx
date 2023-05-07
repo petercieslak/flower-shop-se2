@@ -1,11 +1,12 @@
 import LoginInput from "./LoginInput";
 import flowersvector from "../assets/flowers-login.png";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useState } from "react";
 import { TokenContext } from "../ContextStore";
 
 
 function LoginForm() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const {token, setToken} = useContext(TokenContext);
@@ -27,14 +28,13 @@ function LoginForm() {
         console.log(token.token);
         setToken(token.token);
         console.log("Success logging in.");
+        navigate('/products');
       })
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     loginHandling();
-    console.log(email);
-    console.log(password);
   };
 
   return (

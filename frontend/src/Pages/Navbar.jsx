@@ -1,8 +1,9 @@
 import User from "../Icons/User";
 import Cart from "../Icons/Cart";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 function Navbar() {
+  const navigate = useNavigate();
   return (
     <nav className=" bg-[#F8F2E9] w-screen fixed flex shadow-xl h-12 px-9 items-center justify-between font-montserrat font-medium text-lg">
       <NavLink to={"/"}>
@@ -20,7 +21,7 @@ function Navbar() {
           </button>
         </li>
         <li>
-          <button className=" h-10 w-36 rounded-md hover:bg-gradient-radial from-green-200 via-green-100 to-[#F8F2E9]">
+          <button onClick={() => navigate('/products')} className=" h-10 w-36 rounded-md hover:bg-gradient-radial from-green-200 via-green-100 to-[#F8F2E9]">
             Ogrodowe
           </button>
         </li>
