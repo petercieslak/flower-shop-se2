@@ -33,8 +33,12 @@ function LoginForm() {
       }).then((user) => {
         console.log("Success logging in.");
         setToken(user.token);
-        setName(user.name);
-        navigate('/products');
+        if(user.role === "[ADMIN]"){
+          navigate('/admin');
+        }else{
+          setName(user.name);
+          navigate('/products');
+        }
       }).catch((e) => {
         console.log("Error when trying to log in: " + e)
         setCredInvalid(true);
