@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -36,7 +37,7 @@ public class Product {
 
     @Column
     private double price;
-
+    
     @Column
     private String flowerType;
 
