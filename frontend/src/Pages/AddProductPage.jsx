@@ -2,12 +2,16 @@ import HomePage from "./HomePage.jsx";
 import AdminNavbar from "./AdminNavbar.jsx";
 import AdminProductTable from "../Components/AdminProductTable.jsx";
 import LoginInput from "../Components/LoginInput.jsx";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { TokenContext } from "../ContextStore.jsx";
+
 
 function AddProductPage() {
   const [flowerName, setFlowerName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
+
+  const {token, setToken} = useContext(TokenContext);
 
   const fetchProducts = () => {
     fetch("http://localhost:8080/api/products", {
@@ -20,6 +24,7 @@ function AddProductPage() {
       }),          
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "Authorization": "Bearer " + token,
     },
     })
       .then(response => {

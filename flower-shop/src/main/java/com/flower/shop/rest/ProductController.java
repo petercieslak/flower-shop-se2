@@ -31,7 +31,7 @@ public class ProductController {
     }
 
     @CrossOrigin
-    //@PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping()
     public ResponseEntity<Void> addProduct( @Valid @RequestBody ProductDto product, @RequestHeader HttpHeaders headers) {
         if(product.getPrice() < 0){
