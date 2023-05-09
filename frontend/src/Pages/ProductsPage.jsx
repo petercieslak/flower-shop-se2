@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ProductComponent from "../Components/ProductComponent";
+import { TokenContext } from "../ContextStore";
 
 function ProductsPage() {
   const [products, setProducts] = useState([]);
   const [pageNo, setPageNo] = useState(0);
   const [pageSize, setPageSize] = useState(5);
+  const {token, setToken} = useContext(TokenContext);
 
   const fetchProducts = () => {
     fetch(`http://localhost:8080/api/products?pageNo=${pageNo}&pageSize=${pageSize}`)
