@@ -182,7 +182,8 @@ public class EmployeeAddingNewProductTest {
                 product.getName(),
                 product.getDescription(),
                 product.getImage(),
-                product.getPrice());
+                product.getPrice(),
+                product.getFlowerType());
     }
 
     String token_admin = Jwts.builder()
