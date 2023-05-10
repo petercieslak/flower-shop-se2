@@ -10,9 +10,11 @@ import java.util.UUID;
 @Table(name = "addresses")
 @Data
 public class Address {
+    @Column(length = 16)
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
+
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
