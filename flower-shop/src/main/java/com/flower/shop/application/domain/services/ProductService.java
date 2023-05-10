@@ -32,8 +32,8 @@ public class ProductService {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         Page<Product> products = productRepository.findByFlowerType(flowerType, pageable);
         List<Product> listOfProducts = products.getContent();
-        List<ProductDto> result = listOfProducts.stream().
-                map(p -> productMapper.mapProduct(p)).
+        List<ProductDto> result= listOfProducts.stream().
+                map(p -> productMapper.toDto(p)).
                 collect(Collectors.toList());
 
         return result;

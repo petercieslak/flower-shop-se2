@@ -80,7 +80,7 @@ public class EmployeeAddingNewProductTest {
 
     @AfterAll
     private void clearDatabase() {
-        JdbcTestUtils.deleteFromTables(jdbcTemplate, "client", "employee", "persons", "product");
+        JdbcTestUtils.deleteFromTables(jdbcTemplate, "cart", "client", "employee", "persons", "product");
     }
 
     @Test
