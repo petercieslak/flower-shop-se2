@@ -21,4 +21,5 @@ public class ProductDto {
     private byte[] image;
 
     private double price;
+    private String flowerType;
 }
