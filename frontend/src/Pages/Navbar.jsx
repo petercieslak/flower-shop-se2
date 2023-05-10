@@ -12,11 +12,12 @@ function Navbar() {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const toggleDropdown = () => {
-    if(name === ""){
-      navigate('/login');
-    } else
-      setShowDropdown(!showDropdown);
+      setShowDropdown(true);
   }
+
+  const hideDropdown = () => {
+    setShowDropdown(false);
+}
 
   const logoutHandle = () =>{
     setToken(""); 
@@ -52,18 +53,20 @@ function Navbar() {
           </NavLink>
         </li>
         <li>
-          <div onClick={toggleDropdown} className=" cursor-pointer">
+          <div onMouseEnter={toggleDropdown} className=" cursor-pointer">
             <User />
           </div>
           {showDropdown && 
           (
             name === "" ? 
             (
-              <></>
+              <ul className="absolute right-0 mt-2 w-48 bg-[#F8F2E9] rounded-md shadow-lg border border-black" onMouseLeave={hideDropdown}>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer rounded-lg" onClick={() => navigate('/login')}>Log in</li>
+              </ul>
             )
             : 
             (
-              <ul className="absolute right-0 mt-2 w-48 bg-[#F8F2E9] rounded-md shadow-lg border border-black" on>
+              <ul className="absolute right-0 mt-2 w-48 bg-[#F8F2E9] rounded-md shadow-lg border border-black" onMouseLeave={hideDropdown}>
                 <li className="px-4 py-2">Hi, {name}!</li>
                 <hr className=" border-gray-300"/>
                 <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer rounded-b-lg" onClick={logoutHandle}>Logout</li>
