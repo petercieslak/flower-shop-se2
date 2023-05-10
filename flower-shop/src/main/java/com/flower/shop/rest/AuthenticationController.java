@@ -7,13 +7,11 @@ import com.flower.shop.application.authentication.util.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 @RestController
@@ -38,6 +36,12 @@ public class AuthenticationController {
     @PostMapping(value="/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(service.authenticate(request));
+    }
+
+    @GetMapping
+    public ResponseEntity<UUID> getUUID(String email)
+    {
+        return ResponseEntity.ok(service.returnUUID(email));
     }
 
     private Boolean validCredentials(RegisterRequest request) {
