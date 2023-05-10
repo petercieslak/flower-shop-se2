@@ -22,10 +22,6 @@ public class Client extends Person {
     @Column
     private Boolean hasNewsletterOn;
 
-    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
-    private Cart cart;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("USER"));

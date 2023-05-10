@@ -1,6 +1,8 @@
 package com.flower.shop.application.authentication;
 
+import com.flower.shop.data.dao.CartDAO;
 import com.flower.shop.data.dao.ClientDAO;
+import com.flower.shop.data.models.Cart;
 import com.flower.shop.data.models.Client;
 import com.flower.shop.application.authentication.util.AuthenticationRequest;
 import com.flower.shop.application.authentication.util.AuthenticationResponse;
@@ -17,14 +19,17 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Slf4j
 public class AuthenticationService {
-    private final ClientDAO repository;
+    private final ClientDAO clientRepository;
+    private final CartDAO cartRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
         Client user = initializeClient(request);
-        repository.save(user);
+        Cart cart = initializeCart(user);
+        cartRepository.save(cart);
+
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -38,7 +43,7 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        var user = repository.findByEmail(request.getEmail())
+        var user = clientRepository.findByEmail(request.getEmail())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
@@ -47,7 +52,7 @@ public class AuthenticationService {
     }
 
     public boolean userExists(RegisterRequest request) {
-        if(repository.findByEmail(request.getEmail()).isPresent())
+        if(clientRepository.findByEmail(request.getEmail()).isPresent())
             return true;
         return false;
     }
@@ -67,5 +72,11 @@ public class AuthenticationService {
         emp.setPassword(passwordEncoder.encode(request.getPassword()));
         emp.setFirstName(request.getFirstname());
         return emp;
+    }
+
+    private Cart initializeCart(Client client) {
+        return Cart.builder()
+                .client(client)
+                .build();
     }
 }
