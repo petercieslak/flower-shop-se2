@@ -1,10 +1,35 @@
 import AdminPage from "../Pages/AdminPage.jsx";
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-function AdminProductRow(prod) {
+import AdminProductTable from "../Components/AdminProductTable.jsx";
+import LoginInput from "../Components/LoginInput.jsx";
+import { useContext, useState } from "react";
+import { TokenContext } from "../ContextStore.jsx";
+
+
+function AdminProductRow(prod) {  
+  const {token, setToken} = useContext(TokenContext);
+  
+
+  const fetchProducts = () => {
+    fetch("http://localhost:5173/api/products/" + prod.productId, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        "Authorization": "Bearer " + token,
+    },
+    })
+      .then(response => {
+        console.log(response);
+      })
+  }
+
+  const deleteProduct = () => {
+    fetchProducts();
+  }
+
   return (
     <tr>
-
         <td className=" h-8 w-8">
             <img className=" w-full h-full object-cover rounded-lg" src={"data:image/png;base64," + prod.image} />
         </td>
@@ -29,7 +54,7 @@ function AdminProductRow(prod) {
           Edit
         </a>
         <span className="text-gray-300 mx-2">|</span>
-        <a href="#" className="text-red-600 hover:text-red-900">
+        <a href="#" className="text-red-600 hover:text-red-900" onClick={deleteProduct}>
           Delete
         </a>
       </td>
