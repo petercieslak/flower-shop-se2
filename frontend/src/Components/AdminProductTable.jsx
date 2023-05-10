@@ -29,6 +29,12 @@ function AdminProductTable() {
         <thead className="bg-gray-50">
           <tr>
             <th
+                scope="col"
+                className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
+              Image
+            </th>
+            <th
               scope="col"
               className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
@@ -57,7 +63,7 @@ function AdminProductTable() {
 
         <tbody className="bg-white divide-y divide-gray-200">
         {products.map(product => (
-            <AdminProductRow description={product.description} name={product.name} price={product.price}/>
+            <AdminProductRow description={product.description} name={product.name} price={product.price} image={product.image}/>
         ))}
         </tbody>
       </table>

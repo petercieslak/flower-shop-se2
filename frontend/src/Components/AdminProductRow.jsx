@@ -4,6 +4,10 @@ import * as ReactDOM from "react-dom/client";
 function AdminProductRow(prod) {
   return (
     <tr>
+
+        <td className=" h-8 w-8">
+            <img className=" w-full h-full object-cover rounded-lg" src={"data:image/png;base64," + prod.image} />
+        </td>
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="flex items-center">
           <div className="flex-shrink-0 h-10 w-10"></div>
