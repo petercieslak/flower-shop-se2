@@ -1,6 +1,28 @@
 import AdminProductRow from "./AdminProductRow.jsx";
+import {useContext, useEffect, useState} from "react";
+import {TokenContext} from "../ContextStore.jsx";
+import ProductComponent from "./ProductComponent.jsx";
 
 function AdminProductTable() {
+  const [products, setProducts] = useState([]);
+  const [pageSize, setPageSize] = useState(5);
+  const {token, setToken} = useContext(TokenContext);
+
+  const fetchProducts = () => {
+    fetch(`http://localhost:8080/api/products`)
+        .then(response => {
+          console.log(response);
+          return response.json();
+        })
+        .then(data => {
+          setProducts(data);
+        })
+  }
+
+  useEffect(() => {
+    fetchProducts();
+  }, [])
+
   return (
     <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg mt-4">
       <table className="min-w-full divide-y divide-gray-200">
@@ -34,7 +56,9 @@ function AdminProductTable() {
         </thead>
 
         <tbody className="bg-white divide-y divide-gray-200">
-          <AdminProductRow />
+        {products.map(product => (
+            <AdminProductRow description={product.description} name={product.name} price={product.price}/>
+        ))}
         </tbody>
       </table>
     </div>
