@@ -2,18 +2,25 @@ package com.flower.shop.application.domain.services;
 
 import com.flower.shop.application.dto.AddressDto;
 import com.flower.shop.application.dto.OrderDto;
+import com.flower.shop.application.dto.ProductDto;
+import com.flower.shop.application.dto.mapper.OrderMapper;
+import com.flower.shop.application.dto.mapper.ProductMapper;
 import com.flower.shop.application.dto.util.OrderStatus;
 import com.flower.shop.data.dao.CartDAO;
 import com.flower.shop.data.dao.ClientDAO;
 import com.flower.shop.data.dao.OrderDAO;
 import com.flower.shop.data.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class OrderService {
@@ -25,7 +32,19 @@ public class OrderService {
     private OrderDAO orderRepository;
 
     @Autowired
+    private OrderMapper orderMapper;
+    @Autowired
     private OrderStatus orderStatus;
+
+    public List<OrderDto> getOrders(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Order> orders = orderRepository.findAll(pageable);
+        List<Order> listOfOrders = orders.getContent();
+        List<OrderDto> result= listOfOrders.stream().
+                map(p -> orderMapper.toDto(p)).
+                collect(Collectors.toList());
+        return result;
+    }
 
     public OrderDto createOrder(UUID clientId, AddressDto address) {
         Optional<Cart> cart = cartRepository.findById(clientId);
