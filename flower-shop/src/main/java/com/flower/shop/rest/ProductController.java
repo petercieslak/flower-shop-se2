@@ -26,9 +26,10 @@ public class ProductController {
     @GetMapping()
     public ResponseEntity<List<ProductDto>> getProducts(
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+            @RequestParam(value = "type", defaultValue = "gift", required = true) String flowerType
     ) {
-        List<ProductDto> products = productService.getProducts(pageNo, pageSize);
+        List<ProductDto> products = productService.getProducts(pageNo, pageSize, flowerType);
         return ResponseEntity.ok(products);
     }
 
