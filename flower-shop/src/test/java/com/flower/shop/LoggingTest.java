@@ -35,7 +35,7 @@ public class LoggingTest {
 
     @AfterAll
     private void clearDatabase() {
-        JdbcTestUtils.deleteFromTables(jdbcTemplate, "client", "persons");
+        JdbcTestUtils.deleteFromTables(jdbcTemplate, "cart", "client", "persons");
     }
 
     @Test

@@ -33,7 +33,7 @@ public class ProductService {
         Page<Product> products = productRepository.findAll(pageable);
         List<Product> listOfProducts = products.getContent();
         List<ProductDto> result= listOfProducts.stream().
-                map(p -> productMapper.mapProduct(p)).
+                map(p -> productMapper.toDto(p)).
                 collect(Collectors.toList());
 
         return result;
