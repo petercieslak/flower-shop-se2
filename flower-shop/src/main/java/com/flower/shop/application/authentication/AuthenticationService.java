@@ -1,6 +1,7 @@
 package com.flower.shop.application.authentication;
 
 import com.flower.shop.data.dao.ClientDAO;
+import com.flower.shop.data.models.Cart;
 import com.flower.shop.data.models.Client;
 import com.flower.shop.application.authentication.util.AuthenticationRequest;
 import com.flower.shop.application.authentication.util.AuthenticationResponse;
@@ -12,6 +13,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -58,6 +61,7 @@ public class AuthenticationService {
         client.setPassword(passwordEncoder.encode(request.getPassword()));
         client.setFirstName(request.getFirstname());
         client.setHasNewsletterOn(request.getHasNewsletterOn());
+        client.setCart(initializeCart(client));
         return client;
     }
 
@@ -67,5 +71,11 @@ public class AuthenticationService {
         emp.setPassword(passwordEncoder.encode(request.getPassword()));
         emp.setFirstName(request.getFirstname());
         return emp;
+    }
+
+    private Cart initializeCart(Client client) {
+        return Cart.builder()
+                .client(client)
+                .build();
     }
 }

@@ -23,7 +23,6 @@ public class Client extends Person {
     private Boolean hasNewsletterOn;
 
     @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
     private Cart cart;
 
     @Override
