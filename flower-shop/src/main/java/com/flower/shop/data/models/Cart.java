@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.UUID;
 public class Cart {
 
     @Id
-    @Column(name = "client_id")
+    @Column(name = "client_id", length = 16)
     private UUID id;
 
     @OneToOne
