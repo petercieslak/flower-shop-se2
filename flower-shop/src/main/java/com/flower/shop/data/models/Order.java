@@ -24,16 +24,14 @@ public class Order {
     @Column
     private String status;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Address deliveryAddress;
 
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "client_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Client client;
+
     @ManyToMany
     private List<Product> products;
     

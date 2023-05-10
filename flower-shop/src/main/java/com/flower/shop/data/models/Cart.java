@@ -1,15 +1,20 @@
 package com.flower.shop.data.models;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "cart")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Cart {
 
     @Id
-    @Column(name = "client_id")
     private UUID id;
 
     @OneToOne
