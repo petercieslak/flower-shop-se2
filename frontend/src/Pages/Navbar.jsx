@@ -27,7 +27,9 @@ function Navbar() {
       </ul>
       <ul className="flex gap-5">
         <li>
-          <Cart />
+          <NavLink to={"/cart"}>
+            <Cart />
+          </NavLink>
         </li>
         <li>
           <NavLink to={"/login"}>

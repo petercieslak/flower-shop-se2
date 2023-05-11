@@ -16,8 +16,4 @@ public class CartProductsDto {
     private UUID cart_id;
     private UUID products_product_id;
 
-//    public CartProductsDto(UUID uuid, UUID uuid1) {
-//        cart_id = uuid;
-//        products_product_id = uuid1;
-//    }
 }

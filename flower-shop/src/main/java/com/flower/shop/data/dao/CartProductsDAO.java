@@ -1,8 +1,5 @@
 package com.flower.shop.data.dao;
-
-import com.flower.shop.application.dto.CartProductsDto;
 import com.flower.shop.data.models.Cart;
-import com.flower.shop.data.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +17,9 @@ public interface CartProductsDAO extends JpaRepository<Cart, UUID> {
     @Transactional
     @Query(value = "delete from cart_products cp where cp.cart_id = ?1 and cp.products_product_id = ?2", nativeQuery = true)
     int deleteProductFromCart(UUID cart_id, String product_id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "insert into cart_products values (?1, ?2)", nativeQuery = true)
+    int insertIntoCartProducts(UUID cart_id, String product_id);
 }
