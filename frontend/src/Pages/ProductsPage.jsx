@@ -29,8 +29,8 @@ function ProductsPage() {
       {products.map(product => (
           <ProductComponent image={product.image} name={product.name} price={product.price}/>
       ))}
-      <p className="mx-5 fixed bottom-4 left-96" onClick={()=>{setPageNo(pageNo-1)}}>Previous page</p>
-      <p className="mx-5 fixed bottom-4 right-96" onClick={()=>{setPageNo(pageNo+1)}}>Next page</p>
+      <button className="shadow-[0px_22px_70px_4px_rgba(1,67,37,0.5)] w-32 h-10 rounded-md border border-black bg-[#F8F2E9] mx-5 fixed bottom-4 left-96 customshadow" onClick={()=>{setPageNo(pageNo-1)}}>Previous page</button>
+      <button className="shadow-[0px_22px_70px_4px_rgba(1,67,37,0.5)] w-32 h-10 rounded-md border border-black bg-[#F8F2E9] mx-5 fixed bottom-4 right-96 customshadow" onClick={()=>{setPageNo(pageNo+1)}}>Next page</button>
       
     </div>
   );
