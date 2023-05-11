@@ -1,23 +1,28 @@
 import AdminPage from "../Pages/AdminPage.jsx";
-
-function AdminProductRow() {
+import * as React from "react";
+import * as ReactDOM from "react-dom/client";
+function AdminProductRow(prod) {
   return (
     <tr>
+
+        <td className=" h-8 w-8">
+            <img className=" w-full h-full object-cover rounded-lg" src={"data:image/png;base64," + prod.image} />
+        </td>
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="flex items-center">
           <div className="flex-shrink-0 h-10 w-10"></div>
           <div className="ml-4">
             <div className="text-sm text-center font-medium text-gray-900">
-              kwiaty
+                {prod.name}
             </div>
           </div>
         </div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-        131
+          {prod.price}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-        123
+          {prod.description}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
         <a href="#" className="text-indigo-600 hover:text-indigo-900">
@@ -31,5 +36,4 @@ function AdminProductRow() {
     </tr>
   );
 }
-
 export default AdminProductRow;
