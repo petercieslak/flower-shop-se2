@@ -1,12 +1,13 @@
 import User from "../Icons/User";
 import Cart from "../Icons/Cart";
 import { NavLink, useNavigate } from "react-router-dom";
-import { NameContext, TokenContext } from "../ContextStore";
+import { NameContext, TokenContext, TypeContext } from "../ContextStore";
 import { useContext, useState } from "react";
 
 function Navbar() {
   const {name, setName} = useContext(NameContext);
   const {token, setToken} = useContext(TokenContext);
+  const {type, setType} = useContext(TypeContext);
   const navigate = useNavigate();
 
   const [showDropdown, setShowDropdown] = useState(false);
@@ -24,6 +25,21 @@ function Navbar() {
     setName("");
   }
 
+  const handleGardenClick = () =>{
+    setType("garden");
+    navigate('/products');
+  }
+
+  const handleGiftClick = () =>{
+    setType("gift");
+    navigate('/products');
+  }
+
+  const handlePottedClick = () =>{
+    setType("potted");
+    navigate('/products');
+  }
+
   return (
     <nav className=" bg-[#F8F2E9] w-screen fixed flex shadow-xl h-12 px-9 items-center justify-between font-montserrat font-medium text-lg">
       <NavLink to={"/"}>
@@ -31,17 +47,17 @@ function Navbar() {
       </NavLink>
       <ul className="flex gap-3">
         <li>
-          <button className=" h-10 w-36 rounded-md hover:bg-gradient-radial from-green-200 via-green-100 to-[#F8F2E9]">
+          <button onClick={handleGiftClick} className=" h-10 w-36 rounded-md hover:bg-gradient-radial from-green-200 via-green-100 to-[#F8F2E9]">
             Prezenty
           </button>
         </li>
         <li>
-          <button className=" h-10 w-36 rounded-md hover:bg-gradient-radial from-green-200 via-green-100 to-[#F8F2E9]">
+          <button onClick={handlePottedClick} className=" h-10 w-36 rounded-md hover:bg-gradient-radial from-green-200 via-green-100 to-[#F8F2E9]">
             Doniczkowe
           </button>
         </li>
         <li>
-          <button onClick={() => navigate('/products')} className=" h-10 w-36 rounded-md hover:bg-gradient-radial from-green-200 via-green-100 to-[#F8F2E9]">
+          <button onClick={handleGardenClick} className=" h-10 w-36 rounded-md hover:bg-gradient-radial from-green-200 via-green-100 to-[#F8F2E9]">
             Ogrodowe
           </button>
         </li>

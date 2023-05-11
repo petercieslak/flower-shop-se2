@@ -1,15 +1,16 @@
 import { useContext, useEffect, useState } from "react";
 import ProductComponent from "../Components/ProductComponent";
-import { TokenContext } from "../ContextStore";
+import { TokenContext, TypeContext } from "../ContextStore";
 
 function ProductsPage() {
   const [products, setProducts] = useState([]);
   const [pageNo, setPageNo] = useState(0);
   const [pageSize, setPageSize] = useState(5);
   const {token, setToken} = useContext(TokenContext);
+  const {type, setType} = useContext(TypeContext);
 
   const fetchProducts = () => {
-    fetch(`http://localhost:8080/api/products?pageNo=${pageNo}&pageSize=${pageSize}`)
+    fetch(`http://localhost:8080/api/products?pageNo=${pageNo}&pageSize=${pageSize}&type=${type}`)
       .then(response => {
         console.log(response);
         return response.json();
@@ -21,7 +22,7 @@ function ProductsPage() {
 
   useEffect(() => {
     fetchProducts();
-  }, [pageNo])
+  }, [pageNo, type])
 
   return (
     <div className="bg-[#F8F2E9] w-full h-screen flex flex-row flex-wrap justify-center p-10">
