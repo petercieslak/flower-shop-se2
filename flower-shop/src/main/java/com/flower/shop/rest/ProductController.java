@@ -16,13 +16,13 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/api/products")
 public class ProductController {
 
     @Autowired
     ProductService productService;
 
-    @CrossOrigin
     @GetMapping()
     public ResponseEntity<List<ProductDto>> getProducts(
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
@@ -33,7 +33,6 @@ public class ProductController {
         return ResponseEntity.ok(products);
     }
 
-    @CrossOrigin
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping()
     public ResponseEntity<Void> addProduct( @Valid @RequestBody ProductDto product, @RequestHeader HttpHeaders headers) {
@@ -44,7 +43,6 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @CrossOrigin
     @DeleteMapping("/{productID}")
     public ResponseEntity<Void> removeProduct(@PathVariable String productID) {
         UUID ID = UUID.fromString(productID);
@@ -55,7 +53,6 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @CrossOrigin
     @PutMapping("/{productID}")
     public ResponseEntity<Void> modifyProduct(@Valid @RequestBody ProductDto product, @PathVariable String productID ) {
         UUID ID = UUID.fromString(productID);
