@@ -3,14 +3,12 @@ import LoginPage from "./Pages/LoginPage";
 import HomePage from "./Pages/HomePage";
 import Navbar from "./Pages/Navbar";
 import AdminPage from "./Pages/AdminPage";
-
+import OrdersPage from "./Pages/OrdersPage";
 import CheckoutPage from "./Pages/CheckoutPage"
 import CartPage from "./Pages/CartPage";
-
 import CartItemClass from "./Classes/CartItemClass";
 import flower_cart from "./assets/flower-cart.png";
 import flower_cart_2 from "./assets/flower-cart-2.png"
-
 import { Routes, Route } from "react-router-dom";
 import AdminNavbar from "./Pages/AdminNavbar";
 import AddProductPage from "./Pages/AddProductPage";
@@ -39,6 +37,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/admin">
               <Route index element={<><AdminNavbar/><AdminPage /></>}/>
+              <Route path="products" element={<><AdminNavbar/><AdminPage /></>} />
+              <Route path="orders" element={<><AdminNavbar/><OrdersPage /></>} />
               <Route path="addproduct" element={<><AdminNavbar/><AddProductPage /></>} />
             </Route>
           </Routes>
