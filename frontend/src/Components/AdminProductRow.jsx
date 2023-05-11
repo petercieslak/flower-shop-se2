@@ -13,7 +13,7 @@ function AdminProductRow(prod) {
   
 
   const fetchProducts = () => {
-    fetch("http://localhost:5173/api/products/" + prod.productId, {
+    fetch("http://localhost:8080/api/products/" + prod.productId, {
       method: "DELETE",
       headers: {
         "Content-type": "application/json; charset=UTF-8",
