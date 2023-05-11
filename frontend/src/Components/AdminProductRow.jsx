@@ -5,6 +5,7 @@ import AdminProductTable from "../Components/AdminProductTable.jsx";
 import LoginInput from "../Components/LoginInput.jsx";
 import { useContext, useState } from "react";
 import { TokenContext } from "../ContextStore.jsx";
+import {Link} from "react-router-dom";
 
 
 function AdminProductRow(prod) {  
@@ -50,9 +51,9 @@ function AdminProductRow(prod) {
           {prod.description}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-        <a href="#" className="text-indigo-600 hover:text-indigo-900">
+        <Link to={prod.productId} className="text-indigo-600 hover:text-indigo-900">
           Edit
-        </a>
+        </Link>
         <span className="text-gray-300 mx-2">|</span>
         <a href="#" className="text-red-600 hover:text-red-900" onClick={deleteProduct}>
           Delete

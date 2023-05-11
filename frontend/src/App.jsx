@@ -14,6 +14,7 @@ import flower_cart_2 from "./assets/flower-cart-2.png"
 import { Routes, Route } from "react-router-dom";
 import AdminNavbar from "./Pages/AdminNavbar";
 import AddProductPage from "./Pages/AddProductPage";
+import ModifyProductPage from "./Pages/ModifyProductPage";
 import RegisterPage from "./Pages/RegisterPage";
 import { TokenContext, NameContext } from "./ContextStore";
 import { useState } from "react";
@@ -38,6 +39,7 @@ function App() {
           <Route path="/admin">
             <Route index element={<><AdminNavbar/><AdminPage /></>}/>
             <Route path="addproduct" element={<><AdminNavbar/><AddProductPage /></>} />
+            <Route path=":productId" element={<><AdminNavbar/><ModifyProductPage /></>} />
           </Route>
         </Routes>
       </NameContext.Provider>
