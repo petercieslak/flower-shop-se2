@@ -13,6 +13,7 @@ import { Routes, Route } from "react-router-dom";
 import AdminNavbar from "./Pages/AdminNavbar";
 import AddProductPage from "./Pages/AddProductPage";
 import RegisterPage from "./Pages/RegisterPage";
+import ModifyProductPage from "./Pages/ModifyProductPage";
 import { TokenContext, NameContext, TypeContext } from "./ContextStore";
 import { useState } from "react";
 
@@ -38,6 +39,7 @@ function App() {
             <Route path="/admin">
               <Route index element={<><AdminNavbar/><AdminPage /></>}/>
               <Route path="products" element={<><AdminNavbar/><AdminPage /></>} />
+              <Route path=":productId" element={<><AdminNavbar/><ModifyProductPage /></>} />
               <Route path="orders" element={<><AdminNavbar/><OrdersPage /></>} />
               <Route path="addproduct" element={<><AdminNavbar/><AddProductPage /></>} />
             </Route>

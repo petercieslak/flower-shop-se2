@@ -1,7 +1,33 @@
 import AdminPage from "../Pages/AdminPage.jsx";
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-function AdminProductRow(prod) {
+import AdminProductTable from "../Components/AdminProductTable.jsx";
+import LoginInput from "../Components/LoginInput.jsx";
+import { useContext, useState } from "react";
+import { TokenContext } from "../ContextStore.jsx";
+import {Link} from "react-router-dom";
+
+function AdminProductRow(prod) {  
+  const {token, setToken} = useContext(TokenContext);
+
+
+  const fetchProducts = () => {
+    fetch("http://localhost:8080/api/products/" + prod.productId, {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        "Authorization": "Bearer " + token,
+    },
+    })
+      .then(response => {
+        console.log(response);
+      })
+  }
+
+  const deleteProduct = () => {
+    fetchProducts();
+  }
+
   return (
     <tr>
 
@@ -25,11 +51,11 @@ function AdminProductRow(prod) {
           {prod.description}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-        <a href="#" className="text-indigo-600 hover:text-indigo-900">
+        <Link to={prod.productId} className="text-indigo-600 hover:text-indigo-900">
           Edit
-        </a>
+        </Link>
         <span className="text-gray-300 mx-2">|</span>
-        <a href="#" className="text-red-600 hover:text-red-900">
+        <a href="#" className="text-red-600 hover:text-red-900" onClick={deleteProduct}>
           Delete
         </a>
       </td>

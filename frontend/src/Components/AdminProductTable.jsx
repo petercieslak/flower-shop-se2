@@ -63,7 +63,7 @@ function AdminProductTable() {
 
         <tbody className="bg-white divide-y divide-gray-200">
         {products.map(product => (
-            <AdminProductRow description={product.description} name={product.name} price={product.price} image={product.image}/>
+            <AdminProductRow productId={product.productId} description={product.description} name={product.name} price={product.price} image={product.image}/>
         ))}
         </tbody>
       </table>
