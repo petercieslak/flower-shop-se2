@@ -45,6 +45,7 @@ public class ProductController {
     }
 
     @CrossOrigin
+    @PreAuthorize("hasAuthority('ADMIN')")
     @DeleteMapping("/{productID}")
     public ResponseEntity<Void> removeProduct(@PathVariable String productID) {
         UUID ID = UUID.fromString(productID);
@@ -56,6 +57,7 @@ public class ProductController {
     }
 
     @CrossOrigin
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/{productID}")
     public ResponseEntity<Void> modifyProduct(@Valid @RequestBody ProductDto product, @PathVariable String productID ) {
         UUID ID = UUID.fromString(productID);
