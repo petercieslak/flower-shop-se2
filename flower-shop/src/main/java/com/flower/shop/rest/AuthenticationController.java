@@ -7,10 +7,7 @@ import com.flower.shop.application.authentication.util.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +24,7 @@ public class AuthenticationController {
     private final String EMAIL_REGEX = ".+[@]{1}.+";
 
 
+    @CrossOrigin
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request){
         if(!validCredentials(request))
@@ -35,6 +33,7 @@ public class AuthenticationController {
             return ResponseEntity.ok(service.register(request));
         return new ResponseEntity(HttpStatus.FORBIDDEN); //403 - user already exists
     }
+    @CrossOrigin
     @PostMapping(value="/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(service.authenticate(request));
