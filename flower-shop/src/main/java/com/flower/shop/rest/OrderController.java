@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
+
 import java.util.UUID;
 
 @RestController
@@ -21,6 +23,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+
     @CrossOrigin
     @GetMapping()
     public ResponseEntity<List<OrderDto>> getOrders(
@@ -32,18 +35,19 @@ public class OrderController {
     }
 
     @PostMapping("/{client_id}")
-    public ResponseEntity<OrderDto> createOrder(@RequestParam UUID clientId, AddressDto address) {
+    public ResponseEntity<OrderDto> createOrder(@PathVariable("client_id") UUID clientId, AddressDto address) {
+
         if(!addressIsValid(address) || !clientService.clientExists(clientId))
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(orderService.createOrder(clientId, address));
     }
 
     private boolean addressIsValid(AddressDto address) {
-        //fixme more validation
-        if(address.getCity().isEmpty()
-                && address.getStreet().isEmpty()
-                && address.getCountry().isEmpty()
-                && address.getPostalCode().isEmpty())
+
+        if(address.getCity() == null ||
+                address.getStreet() == null ||
+                address.getCountry() == null ||
+                address.getPostalCode() == null)
             return false;
         return true;
     }
