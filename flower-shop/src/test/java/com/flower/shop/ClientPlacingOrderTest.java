@@ -1,10 +1,16 @@
 package com.flower.shop;
 
+import com.flower.shop.rest.OrderController;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 public class ClientPlacingOrderTest {
+
+    @Autowired
+    OrderController orderController;
+
     @Test
     public void shouldReturnBadRequestBecauseBodyIsInvalid() {
         HttpStatus result = HttpStatus.BAD_REQUEST;
