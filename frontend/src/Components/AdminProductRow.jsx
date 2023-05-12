@@ -32,7 +32,7 @@ function AdminProductRow(prod) {
     <tr>
 
         <td className=" h-8 w-8">
-            <img className=" w-full h-full object-cover rounded-lg" src={"data:image/png;base64," + prod.image} />
+            <img className="object-cover rounded-lg" src={"data:image/png;base64," + prod.image} />
         </td>
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="flex items-center">
