@@ -3,7 +3,7 @@ import React from "react"
 function ProductComponent(props) {
 
     return (
-    <div className="border-2 border-[#3B1F2B] rounded-lg mx-5 m-5">
+    <div className="border-2 border-[#3B1F2B] rounded-lg mx-5 m-5 h-[400px]">
         <div className=" h-80 w-60">
             <img className=" w-full h-full object-cover rounded-lg" src={"data:image/png;base64," + props.image} />
         </div>

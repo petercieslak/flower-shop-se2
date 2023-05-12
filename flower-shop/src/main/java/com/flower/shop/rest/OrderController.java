@@ -4,10 +4,12 @@ import com.flower.shop.application.domain.services.ClientService;
 import com.flower.shop.application.domain.services.OrderService;
 import com.flower.shop.application.dto.AddressDto;
 import com.flower.shop.application.dto.OrderDto;
+import com.flower.shop.application.dto.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -20,8 +22,21 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @CrossOrigin
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping()
+    public ResponseEntity<List<OrderDto>> getOrders(
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
+    ) {
+        List<OrderDto> orders = orderService.getOrders(pageNo, pageSize);
+        return ResponseEntity.ok(orders);
+    }
+
+    @CrossOrigin
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/{client_id}")
-    public ResponseEntity<OrderDto> createOrder(@RequestParam UUID clientId, AddressDto address) {
+    public ResponseEntity<OrderDto> createOrder(@PathVariable("client_id") UUID clientId, AddressDto address) {
         if(!addressIsValid(address) || !clientService.clientExists(clientId))
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(orderService.createOrder(clientId, address));

@@ -55,6 +55,7 @@ public class ProductService {
         modifiedProduct.setDescription(product.getDescription());
         modifiedProduct.setImage(product.getImage());
         modifiedProduct.setPrice(product.getPrice());
+        modifiedProduct.setFlowerType(product.getFlowerType());
         productRepository.save(modifiedProduct);
     }
 

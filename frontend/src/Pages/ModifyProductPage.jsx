@@ -2,11 +2,13 @@ import HomePage from "./HomePage.jsx";
 import AdminNavbar from "./AdminNavbar.jsx";
 import AdminProductTable from "../Components/AdminProductTable.jsx";
 import LoginInput from "../Components/LoginInput.jsx";
+import { useParams } from "react-router-dom";
 import { useContext, useState } from "react";
 import { TokenContext } from "../ContextStore.jsx";
 
 
-function AddProductPage() {
+function ModifyProductPage() {
+  const { productId } = useParams();
   const [flowerName, setFlowerName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
@@ -16,8 +18,8 @@ function AddProductPage() {
   const {token, setToken} = useContext(TokenContext);
 
   const fetchProducts = () => {
-    fetch("http://localhost:8080/api/products", {
-      method: "POST",
+    fetch("http://localhost:8080/api/products/" + productId, {
+      method: "PUT",
       body: JSON.stringify({
           "name": flowerName,
           "description": description,
@@ -35,7 +37,10 @@ function AddProductPage() {
       })
   }
 
-  const addProduct = () => {
+  const modifyProduct = () => {
+    setFlowerName(flowerName);
+    setDescription(description);
+    setPrice(price);
     fetchProducts();
   }
 
@@ -72,10 +77,10 @@ function AddProductPage() {
           <input type="text" placeholder="Flower name" value={flowerName} onChange={(e)=>{setFlowerName(e.target.value)}} className="w-full p-3 border mb-4" />
           <input type="text" placeholder="Description" value={description} onChange={(e)=>{setDescription(e.target.value)}} className="w-full p-3 border mb-4"/>
           <input type="number" placeholder="Price" value={price} onChange={(e)=>{setPrice(e.target.value)}} className="w-full p-3 border mb-4 "/>
-          <button onClick={addProduct} className="bg-[#014325] w-full h-16 text-white rounded-md">Add</button>
+          <button onClick={modifyProduct} className="bg-[#014325] w-full h-16 text-white rounded-md">Modify</button>
         </div>
       </div>
     </div>
   );
 }
-export default AddProductPage;
+export default ModifyProductPage;

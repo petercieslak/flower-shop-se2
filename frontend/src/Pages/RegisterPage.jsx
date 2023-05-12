@@ -1,15 +1,14 @@
-import LoginForm from "../Components/LoginForm"
-import Navbar from "./Navbar";
+import RegisterForm from "../Components/RegisterForm"
 
-function LoginPage() {
+function RegisterPage() {
   return (
     <div className="bg-[#F8F2E9] w-screen h-screen flex">
         <div className="w-2/5 h-screen flex justify-center items-center flex-col">
-          <LoginForm/>
+          <RegisterForm/>
         </div>
         <div className="w-3/5 h-screen bg-leaves-pattern bg-cover"/>
       </div>
   );
 }
 
-export default LoginPage;
+export default RegisterPage;

@@ -11,6 +11,11 @@ import com.flower.shop.data.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import java.util.stream.Collectors;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,9 +31,20 @@ public class OrderService {
     private OrderDAO orderRepository;
 
     @Autowired
+    private OrderMapper orderMapper;
+
+    @Autowired
     private OrderStatus orderStatus;
 
-    private OrderMapper orderMapper = new OrderMapper();
+    public List<OrderDto> getOrders(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Order> orders = orderRepository.findAll(pageable);
+        List<Order> listOfOrders = orders.getContent();
+        List<OrderDto> result= listOfOrders.stream().
+                map(p -> orderMapper.toDto(p)).
+                collect(Collectors.toList());
+        return result;
+    }
 
     public OrderDto createOrder(UUID clientId, AddressDto address) {
         Optional<Cart> cart = cartRepository.findById(clientId);

@@ -1,26 +1,32 @@
-import AdminProductRow from "./AdminProductRow.jsx";
+import AdminOrderRow from "./AdminOrderRow.jsx";
 import {useContext, useEffect, useState} from "react";
 import {TokenContext} from "../ContextStore.jsx";
 import ProductComponent from "./ProductComponent.jsx";
 
-function AdminProductTable() {
-  const [products, setProducts] = useState([]);
+function AdminOrderTable() {
+  const [orders, setOrders] = useState([]);
+  const [pageNo, setPageNo] = useState(0);
   const [pageSize, setPageSize] = useState(5);
   const {token, setToken} = useContext(TokenContext);
 
-  const fetchProducts = () => {
-    fetch(`http://localhost:8080/api/products`)
-        .then(response => {
-          console.log(response);
-          return response.json();
-        })
-        .then(data => {
-          setProducts(data);
-        })
+  const fetchOrders = () => {
+    fetch(`http://localhost:8080/api/orders?pageNo=${pageNo}&pageSize=${pageSize}`, {
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+      "Authorization": "Bearer " + token
+    }
+    })
+    .then(response => {
+      console.log(response);
+      return response.json();
+    })
+    .then(data => {
+      setOrders(data);
+    });
   }
 
   useEffect(() => {
-    fetchProducts();
+    fetchOrders();
   }, [])
 
   return (
@@ -32,25 +38,25 @@ function AdminProductTable() {
                 scope="col"
                 className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              Image
+              Status
             </th>
             <th
               scope="col"
               className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              Name
+              Address
             </th>
             <th
               scope="col"
               className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              Price
+              Client
             </th>
             <th
               scope="col"
               className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              Description
+              Products
             </th>
             <th
               scope="col"
@@ -62,8 +68,8 @@ function AdminProductTable() {
         </thead>
 
         <tbody className="bg-white divide-y divide-gray-200">
-        {products.map(product => (
-            <AdminProductRow productId={product.productId} description={product.description} name={product.name} price={product.price} image={product.image}/>
+        {orders.map(order => (
+            <AdminOrderRow status={order.status}/>
         ))}
         </tbody>
       </table>
@@ -71,4 +77,4 @@ function AdminProductTable() {
   );
 }
 
-export default AdminProductTable;
+export default AdminOrderTable;
