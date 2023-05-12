@@ -5,18 +5,24 @@ import ProductComponent from "./ProductComponent.jsx";
 
 function AdminOrderTable() {
   const [orders, setOrders] = useState([]);
+  const [pageNo, setPageNo] = useState(0);
   const [pageSize, setPageSize] = useState(5);
   const {token, setToken} = useContext(TokenContext);
 
   const fetchOrders = () => {
-    fetch(`http://localhost:8080/api/orders`)
-        .then(response => {
-          console.log(response);
-          return response.json();
-        })
-        .then(data => {
-          setOrders(data);
-        })
+    fetch(`http://localhost:8080/api/orders?pageNo=${pageNo}&pageSize=${pageSize}`, {
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+      "Authorization": "Bearer " + token
+    }
+    })
+    .then(response => {
+      console.log(response);
+      return response.json();
+    })
+    .then(data => {
+      setOrders(data);
+    });
   }
 
   useEffect(() => {

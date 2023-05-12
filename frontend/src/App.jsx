@@ -37,11 +37,12 @@ function App() {
             <Route path="/checkout" element={<><Navbar /><CheckoutPage one={one} two={two}/></>} />
             <Route path="/" element={<HomePage />} />
             <Route path="/admin">
-              <Route index element={<><AdminNavbar/><AdminPage /></>}/>
-              <Route path="products" element={<><AdminNavbar/><AdminPage /></>} />
-              <Route path=":productId" element={<><AdminNavbar/><ModifyProductPage /></>} />
-              <Route path="orders" element={<><AdminNavbar/><OrdersPage /></>} />
-              <Route path="addproduct" element={<><AdminNavbar/><AddProductPage /></>} />
+              <Route path="products">
+                <Route index element={<><AdminNavbar/><AdminPage /></>}/>
+                <Route path="addproduct" element={<><AdminNavbar/><AddProductPage /></>} />
+                <Route path=":productId" element={<><AdminNavbar/><ModifyProductPage /></>} />
+              </Route>
+              <Route path="orders" element={<><AdminNavbar/><OrdersPage /></>} />     
             </Route>
           </Routes>
         </TypeContext.Provider>

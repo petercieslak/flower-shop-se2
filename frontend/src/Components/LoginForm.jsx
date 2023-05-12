@@ -34,7 +34,7 @@ function LoginForm() {
         console.log("Success logging in.");
         setToken(user.token);
         if(user.role === "[ADMIN]"){
-          navigate('/admin');
+          navigate('/admin/products');
         }else{
           setName(user.name);
           navigate('/products');
