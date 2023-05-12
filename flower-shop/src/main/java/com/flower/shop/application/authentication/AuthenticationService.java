@@ -8,12 +8,16 @@ import com.flower.shop.application.authentication.util.AuthenticationRequest;
 import com.flower.shop.application.authentication.util.AuthenticationResponse;
 import com.flower.shop.application.authentication.util.RegisterRequest;
 import com.flower.shop.data.models.Employee;
+import com.flower.shop.data.models.Person;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor

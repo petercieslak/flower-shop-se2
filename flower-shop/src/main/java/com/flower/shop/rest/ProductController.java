@@ -70,6 +70,4 @@ public class ProductController {
         productService.modifyProduct(product, ID);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-
-
 }

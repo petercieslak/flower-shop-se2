@@ -1,4 +1,5 @@
 package com.flower.shop.application.domain.services;
+
 import com.flower.shop.application.dto.AddressDto;
 import com.flower.shop.application.dto.OrderDto;
 import com.flower.shop.application.dto.mapper.OrderMapper;
@@ -9,6 +10,7 @@ import com.flower.shop.data.dao.OrderDAO;
 import com.flower.shop.data.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -43,9 +45,6 @@ public class OrderService {
                 collect(Collectors.toList());
         return result;
     }
-
-
-
 
     public OrderDto createOrder(UUID clientId, AddressDto address) {
         Optional<Cart> cart = cartRepository.findById(clientId);
