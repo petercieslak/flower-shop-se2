@@ -21,7 +21,8 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("/{client_id}")
-    public ResponseEntity<OrderDto> createOrder(@PathVariable("client_id") UUID clientId, AddressDto address) {
+    public ResponseEntity<OrderDto> createOrder(@PathVariable("client_id") UUID clientId,
+                                                @RequestBody AddressDto address) {
         if(!addressIsValid(address) || !clientService.clientExists(clientId))
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(orderService.createOrder(clientId, address));
