@@ -3,6 +3,7 @@ version: "3.8"
 services:
   flower-shop-db:
     image: mysql:8.0.32
+    container_name: flower-shop-db
     restart: unless-stopped
     env_file: ./.env
     environment:
@@ -10,8 +11,11 @@ services:
       - MYSQL_DATABASE=$DATABASE
     ports:
       - 3306:3306
+    networks:
+      - flower-shop-network
   flower-shop-test:
     image: mysql:8.0.32
+    container_name: flower-shop-test-db
     restart: unless-stopped
     env_file: ./.env
     environment:
@@ -19,3 +23,20 @@ services:
       - MYSQL_DATABASE=$TEST_DATABASE
     ports:
       - 3336:3306
+    networks:
+      - flower-shop-network
+  flower-shop-backend:
+    container_name: flower-shop
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: flower-shop:latest
+    ports:
+      - 8888:3306
+    networks:
+      - flower-shop-network
+    links:
+      - flower-shop-db
+networks:
+  flower-shop-network:
+    driver: bridge
