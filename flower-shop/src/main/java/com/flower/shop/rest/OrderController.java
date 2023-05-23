@@ -5,6 +5,7 @@ import com.flower.shop.application.domain.services.OrderService;
 import com.flower.shop.application.dto.AddressDto;
 import com.flower.shop.application.dto.OrderDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,16 @@ public class OrderController {
         if(!addressIsValid(address) || !clientService.clientExists(clientId))
             return ResponseEntity.badRequest().build();
         return ResponseEntity.ok(orderService.createOrder(clientId, address));
+    }
+
+    @CrossOrigin
+    @PutMapping("/{order_id}")
+    public ResponseEntity<Void> modifyOrder(@PathVariable("order_id") UUID orderId, @RequestBody AddressDto address) {
+//        if(!addressIsValid(address) || !clientService.clientExists(clientId))
+//            return ResponseEntity.badRequest().build();
+
+        orderService.modifyOrder(orderId, address);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     private boolean addressIsValid(AddressDto address) {

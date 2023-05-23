@@ -36,6 +36,16 @@ public class OrderService {
         orderRepository.save(order);
         return orderMapper.toDto(order);
     }
+    public void modifyOrder(UUID orderId, AddressDto address) {
+        Order modifiedOrder = findOrder(orderId).get();
+        modifiedOrder.setDeliveryAddress(initAddress(address));
+
+        orderRepository.save(modifiedOrder);
+
+    }
+    public Optional<Order> findOrder(UUID orderId){
+        return orderRepository.findById(orderId);
+    }
 
     private Order initOrder(Optional<Cart> cart, AddressDto address) {
         Order order = new Order();
