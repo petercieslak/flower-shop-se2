@@ -6,6 +6,7 @@ import static com.flower.shop.rest.util.RegexMatcher.postalCodeMatcher;
 import com.flower.shop.application.domain.services.ClientService;
 import com.flower.shop.application.domain.services.OrderService;
 import com.flower.shop.application.dto.AddressDto;
+import com.flower.shop.application.dto.ModifyOrderDto;
 import com.flower.shop.application.dto.OrderDto;
 import com.flower.shop.data.dao.ClientDAO;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,16 @@ public class OrderController {
         if(!clientService.clientExists(clientId))
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         return new ResponseEntity<>(orderService.createOrder(clientId, address), HttpStatus.CREATED);
+    }
+
+    @CrossOrigin
+    @PutMapping("/{order_id}")
+    public ResponseEntity<Void> modifyOrder(@PathVariable("order_id") UUID orderId, @RequestBody ModifyOrderDto orderdto) {
+        if(!addressIsValid(orderdto.getDeliveryAddress()))
+            return ResponseEntity.badRequest().build();
+
+        orderService.modifyOrder(orderId, orderdto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     private boolean addressIsValid(AddressDto address) {
