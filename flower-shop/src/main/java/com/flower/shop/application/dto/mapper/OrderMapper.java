@@ -21,6 +21,7 @@ public class OrderMapper {
         orderDto.setStatus(order.getStatus());
         orderDto.setDeliveryAddress(addressMapper
                 .toDto(order.getDeliveryAddress()));
+        orderDto.setClientId(order.getClient().getId());
         return orderDto;
     }
 }

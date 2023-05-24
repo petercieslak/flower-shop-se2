@@ -1,5 +1,8 @@
 package com.flower.shop.rest;
 
+import static com.flower.shop.rest.util.RegexMatcher.emailMatcher;
+import static com.flower.shop.rest.util.RegexMatcher.noNumbersMatcher;
+
 import com.flower.shop.application.authentication.AuthenticationService;
 import com.flower.shop.application.authentication.util.AuthenticationRequest;
 import com.flower.shop.application.authentication.util.AuthenticationResponse;
@@ -22,18 +25,13 @@ import java.util.regex.Pattern;
 public class AuthenticationController {
     private final AuthenticationService service;
 
-    private final String NAME_REGEX = "[a-zA-Z]+";
-
-    private final String EMAIL_REGEX = ".+[@]{1}.+";
-
-
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request){
         if(!validCredentials(request))
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         if(!service.userExists(request))
             return ResponseEntity.ok(service.register(request));
-        return new ResponseEntity(HttpStatus.FORBIDDEN); //403 - user already exists
+        return new ResponseEntity(HttpStatus.FORBIDDEN);
     }
     @PostMapping(value="/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
@@ -53,13 +51,13 @@ public class AuthenticationController {
     }
 
     private Boolean nameSyntaxValid(String name) {
-        if(name.length() > 0 && Pattern.matches(NAME_REGEX, name))
+        if(name.length() > 0 && noNumbersMatcher(name))
             return true;
         return false;
     }
 
     private Boolean emailSyntaxValid(String email) {
-        if(email.length() > 0 && Pattern.matches(EMAIL_REGEX, email))
+        if(email.length() > 0 && emailMatcher(email))
             return true;
         return false;
     }
