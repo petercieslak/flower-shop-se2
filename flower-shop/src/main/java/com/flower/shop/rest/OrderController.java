@@ -32,8 +32,8 @@ public class OrderController {
     @CrossOrigin
     @PutMapping("/{order_id}")
     public ResponseEntity<Void> modifyOrder(@PathVariable("order_id") UUID orderId, @RequestBody ModifyOrderDto orderdto) {
-//        if(!addressIsValid(address) || !clientService.clientExists(clientId))
-//            return ResponseEntity.badRequest().build();
+        if(!addressIsValid(orderdto.getDeliveryAddress()))
+            return ResponseEntity.badRequest().build();
 
         orderService.modifyOrder(orderId, orderdto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
