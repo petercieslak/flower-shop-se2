@@ -1,44 +1,47 @@
 import User from "../Icons/User";
 import Cart from "../Icons/Cart";
 import { NavLink, useNavigate } from "react-router-dom";
-import { NameContext, TokenContext, TypeContext } from "../ContextStore";
+import { IdContext, NameContext, TokenContext, TypeContext } from "../ContextStore";
 import { useContext, useState } from "react";
 
 function Navbar() {
-  const {name, setName} = useContext(NameContext);
-  const {token, setToken} = useContext(TokenContext);
-  const {type, setType} = useContext(TypeContext);
+  const { name, setName } = useContext(NameContext);
+  const { token, setToken } = useContext(TokenContext);
+  const { id, setId } = useContext(IdContext);
+  const { type, setType } = useContext(TypeContext);
+ 
   const navigate = useNavigate();
 
   const [showDropdown, setShowDropdown] = useState(false);
 
   const toggleDropdown = () => {
-      setShowDropdown(true);
-  }
+    setShowDropdown(true);
+  };
 
   const hideDropdown = () => {
     setShowDropdown(false);
-}
+  };
 
-  const logoutHandle = () =>{
-    setToken(""); 
+  const logoutHandle = () => {
+    setToken("");
     setName("");
-  }
+    setId("");
+  };
 
-  const handleGardenClick = () =>{
+  const handleGardenClick = () => {
     setType("garden");
-    navigate('/products');
-  }
+    navigate("/products");
+  };
 
-  const handleGiftClick = () =>{
+  const handleGiftClick = () => {
     setType("gift");
-    navigate('/products');
-  }
+    navigate("/products");
+  };
 
-  const handlePottedClick = () =>{
+  const handlePottedClick = () => {
     setType("potted");
-    navigate('/products');
-  }
+    navigate("/products");
+  };
 
   return (
     <nav className=" bg-[#F8F2E9] w-screen fixed flex shadow-xl h-12 px-9 items-center justify-between font-montserrat font-medium text-lg">
@@ -47,22 +50,31 @@ function Navbar() {
       </NavLink>
       <ul className="flex gap-3">
         <li>
-          <button onClick={handleGiftClick} className=" h-10 w-36 rounded-md hover:bg-gradient-radial from-green-200 via-green-100 to-[#F8F2E9]">
+          <button
+            onClick={handleGiftClick}
+            className=" h-10 w-36 rounded-md hover:bg-gradient-radial from-green-200 via-green-100 to-[#F8F2E9]"
+          >
             Prezenty
           </button>
         </li>
         <li>
-          <button onClick={handlePottedClick} className=" h-10 w-36 rounded-md hover:bg-gradient-radial from-green-200 via-green-100 to-[#F8F2E9]">
+          <button
+            onClick={handlePottedClick}
+            className=" h-10 w-36 rounded-md hover:bg-gradient-radial from-green-200 via-green-100 to-[#F8F2E9]"
+          >
             Doniczkowe
           </button>
         </li>
         <li>
-          <button onClick={handleGardenClick} className=" h-10 w-36 rounded-md hover:bg-gradient-radial from-green-200 via-green-100 to-[#F8F2E9]">
+          <button
+            onClick={handleGardenClick}
+            className=" h-10 w-36 rounded-md hover:bg-gradient-radial from-green-200 via-green-100 to-[#F8F2E9]"
+          >
             Ogrodowe
           </button>
         </li>
       </ul>
-      <ul className="flex gap-5">        
+      <ul className="flex gap-5">
         <li>
           <NavLink to={"/cart"}>
             <Cart />
@@ -72,23 +84,40 @@ function Navbar() {
           <div onMouseEnter={toggleDropdown} className=" cursor-pointer">
             <User />
           </div>
-          {showDropdown && 
-          (
-            name === "" ? 
-            (
-              <ul className="absolute right-0 mt-2 w-48 bg-[#F8F2E9] rounded-md shadow-lg border border-black" onMouseLeave={hideDropdown}>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer rounded-lg" onClick={() => navigate('/login')}>Log in</li>
+          {showDropdown &&
+            (name === "" ? (
+              <ul
+                className="absolute right-0 mt-2 w-48 bg-[#F8F2E9] rounded-md shadow-lg border border-black"
+                onMouseLeave={hideDropdown}
+              >
+                <li
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer rounded-lg"
+                  onClick={() => navigate("/login")}
+                >
+                  Log in
+                </li>
               </ul>
-            )
-            : 
-            (
-              <ul className="absolute right-0 mt-2 w-48 bg-[#F8F2E9] rounded-md shadow-lg border border-black" onMouseLeave={hideDropdown}>
+            ) : (
+              <ul
+                className="absolute right-0 mt-2 w-48 bg-[#F8F2E9] rounded-md shadow-lg border border-black"
+                onMouseLeave={hideDropdown}
+              >
                 <li className="px-4 py-2">Hi, {name}!</li>
-                <hr className=" border-gray-300"/>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer rounded-b-lg" onClick={logoutHandle}>Logout</li>
+                <hr className=" border-gray-300" />
+                <li className="px-4 py-2">ID: {id}</li> {/* Display the ID here */}
+                <hr className=" border-gray-300" />
+                <li className="px-4 py-2">
+                  <NavLink to={"/orders"}>Orders</NavLink>
+                </li>
+                <hr className=" border-gray-300" />
+                <li
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer rounded-b-lg"
+                  onClick={logoutHandle}
+                >
+                  Logout
+                </li>
               </ul>
-            ) 
-          )}
+            ))}
         </li>
       </ul>
     </nav>

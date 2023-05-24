@@ -31,6 +31,9 @@ public class OrderService {
     private OrderDAO orderRepository;
 
     @Autowired
+    private ClientDAO clientRepository;
+
+    @Autowired
     private OrderMapper orderMapper;
 
     @Autowired
@@ -39,6 +42,16 @@ public class OrderService {
     public List<OrderDto> getOrders(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         Page<Order> orders = orderRepository.findAll(pageable);
+        List<Order> listOfOrders = orders.getContent();
+        List<OrderDto> result= listOfOrders.stream().
+                map(p -> orderMapper.toDto(p)).
+                collect(Collectors.toList());
+        return result;
+    }
+
+    public List<OrderDto> getClientOrders(int pageNo, int pageSize, UUID clientId) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Order> orders = orderRepository.findByClient(clientRepository.findById(clientId), pageable);
         List<Order> listOfOrders = orders.getContent();
         List<OrderDto> result= listOfOrders.stream().
                 map(p -> orderMapper.toDto(p)).
