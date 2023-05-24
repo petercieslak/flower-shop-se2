@@ -3,6 +3,7 @@ package com.flower.shop.rest;
 import com.flower.shop.application.domain.services.ClientService;
 import com.flower.shop.application.domain.services.OrderService;
 import com.flower.shop.application.dto.AddressDto;
+import com.flower.shop.application.dto.ModifyOrderDto;
 import com.flower.shop.application.dto.OrderDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,11 +31,11 @@ public class OrderController {
 
     @CrossOrigin
     @PutMapping("/{order_id}")
-    public ResponseEntity<Void> modifyOrder(@PathVariable("order_id") UUID orderId, @RequestBody AddressDto address) {
+    public ResponseEntity<Void> modifyOrder(@PathVariable("order_id") UUID orderId, @RequestBody ModifyOrderDto orderdto) {
 //        if(!addressIsValid(address) || !clientService.clientExists(clientId))
 //            return ResponseEntity.badRequest().build();
 
-        orderService.modifyOrder(orderId, address);
+        orderService.modifyOrder(orderId, orderdto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
