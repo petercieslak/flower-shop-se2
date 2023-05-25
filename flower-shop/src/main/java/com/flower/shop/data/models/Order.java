@@ -19,6 +19,7 @@ public class Order {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
+    @Column(name = "id", length=16, unique = true, nullable = false)
     private UUID id;
 
     @Column
