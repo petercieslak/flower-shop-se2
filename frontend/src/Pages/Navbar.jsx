@@ -104,8 +104,6 @@ function Navbar() {
               >
                 <li className="px-4 py-2">Hi, {name}!</li>
                 <hr className=" border-gray-300" />
-                <li className="px-4 py-2">ID: {id}</li> {/* Display the ID here */}
-                <hr className=" border-gray-300" />
                 <li className="px-4 py-2">
                   <NavLink to={"/orders"}>Orders</NavLink>
                 </li>
