@@ -34,6 +34,19 @@ public class OrderController {
     }
 
     @CrossOrigin
+    @GetMapping("/{client_id}")
+    public ResponseEntity<List<OrderDto>> getClientOrders(@PathVariable("client_id") UUID clientId,
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
+    ) {
+        if(!clientService.clientExists(clientId)){
+            return ResponseEntity.badRequest().build();
+        }
+        List<OrderDto> orders = orderService.getClientOrders(pageNo, pageSize, clientId);
+        return ResponseEntity.ok(orders);
+    }
+
+    @CrossOrigin
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/{client_id}")
     public ResponseEntity<OrderDto> createOrder(@PathVariable("client_id") UUID clientId, AddressDto address) {
