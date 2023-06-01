@@ -1,6 +1,7 @@
 package com.flower.shop.application.domain.services;
 
 import com.flower.shop.data.dao.ClientDAO;
+import com.flower.shop.data.models.Client;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,5 +26,12 @@ public class ClientService {
 
     public UUID getClientIdByMail(String clientMail) {
         return clientRepository.findByEmail(clientMail).get().getId();
+    }
+    public UUID getIds() {
+        return clientRepository.findAll().get(0).getId();
+    }
+
+    public Client getClientByEmail(String email) {
+        return (Client) clientRepository.findByEmail(email).get();
     }
 }

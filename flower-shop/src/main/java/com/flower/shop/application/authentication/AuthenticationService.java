@@ -31,9 +31,9 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
         Client user = initializeClient(request);
-        Cart cart = initializeCart(user);
-        cartRepository.save(cart);
-
+//        Cart cart = initializeCart(user);
+//        cartRepository.save(cart);
+        clientRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
@@ -83,9 +83,9 @@ public class AuthenticationService {
         return emp;
     }
 
-    private Cart initializeCart(Client client) {
-        return Cart.builder()
-                .client(client)
-                .build();
-    }
+//    private Cart initializeCart(Client client) {
+//        return Cart.builder()
+//                .client(client)
+//                .build();
+//    }
 }

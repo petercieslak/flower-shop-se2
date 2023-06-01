@@ -1,41 +1,31 @@
 package com.flower.shop.rest;
 
-import com.flower.shop.application.domain.services.CartProductsService;
+import com.flower.shop.application.domain.services.CartService;
+import com.flower.shop.data.models.Cart;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import java.util.List;
-import java.util.UUID;
+
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "/api/cart")
 public class CartController {
     @Autowired
-    CartProductsService cartProductsService;
-
+    CartService cartService;
     @CrossOrigin
     @GetMapping()
-    public ResponseEntity<List<String>> getItems(String string) {
-        UUID uuid = UUID.fromString(string);
-        return ResponseEntity.ok(cartProductsService.findAllItems(uuid));
+    public Map<UUID, Integer> findClientCart(String mail) {
+        List<Cart> c = cartService.findClientCart(mail);
+        Map<UUID, Integer> map = new HashMap<>();
+        for (Cart cart : c) {
+            map.put(cart.getCartPKId().getProductId(),
+                    cart.getQuantity());
+        }
+        return map;
     }
-
-    @CrossOrigin
-    @DeleteMapping
-    public int removeFromCart(String cart_id, String product) {
-        UUID uuid = UUID.fromString(cart_id);
-        return cartProductsService.deleteProductFromCart(uuid, product);
-    }
-
     @CrossOrigin
     @PostMapping
-    public int insertIntoCartProducts(String cart_id, String product_id){
-        UUID uuid = UUID.fromString(cart_id);
-        return cartProductsService.insertIntoCartProducts(uuid, product_id);
+    public int changeCartProducts(String mail, String product_name, Integer quantity){
+        return cartService.insertIntoCartProducts(mail, product_name, quantity);
     }
-
 }

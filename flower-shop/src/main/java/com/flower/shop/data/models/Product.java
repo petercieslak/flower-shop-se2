@@ -2,10 +2,13 @@ package com.flower.shop.data.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+//import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,14 +19,13 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Product {
     @Id
-
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     @Column(length=16)
-    private UUID productId;
+    private UUID id;
 
     @Column
     private String name;
@@ -41,4 +43,7 @@ public class Product {
     @Column
     private String flowerType;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "product")
+    private List<Cart> carts;
 }

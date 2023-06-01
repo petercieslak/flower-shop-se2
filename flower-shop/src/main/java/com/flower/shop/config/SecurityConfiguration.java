@@ -30,7 +30,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .antMatchers("/api/v1/auth/**", "/swagger-ui/**",
                         "/swagger-resources/**", "/webjars/**", "/v2/**",
-                        "/api/products", "/api/orders", "/api/products/**")
+                        "/api/products", "/api/orders", "/api/products/**",
+                        "/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

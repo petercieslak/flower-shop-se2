@@ -55,9 +55,9 @@ public class OrderService {
 
     private Order initOrder(Optional<Cart> cart, AddressDto address) {
         Order order = new Order();
-        order.setClient(cart.get().getClient());
+//        order.setClient(cart.get().getClient());
         order.setStatus(orderStatus.ACTIVE);
-        order.setProducts(initOrderProducts(cart.get().getProducts()));
+//        order.setProducts(initOrderProducts(cart.get().getProducts()));
         order.setDeliveryAddress(initAddress(address));
         return order;
     }
