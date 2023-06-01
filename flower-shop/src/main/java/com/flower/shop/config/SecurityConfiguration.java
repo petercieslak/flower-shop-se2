@@ -31,7 +31,7 @@ public class SecurityConfiguration {
                 .antMatchers("/api/v1/auth/**", "/swagger-ui/**",
                         "/swagger-resources/**", "/webjars/**", "/v2/**",
                         "/api/products", "/api/orders", "/api/products/**",
-                        "/**")
+                        "/api/cart", "/api/cart/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
