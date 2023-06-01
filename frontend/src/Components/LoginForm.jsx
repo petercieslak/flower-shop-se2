@@ -2,7 +2,7 @@ import LoginInput from "./LoginInput";
 import flowersvector from "../assets/flowers-login.png";
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext, useState } from "react";
-import { NameContext, TokenContext } from "../ContextStore";
+import { IdContext, NameContext, TokenContext } from "../ContextStore";
 
 
 function LoginForm() {
@@ -13,6 +13,7 @@ function LoginForm() {
 
   const {token, setToken} = useContext(TokenContext);
   const {name, setName} = useContext(NameContext);
+  const {id, setId} = useContext(IdContext);
 
   const loginHandling = () => {
     fetch("http://localhost:8080/api/v1/auth/authenticate", {
@@ -33,9 +34,11 @@ function LoginForm() {
       }).then((user) => {
         console.log("Success logging in.");
         setToken(user.token);
+        
         if(user.role === "[ADMIN]"){
           navigate('/admin/products');
         }else{
+          setId(user.id);
           setName(user.name);
           navigate('/products');
         }
