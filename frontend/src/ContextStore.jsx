@@ -1,14 +1,18 @@
-import React from 'react'
+import React from "react";
 
 export const TokenContext = React.createContext({
-    token: "",
-    setToken: (token) => {}
-  });
+  token: "",
+  setToken: (token) => {},
+});
 export const NameContext = React.createContext({
-    name: "",
-    setName: (name) => {}
-  });
+  name: "",
+  setName: (name) => {},
+});
+export const IdContext = React.createContext({
+  id: "",
+  setId: (id) => {},
+});
 export const TypeContext = React.createContext({
-    type: "",
-    setType: (type) => {}
-  });
+  type: "",
+  setType: (type) => {},
+});

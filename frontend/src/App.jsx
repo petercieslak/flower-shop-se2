@@ -4,6 +4,7 @@ import HomePage from "./Pages/HomePage";
 import Navbar from "./Pages/Navbar";
 import AdminPage from "./Pages/AdminPage";
 import OrdersPage from "./Pages/OrdersPage";
+import ClientsOrdersPage from "./Pages/ClientsOrdersPage";
 import CheckoutPage from "./Pages/CheckoutPage"
 import CartPage from "./Pages/CartPage";
 import CartItemClass from "./Classes/CartItemClass";
@@ -14,12 +15,13 @@ import AdminNavbar from "./Pages/AdminNavbar";
 import AddProductPage from "./Pages/AddProductPage";
 import RegisterPage from "./Pages/RegisterPage";
 import ModifyProductPage from "./Pages/ModifyProductPage";
-import { TokenContext, NameContext, TypeContext } from "./ContextStore";
+import {IdContext, TokenContext, NameContext, TypeContext } from "./ContextStore";
 import { useState } from "react";
 
 function App() {
   const [token, setToken] = useState("");
   const [name, setName] = useState("");
+  const [id, setId] = useState("");
   const [type, setType] = useState("gift");
 
   let one = new CartItemClass(flower_cart, 'jeden', 2, 9.99)
@@ -29,6 +31,7 @@ function App() {
       <NameContext.Provider value={{ name, setName }}>
         <TypeContext.Provider value={{ type, setType }}>
       {/* <Navbar /> */}
+          <IdContext.Provider value={{ id, setId }}>
           <Routes>
             <Route path="/products" element={<><Navbar /><ProductsPage /></>} />
             <Route path="/login" element={<><Navbar /><LoginPage /></>} />
@@ -36,6 +39,7 @@ function App() {
             <Route path="/cart" element={<><Navbar /><CartPage one={one} two={two}/></>} />
             <Route path="/checkout" element={<><Navbar /><CheckoutPage one={one} two={two}/></>} />
             <Route path="/" element={<HomePage />} />
+            <Route path="/orders" element={<><Navbar/><ClientsOrdersPage /></>} />
             <Route path="/admin">
               <Route path="products">
                 <Route index element={<><AdminNavbar/><AdminPage /></>}/>
@@ -45,6 +49,7 @@ function App() {
               <Route path="orders" element={<><AdminNavbar/><OrdersPage /></>} />     
             </Route>
           </Routes>
+          </IdContext.Provider>
         </TypeContext.Provider>
       </NameContext.Provider>
     </TokenContext.Provider>

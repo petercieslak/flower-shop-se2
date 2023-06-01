@@ -23,6 +23,18 @@ To run the project, run the following command
 ./java -jar /build/libs/flower-shop-1.0-SNAPSHOT.jar
 ```
 
+To run the project using different database host (default is localhost) run the following command
+```
+./java -jar /build/libs/flower-shop-1.0-SNAPSHOT.jar --flower-shop-db={DATABASE_HOST}
+```
+
+## Swagger
+___
+To project has swagger configured. In order to open it, run the application and enter the link below
+
+`http://localhost:8080/swagger-ui/index.html`
+
+
 
 ## Technological stack
 ___
@@ -30,3 +42,4 @@ ___
 - Springboot 2
 - PostgreSQL
 - React
+- Tailwind
