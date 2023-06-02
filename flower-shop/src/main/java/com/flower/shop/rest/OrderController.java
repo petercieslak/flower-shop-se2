@@ -8,13 +8,15 @@ import com.flower.shop.application.domain.services.OrderService;
 import com.flower.shop.application.dto.AddressDto;
 import com.flower.shop.application.dto.ModifyOrderDto;
 import com.flower.shop.application.dto.OrderDto;
+import com.flower.shop.application.dto.ProductDto;
 import com.flower.shop.data.dao.ClientDAO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -28,6 +30,32 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    @CrossOrigin
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping()
+    public ResponseEntity<List<OrderDto>> getOrders(
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
+    ) {
+        List<OrderDto> orders = orderService.getOrders(pageNo, pageSize);
+        return ResponseEntity.ok(orders);
+    }
+
+    @CrossOrigin
+    @GetMapping("/{client_id}")
+    public ResponseEntity<List<OrderDto>> getClientOrders(@PathVariable("client_id") UUID clientId,
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
+    ) {
+        if(!clientService.clientExists(clientId)){
+            return ResponseEntity.badRequest().build();
+        }
+        List<OrderDto> orders = orderService.getClientOrders(pageNo, pageSize, clientId);
+        return ResponseEntity.ok(orders);
+    }
+
+    @CrossOrigin
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/{client_id}")
     public ResponseEntity<OrderDto> createOrder(@PathVariable("client_id") UUID clientId,
                                                 @RequestBody AddressDto address) {
