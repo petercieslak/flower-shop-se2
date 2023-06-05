@@ -22,7 +22,7 @@ public class Product {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    @Type(type="org.hibernate.type.UUIDCharType")
+    @Column(length=16)
     private UUID productId;
 
     @Column

@@ -16,6 +16,7 @@ public class Address {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
+    @Column(length=16)
     private UUID id;
 
     @Column

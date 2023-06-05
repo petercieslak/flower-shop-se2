@@ -10,6 +10,10 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 
 @Component
 public class OrderService {
@@ -21,6 +25,12 @@ public class OrderService {
     private OrderDAO orderRepository;
 
     @Autowired
+    private ClientDAO clientRepository;
+
+    @Autowired
+    private OrderMapper orderMapper;
+
+    @Autowired
     private ProductDAO productRepository;
 
     @Autowired
@@ -29,7 +39,25 @@ public class OrderService {
     @Autowired
     private OrderStatus orderStatus;
 
-    private OrderMapper orderMapper = new OrderMapper();
+    public List<OrderDto> getOrders(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Order> orders = orderRepository.findAll(pageable);
+        List<Order> listOfOrders = orders.getContent();
+        List<OrderDto> result= listOfOrders.stream().
+                map(p -> orderMapper.toDto(p)).
+                collect(Collectors.toList());
+        return result;
+    }
+
+    public List<OrderDto> getClientOrders(int pageNo, int pageSize, UUID clientId) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Order> orders = orderRepository.findByClient(clientRepository.findById(clientId), pageable);
+        List<Order> listOfOrders = orders.getContent();
+        List<OrderDto> result= listOfOrders.stream().
+                map(p -> orderMapper.toDto(p)).
+                collect(Collectors.toList());
+        return result;
+    }
 
     public OrderDto createOrder(UUID clientId, AddressDto address) {
         Optional<Cart> cart = cartRepository.findById(clientId);
