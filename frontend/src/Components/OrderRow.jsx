@@ -3,17 +3,18 @@ import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import {Link} from "react-router-dom";
 
-function OrderRow(ord) {
+
+function OrderRow(props) {
   return (
     <tr>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-center font-medium text-gray-900">
-        {ord.status}
+        {props.order.clientId}
       </td>
       {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
           {ord.address}
       </td> */}
       {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-          {ord.client}
+          {fullName}
       </td> */}
       {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
           {ord.products}

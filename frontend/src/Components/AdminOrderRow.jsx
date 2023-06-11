@@ -3,7 +3,25 @@ import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import {Link} from "react-router-dom";
 
-function AdminOrderRow(ord) {
+function AdminOrderRow(props) {
+  const [fullName, setFullName] = React.useState("");
+
+  const fetchName = () => {
+    fetch(
+      `http://localhost:8080/api/utils/${props.order.clientId}`)
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .then((data) => {
+        setFullName(data);
+      });
+  };
+  
+  React.useEffect(() => {
+    fetchName();
+  }, []);
+
   return (
     <tr>
       <td className="px-6 py-4 whitespace-nowrap">
@@ -11,7 +29,7 @@ function AdminOrderRow(ord) {
           <div className="flex-shrink-0 h-10 w-10"></div>
           <div className="ml-4">
             <div className="text-sm text-center font-medium text-gray-900">
-                {ord.status}
+                {props.order.status}
             </div>
           </div>
         </div>
