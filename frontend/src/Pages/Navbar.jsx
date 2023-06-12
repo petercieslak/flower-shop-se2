@@ -1,5 +1,6 @@
 import User from "../Icons/User";
 import Cart from "../Icons/Cart";
+import contact from "../assets/contact.png"
 import { NavLink, useNavigate } from "react-router-dom";
 import { IdContext, NameContext, TokenContext, TypeContext } from "../ContextStore";
 import { useContext, useState } from "react";
@@ -75,6 +76,11 @@ function Navbar() {
         </li>
       </ul>
       <ul className="flex gap-5">
+        <li>
+          <NavLink to={"/contact"}>
+          <img src={contact} className="w-7 pt-1" />
+          </NavLink>
+        </li>
         <li>
           <NavLink to={"/cart"}>
             <Cart />
