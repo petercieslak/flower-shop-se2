@@ -71,10 +71,4 @@ public class ProductService {
     public UUID getProductIdByName(String name){ return productRepository.findByName(name).get().getId();}
 
     public Product getProductByName(String name){ return productRepository.findByName(name).get(); }
-//    public UUID getClientIdByMail(String clientMail) {
-//        return clientRepository.findByEmail(clientMail).get().getId();
-//    }
-
-//    public UUID getClientIdByMail(String clientMail) {
-//        return clientRepository.findByEmail(clientMail).get().getId();
 }
