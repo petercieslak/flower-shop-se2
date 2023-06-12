@@ -40,10 +40,13 @@ public class AuthenticationService {
                 .name(user.getFirstName())
                 .role(user.getAuthorities().toString())
                 .id(user.getId())
+                .mail(user.getEmail())
                 .build();
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        System.out.println(request.getEmail());
+        System.out.println(request.getPassword());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -58,6 +61,7 @@ public class AuthenticationService {
                 .name(user.getFirstName())
                 .role(user.getAuthorities().toString())
                 .id(user.getId())
+                .mail(user.getEmail())
                 .build();
     }
 

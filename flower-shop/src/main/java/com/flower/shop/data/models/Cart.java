@@ -14,25 +14,11 @@ import java.util.UUID;
 @Builder
 public class Cart {
 
-//    @Id
-//    @Column(name = "id", length = 16)
-//    private UUID id;
-
     @EmbeddedId
     private CartPKId cartPKId;
-//    @Id
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "id")
-//    private Client client;
-//
-//    @Id
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "product_id", referencedColumnName = "productId")
-//    private Product product;
 
     @MapsId("productId")
     @ManyToOne
-//    @JoinColumn(name = "product_id")
     private Product product;
 
     @MapsId("clientId")

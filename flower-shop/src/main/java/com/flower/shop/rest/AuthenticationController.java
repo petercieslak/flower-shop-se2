@@ -27,14 +27,25 @@ public class AuthenticationController {
 
     private final String EMAIL_REGEX = ".+[@]{1}.+";
 
-
     @CrossOrigin
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request){
+        System.out.println("doing");
+        System.out.println(request.getEmail());
+        System.out.println(request.getPassword());
+        System.out.println(request.getFirstname());
+        System.out.println(request.getLastname());
+        System.out.println(request.getHasNewsletterOn());
         if(!validCredentials(request))
+        {
+            System.out.println("credentials not valid");
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
         if(!service.userExists(request))
+        {
+            System.out.println("registering");
             return ResponseEntity.ok(service.register(request));
+        }
         return new ResponseEntity(HttpStatus.FORBIDDEN);
     }
     @CrossOrigin
@@ -49,9 +60,13 @@ public class AuthenticationController {
         credentials.add(request.getLastname());
         for(String name : credentials)
             if(!nameSyntaxValid(name))
+            {
                 return false;
+            }
         if(!emailSyntaxValid(request.getEmail()))
+        {
             return false;
+        }
         return true;
     }
 

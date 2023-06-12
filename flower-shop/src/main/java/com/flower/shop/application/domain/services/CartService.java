@@ -6,6 +6,8 @@ import com.flower.shop.data.models.CartPKId;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -29,7 +31,7 @@ public class CartService {
         UUID cart_id = clientService.getClientIdByMail(mail);
         return cartDAO.findUserCart(cart_id);
     }
-    public int insertIntoCartProducts(String mail, String product_name, Integer quantity){
+    public ResponseEntity<Void> insertCartProducts(String mail, String product_name, Integer quantity){
         UUID cart_id = clientService.getClientIdByMail(mail);
         UUID product_id = productService.getProductIdByName(product_name);
         if(cartDAO.checkIfExists(cart_id, product_id) == 0)
@@ -41,19 +43,57 @@ public class CartService {
             cart.setCartPKId(cartPKId);
             cart.setClient(clientService.getClientByEmail(mail));
             cart.setProduct(productService.getProductByName(product_name));
-            cart.setQuantity(quantity);
+            cart.setQuantity(1);
             System.out.println(cart);
             cartDAO.save(cart);
-            return 1;
+            return ResponseEntity.status(HttpStatus.CREATED).build();
         }
         else {
-            if (quantity > 0)
+            return ResponseEntity.status(HttpStatus.FOUND).build();
+//            int current_quntatity = cartDAO.checkQuantity(cart_id, product_id);
+//            if (current_quntatity + quantity > 0)
+//            {
+//                return cartDAO.changeQuantityInCart(cart_id, product_id, current_quntatity + quantity);
+//            }
+//            else {
+//                return cartDAO.deleteProductFromCart(cart_id, product_id);
+//            }
+        }
+    }
+
+    public ResponseEntity<Void> changeCartProducts(String mail, String product_name, Integer quantity){
+        UUID cart_id = clientService.getClientIdByMail(mail);
+        UUID product_id = productService.getProductIdByName(product_name);
+        if(cartDAO.checkIfExists(cart_id, product_id) == 0){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        else {
+            int current_quntatity = cartDAO.checkQuantity(cart_id, product_id);
+            if (current_quntatity + quantity > 0)
             {
-                return cartDAO.changeQuantityInCart(cart_id, product_id, quantity);
+                cartDAO.changeQuantityInCart(cart_id, product_id, current_quntatity + quantity);
+                return ResponseEntity.status(HttpStatus.OK).build();
             }
             else {
-                return cartDAO.deleteProductFromCart(cart_id, product_id);
+                return ResponseEntity.status(HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE).build();
             }
         }
+    }
+
+    public ResponseEntity<Void> deleteCartProducts(String mail, String product_name){
+        UUID cart_id = clientService.getClientIdByMail(mail);
+        UUID product_id = productService.getProductIdByName(product_name);
+        if(cartDAO.checkIfExists(cart_id, product_id) == 0){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        else {
+            cartDAO.deleteProductFromCart(cart_id, product_id);
+            return ResponseEntity.status(HttpStatus.GONE).build();
+        }
+    }
+    public int checkIfExists(String mail, String product_name){
+        UUID cart_id = clientService.getClientIdByMail(mail);
+        UUID product_id = productService.getProductIdByName(product_name);
+        return cartDAO.checkIfExists(cart_id, product_id);
     }
 }
