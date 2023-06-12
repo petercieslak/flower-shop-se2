@@ -51,7 +51,7 @@ function AdminOrderRow(props) {
         Produkty
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-        <Link to={props.order.orderId} className="text-indigo-600 hover:text-indigo-900">
+        <Link to={props.order.orderId} state={{ products: props.order.products }} className="text-indigo-600 hover:text-indigo-900">
           Edit
         </Link>
         <span className="text-gray-300 mx-2">|</span>

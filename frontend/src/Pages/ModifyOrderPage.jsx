@@ -2,13 +2,16 @@ import HomePage from "./HomePage.jsx";
 import AdminNavbar from "./AdminNavbar.jsx";
 import AdminProductTable from "../Components/AdminProductTable.jsx";
 import LoginInput from "../Components/LoginInput.jsx";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useContext, useState } from "react";
 import { TokenContext } from "../ContextStore.jsx";
 
 
 function ModifyOrderPage() {
     const { orderID } = useParams();
+    const location = useLocation()
+    const { products } = location.state
+
     const [street, setStreet] = useState("");
     const [zipCode, setZipCode] = useState("");
     const [city, setCity] = useState("");
@@ -27,7 +30,7 @@ function ModifyOrderPage() {
                 "postalCode": zipCode,
                 "street": street
               },
-              "products": prods
+              "products": products
           }),          
           headers: {
             "Content-type": "application/json; charset=UTF-8",
