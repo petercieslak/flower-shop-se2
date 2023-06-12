@@ -8,6 +8,7 @@ import ClientsOrdersPage from "./Pages/ClientsOrdersPage";
 import CheckoutPage from "./Pages/CheckoutPage"
 import CartPage from "./Pages/CartPage";
 import CartItemClass from "./Classes/CartItemClass";
+import ContactPage from "./Pages/ContactPage";
 import flower_cart from "./assets/flower-cart.png";
 import flower_cart_2 from "./assets/flower-cart-2.png"
 import { Routes, Route } from "react-router-dom";
@@ -40,6 +41,7 @@ function App() {
             <Route path="/checkout" element={<><Navbar /><CheckoutPage one={one} two={two}/></>} />
             <Route path="/" element={<HomePage />} />
             <Route path="/orders" element={<><Navbar/><ClientsOrdersPage /></>} />
+            <Route path="/contact" element={<><Navbar/><ContactPage /></>} />
             <Route path="/admin">
               <Route path="products">
                 <Route index element={<><AdminNavbar/><AdminPage /></>}/>
