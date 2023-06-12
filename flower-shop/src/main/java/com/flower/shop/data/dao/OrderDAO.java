@@ -1,5 +1,6 @@
 package com.flower.shop.data.dao;
 
+import com.flower.shop.data.models.DeliveryMan;
 import com.flower.shop.data.models.Order;
 import com.flower.shop.data.models.Person;
 import org.springframework.data.domain.Page;
@@ -13,5 +14,6 @@ import java.util.UUID;
 
 @Repository
 public interface OrderDAO extends JpaRepository<Order, UUID> {
+    public int countAllByDeliveryMan(DeliveryMan deliveryMan);
     Page<Order> findByClient(Optional<Person> client, Pageable pageable);
 }

@@ -33,6 +33,10 @@ public class Order {
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_man_id", nullable = false)
+    private DeliveryMan deliveryMan;
+
     @ManyToMany
     private List<Product> products;
     
