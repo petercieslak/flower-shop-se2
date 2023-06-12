@@ -50,14 +50,6 @@ public class CartService {
         }
         else {
             return ResponseEntity.status(HttpStatus.FOUND).build();
-//            int current_quntatity = cartDAO.checkQuantity(cart_id, product_id);
-//            if (current_quntatity + quantity > 0)
-//            {
-//                return cartDAO.changeQuantityInCart(cart_id, product_id, current_quntatity + quantity);
-//            }
-//            else {
-//                return cartDAO.deleteProductFromCart(cart_id, product_id);
-//            }
         }
     }
 
