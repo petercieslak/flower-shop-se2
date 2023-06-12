@@ -7,58 +7,58 @@ import { useContext, useState } from "react";
 import { TokenContext } from "../ContextStore.jsx";
 
 
-function ModifyProductPage() {
-  const { productId } = useParams();
-  const [flowerName, setFlowerName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
-  const [type, setType] = useState("");
-  const [image, setImage] = useState("");
+function ModifyOrderPage() {
+    const { orderID } = useParams();
+    const [street, setStreet] = useState("");
+    const [zipCode, setZipCode] = useState("");
+    const [city, setCity] = useState("");
+    const [country, setCountry] = useState("");
+    const [prods, setProds] = useState([]);
 
-  const {token, setToken} = useContext(TokenContext);
+    const {token, setToken} = useContext(TokenContext);
 
-  const fetchProducts = () => {
-    fetch("http://localhost:8080/api/products/" + productId, {
-      method: "PUT",
-      body: JSON.stringify({
-          "name": flowerName,
-          "description": description,
-          "flowerType": type,
-          "image": image,
-          "price": price
-      }),          
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-        "Authorization": "Bearer " + token,
-    },
-    })
-      .then(response => {
-        console.log(response);
-      })
-  }
+    const modifyOrder = () => {
+        fetch(`http://localhost:8080/api/orders/${orderID}`, {
+          method: "PUT",
+          body: JSON.stringify({
+            "deliveryAddress": {
+                "city": city,
+                "country": country,
+                "postalCode": zipCode,
+                "street": street
+              },
+              "products": prods
+          }),          
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            "Authorization": "Bearer " + token,
+        },
+        })
+          .then(response => {
+            console.log(response);
+          })
+      }
 
-  const modifyOrder = () => {
-    setFlowerName(flowerName);
-    setDescription(description);
-    setPrice(price);
-    fetchProducts();
-  }
+    const submit = () => {
+        setStreet(street);
+        setCity(city);
+        setCountry(country);
+        setZipCode(zipCode);
+        modifyOrder();
+    }
 
-  const changeFlowerType = (e) => {
-    setType(e.target.value);
-  }
-
-  return (
+    return (
     <div className="bg-[#F8F2E9] w-screen h-screen flex justify-center items-center">
-      <div className="bg-white h-1/2 w-2/3 shadow-xl flex justify-center items-center font-montserrat">
+        <div className="bg-white h-1/2 w-2/3 shadow-xl flex justify-center items-center font-montserrat">
         <div className="w-4/5 mt-5">
-          <input type="text" placeholder="Flower name" value={flowerName} onChange={(e)=>{setFlowerName(e.target.value)}} className="w-full p-3 border mb-4" />
-          <input type="text" placeholder="Description" value={description} onChange={(e)=>{setDescription(e.target.value)}} className="w-full p-3 border mb-4"/>
-          <input type="number" placeholder="Price" value={price} onChange={(e)=>{setPrice(e.target.value)}} className="w-full p-3 border mb-4 "/>
-          <button onClick={modifyProduct} className="bg-[#014325] w-full h-16 text-white rounded-md">Modify</button>
+            <input type="text" placeholder="Street" value={street} onChange={(e)=>{setStreet(e.target.value)}} className="w-full p-3 border mb-4" />
+            <input type="text" placeholder="Zip Code" value={zipCode} onChange={(e)=>{setZipCode(e.target.value)}} className="w-full p-3 border mb-4"/>
+            <input type="text" placeholder="City" value={city} onChange={(e)=>{setCity(e.target.value)}} className="w-full p-3 border mb-4 "/>
+            <input type="text" placeholder="Country" value={country} onChange={(e)=>{setCountry(e.target.value)}} className="w-full p-3 border mb-4 "/>
+            <button onClick={submit} className="bg-[#014325] w-full h-16 text-white rounded-md">Modify</button>
         </div>
-      </div>
+        </div>
     </div>
-  );
+    );
 }
-export default modifyOrder;
+export default ModifyOrderPage;

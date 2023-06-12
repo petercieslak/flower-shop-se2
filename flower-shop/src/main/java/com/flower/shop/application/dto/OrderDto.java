@@ -12,6 +12,7 @@ import java.util.UUID;
 @Builder
 public class OrderDto {
 
+    private UUID orderId;
     private String status;
 
     private AddressDto deliveryAddress;

@@ -27,7 +27,7 @@ public class UtilsController {
 
     @CrossOrigin
     @GetMapping("/{clientID}")
-    public ResponseEntity<String> getUserFullname(@PathVariable String clientID) {
+    public ResponseEntity<String> getUserFullName(@PathVariable String clientID) {
         UUID ID = UUID.fromString(clientID);
 //        if(clientService.findUser(ID)) {
 //            throw new ResponseStatusException(HttpStatus.NOT_FOUND);

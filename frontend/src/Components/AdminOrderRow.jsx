@@ -2,18 +2,25 @@ import AdminPage from "../Pages/AdminPage.jsx";
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import {Link} from "react-router-dom";
+import { TokenContext } from "../ContextStore.jsx";
 
 function AdminOrderRow(props) {
   const [fullName, setFullName] = React.useState("");
+  const {token, setToken} = React.useContext(TokenContext);
 
   const fetchName = () => {
     fetch(
-      `http://localhost:8080/api/utils/${props.order.clientId}`)
+      `http://localhost:8080/utils/${props.order.clientId}`, {
+        headers: {
+          "Authorization": "Bearer " + token,
+      },
+      })
       .then((response) => {
-        console.log(response);
-        return response.json();
+        
+        return response.text();
       })
       .then((data) => {
+        console.log(data);
         setFullName(data);
       });
   };
@@ -34,19 +41,19 @@ function AdminOrderRow(props) {
           </div>
         </div>
       </td>
-      {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-          {ord.address}
-      </td> */}
-      {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-          {ord.client}
-      </td> */}
-      {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-          {ord.products}
-      </td> */}
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+        Adres
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+        {fullName}
+      </td>
+      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+        Produkty
+      </td>
       <td className="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-        <a href="#" className="text-indigo-600 hover:text-indigo-900">
+        <Link to={props.order.orderId} className="text-indigo-600 hover:text-indigo-900">
           Edit
-        </a>
+        </Link>
         <span className="text-gray-300 mx-2">|</span>
         <a href="#" className="text-red-600 hover:text-red-900">
           Delete

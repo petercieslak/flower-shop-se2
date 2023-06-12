@@ -17,6 +17,7 @@ import RegisterPage from "./Pages/RegisterPage";
 import ModifyProductPage from "./Pages/ModifyProductPage";
 import {IdContext, TokenContext, NameContext, TypeContext } from "./ContextStore";
 import { useState } from "react";
+import ModifyOrderPage from "./Pages/ModifyOrderPage";
 
 function App() {
   const [token, setToken] = useState("");
@@ -46,7 +47,10 @@ function App() {
                 <Route path="addproduct" element={<><AdminNavbar/><AddProductPage /></>} />
                 <Route path=":productId" element={<><AdminNavbar/><ModifyProductPage /></>} />
               </Route>
-              <Route path="orders" element={<><AdminNavbar/><OrdersPage /></>} />     
+              <Route path="orders">
+                <Route index element={<><AdminNavbar/><OrdersPage /></>}/> 
+                <Route path=":orderID" element={<><AdminNavbar/><ModifyOrderPage /></>} />
+              </Route>
             </Route>
           </Routes>
           </IdContext.Provider>
