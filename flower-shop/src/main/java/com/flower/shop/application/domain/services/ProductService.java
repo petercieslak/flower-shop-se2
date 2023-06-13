@@ -40,12 +40,14 @@ public class ProductService {
     }
 
     public void createProduct(ProductDto product){
-        Product newProduct = new Product(product.getProductId(),
-                product.getName(),
-                product.getDescription(),
-                product.getImage(),
-                product.getPrice(),
-                product.getFlowerType());
+        Product newProduct = Product.builder()
+                .productId(product.getProductId())
+                .name(product.getName())
+                .description(product.getDescription())
+                .image(product.getImage())
+                .price(product.getPrice())
+                .flowerType(product.getFlowerType())
+                .build();
         productRepository.save(newProduct);
     }
 

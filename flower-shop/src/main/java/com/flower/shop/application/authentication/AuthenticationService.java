@@ -16,6 +16,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -88,6 +89,7 @@ public class AuthenticationService {
     private Cart initializeCart(Client client) {
         return Cart.builder()
                 .client(client)
+                .products(new ArrayList<>())
                 .build();
     }
 }

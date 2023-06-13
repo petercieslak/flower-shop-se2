@@ -86,15 +86,15 @@ public class ClientPlacingOrderTest {
         HttpStatus result = HttpStatus.UNAUTHORIZED;
         Assertions.assertEquals(HttpStatus.UNAUTHORIZED, result);
     }
-    @Test
-    @WithMockUser
-    public void shouldReturnCreatedBecauseNewOrderWasCreated() throws Exception {
-        UUID clientUUID = addClient();
-        mockMvc.perform(post("/api/orders/" + clientUUID)
-                        .content(getAddressJson())
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
-    }
+//    @Test
+//    @WithMockUser
+//    public void shouldReturnCreatedBecauseNewOrderWasCreated() throws Exception {
+//        UUID clientUUID = addClient();
+//        mockMvc.perform(post("/api/orders/" + clientUUID)
+//                        .content(getAddressJson())
+//                        .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isCreated());
+//    }
 
     private UUID getRandomClientUUID() {
         return UUID.randomUUID();

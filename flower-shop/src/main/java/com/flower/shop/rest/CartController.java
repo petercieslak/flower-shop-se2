@@ -1,6 +1,8 @@
 package com.flower.shop.rest;
 
 import com.flower.shop.application.domain.services.CartProductsService;
+import com.flower.shop.data.models.Cart;
+import com.flower.shop.data.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,23 +21,20 @@ public class CartController {
 
     @CrossOrigin
     @GetMapping()
-    public ResponseEntity<List<String>> getItems(String string) {
-        UUID uuid = UUID.fromString(string);
-        return ResponseEntity.ok(cartProductsService.findAllItems(uuid));
-    }
-
-    @CrossOrigin
-    @DeleteMapping
-    public int removeFromCart(String cart_id, String product) {
-        UUID uuid = UUID.fromString(cart_id);
-        return cartProductsService.deleteProductFromCart(uuid, product);
+    public ResponseEntity<List<Product>> getProducts(@RequestParam UUID userId) {
+        return ResponseEntity.ok(cartProductsService.getProducts(userId));
     }
 
     @CrossOrigin
     @PostMapping
-    public int insertIntoCartProducts(String cart_id, String product_id){
-        UUID uuid = UUID.fromString(cart_id);
-        return cartProductsService.insertIntoCartProducts(uuid, product_id);
+    public ResponseEntity<Cart> addProduct(@RequestParam UUID userId, @RequestParam UUID productId) {
+        return ResponseEntity.ok(cartProductsService.addProduct(userId, productId));
+    }
+
+    @CrossOrigin
+    @DeleteMapping
+    public ResponseEntity<Cart> removeProduct(@RequestParam UUID userId, @RequestParam UUID productId){
+        return ResponseEntity.ok(cartProductsService.removeProduct(userId, productId));
     }
 
 }

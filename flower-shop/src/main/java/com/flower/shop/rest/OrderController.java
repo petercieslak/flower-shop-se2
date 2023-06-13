@@ -55,7 +55,6 @@ public class OrderController {
     }
 
     @CrossOrigin
-    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/{client_id}")
     public ResponseEntity<OrderDto> createOrder(@PathVariable("client_id") UUID clientId,
                                                 @RequestBody AddressDto address) {
