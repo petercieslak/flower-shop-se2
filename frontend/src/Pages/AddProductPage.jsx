@@ -4,6 +4,7 @@ import AdminProductTable from "../Components/AdminProductTable.jsx";
 import LoginInput from "../Components/LoginInput.jsx";
 import { useContext, useState } from "react";
 import { TokenContext } from "../ContextStore.jsx";
+import { useNavigate } from "react-router-dom";
 
 
 function AddProductPage() {
@@ -14,6 +15,7 @@ function AddProductPage() {
   const [image, setImage] = useState("");
 
   const {token, setToken} = useContext(TokenContext);
+  const navigate = useNavigate();
 
   const fetchProducts = () => {
     fetch("http://localhost:8080/api/products", {
@@ -37,6 +39,7 @@ function AddProductPage() {
 
   const addProduct = () => {
     fetchProducts();
+    navigate('/admin/products');
   }
 
   const changeFlowerType = (e) => {

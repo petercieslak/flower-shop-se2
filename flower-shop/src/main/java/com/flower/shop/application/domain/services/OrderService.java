@@ -43,7 +43,7 @@ public class OrderService {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         Page<Order> orders = orderRepository.findAll(pageable);
         List<Order> listOfOrders = orders.getContent();
-        List<OrderDto> result= listOfOrders.stream().
+        List<OrderDto> result = listOfOrders.stream().
                 map(p -> orderMapper.toDto(p)).
                 collect(Collectors.toList());
         return result;
