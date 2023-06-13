@@ -30,12 +30,18 @@ public class ProductService {
 
     public List<ProductDto> getProducts(int pageNo, int pageSize, String flowerType) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
-        Page<Product> products = productRepository.findByFlowerType(flowerType, pageable);
-        List<Product> listOfProducts = products.getContent();
+        List<Product> listOfProducts;
+        if(flowerType.equals("all")){
+            Page<Product> products = productRepository.findAll(pageable);
+            listOfProducts = products.getContent();
+        }
+        else{
+            Page<Product> products = productRepository.findByFlowerType(flowerType, pageable);
+            listOfProducts = products.getContent();
+        }
         List<ProductDto> result= listOfProducts.stream().
                 map(p -> productMapper.toDto(p)).
                 collect(Collectors.toList());
-
         return result;
     }
 
