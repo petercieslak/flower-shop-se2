@@ -40,13 +40,7 @@ function OrderTable() {
               scope="col"
               className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-              Address
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-            >
-              Products
+              ID
             </th>
             <th
               scope="col"
@@ -59,7 +53,7 @@ function OrderTable() {
 
         <tbody className="bg-white divide-y divide-gray-200">
           {orders.map((order) => (
-            <OrderRow status={order.status} />
+            <OrderRow order={order} />
           ))}
         </tbody>
       </table>

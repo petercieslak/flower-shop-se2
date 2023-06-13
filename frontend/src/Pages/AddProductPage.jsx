@@ -70,7 +70,7 @@ function AddProductPage() {
             <option>Choose flower type</option>
             <option value="gift">gift</option>
             <option value="potted">potted</option>
-            <option value="potted">garden</option>
+            <option value="garden">garden</option>
           </select>
           <input type="text" placeholder="Flower name" value={flowerName} onChange={(e)=>{setFlowerName(e.target.value)}} className="w-full p-3 border mb-4" />
           <input type="text" placeholder="Description" value={description} onChange={(e)=>{setDescription(e.target.value)}} className="w-full p-3 border mb-4"/>

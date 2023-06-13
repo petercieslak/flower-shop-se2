@@ -93,7 +93,7 @@ function Navbar() {
           {showDropdown &&
             (name === "" ? (
               <ul
-                className="absolute right-0 mt-2 w-48 bg-[#F8F2E9] rounded-md shadow-lg border border-black"
+                className=" z-40 absolute right-0 mt-2 w-48 bg-[#F8F2E9] rounded-md shadow-lg border border-black"
                 onMouseLeave={hideDropdown}
               >
                 <li

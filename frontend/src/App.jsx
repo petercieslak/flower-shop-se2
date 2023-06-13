@@ -41,7 +41,10 @@ function App() {
             <Route path="/cart" element={<><Navbar /><CartPage one={one} two={two}/></>} />
             <Route path="/checkout" element={<><Navbar /><CheckoutPage one={one} two={two}/></>} />
             <Route path="/" element={<HomePage />} />
-            <Route path="/orders" element={<><Navbar/><ClientsOrdersPage /></>} />
+            <Route path="/orders">
+              <Route index element={<><Navbar/><ClientsOrdersPage /></>}/>
+              <Route path=":orderID" element={<><Navbar/><ModifyOrderPage /></>} />
+            </Route>
             <Route path="/contact" element={<><Navbar/><ContactPage /></>} />
             <Route path="/admin">
               <Route path="products">
