@@ -18,11 +18,11 @@ function RegisterForm() {
   const [emailTaken, setEmailTaken] = useState(false);
 
   const registerHandling = () => {
-    fetch("http://localhost:8080/api/v1/auth/register", {
+    fetch("http://localhost:8080/api/users/register", {
       method: "POST",
       body: JSON.stringify({
         "email": email,
-        "firstname": name,
+        "firstname": firstName,
         "hasNewsletterOn": newsletter,
         "lastname": surname,
         "password": password
@@ -55,6 +55,7 @@ function RegisterForm() {
     setCredInvalid(false);
     setEmailTaken(false);
     event.preventDefault();
+    console.log(email + firstName + newsletter + surname + password);
     registerHandling();
   };
 
