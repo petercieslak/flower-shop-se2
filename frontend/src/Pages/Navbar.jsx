@@ -76,11 +76,7 @@ function Navbar() {
         </li>
       </ul>
       <ul className="flex gap-5">
-        <li>
-          <NavLink to={"/contact"}>
-          <img src={contact} className="w-7 pt-1" />
-          </NavLink>
-        </li>
+
         <li>
           <NavLink to={"/cart"}>
             <Cart />
