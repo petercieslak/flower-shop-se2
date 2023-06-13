@@ -80,7 +80,9 @@ public class OrderService {
         Order order = new Order();
         order.setClient(cart.get().getClient());
         order.setStatus(orderStatus.ACTIVE);
-        order.setProducts(initOrderProducts(cart.get().getProducts()));
+        order.setProducts(initOrderProducts(cart.get().getProducts()
+                .stream()
+                .map(p -> p.getProduct()).collect(Collectors.toList())));
         order.setDeliveryAddress(initAddress(address));
         order.setDeliveryMan(getDeliveryMan(address.getCity()));
         return order;

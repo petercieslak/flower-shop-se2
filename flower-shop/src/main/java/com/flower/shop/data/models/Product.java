@@ -1,5 +1,7 @@
 package com.flower.shop.data.models;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -14,15 +16,15 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Product {
     @Id
-
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    @Column(length=16)
+    @Column(length=16, name = "product_id")
     private UUID productId;
 
     @Column
@@ -40,5 +42,9 @@ public class Product {
     
     @Column
     private String flowerType;
+
+    @OneToMany(mappedBy = "product")
+    @JsonIgnore
+    List<CartProducts> carts;
 
 }

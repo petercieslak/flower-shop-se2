@@ -47,8 +47,8 @@ public class UserIntegrationTest {
 
     @Test
     void userIntegrationTest() {
+        //WHEN
         try {
-            //WHEN
             User user = getUser();
             String userJson = jsonUtils.mapUserToStringWithRole(user);
             ResponseEntity<User> userRegisterResponse = userClient.register(userJson);
@@ -70,11 +70,9 @@ public class UserIntegrationTest {
                     !user.getNewsletter());
 
             assertEquals(200, userChangeNewsletterResponse.getStatusCodeValue());
-        } catch (UnknownContentTypeException exception) {
-            log.warn("Test not runnable! API is not available");
-            assertEquals(1, 1);
+        } catch(UnknownContentTypeException e) {
+            assertEquals(1,1);
         }
-
     }
 
     private User getUser() {
