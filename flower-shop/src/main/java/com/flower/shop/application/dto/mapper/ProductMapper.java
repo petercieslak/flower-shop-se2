@@ -13,7 +13,8 @@ public class ProductMapper {
                 product.getDescription(),
                 product.getImage(),
                 product.getPrice(),
-                product.getFlowerType());
+                product.getFlowerType(),
+                product.getQuantity());
     }
 
 }

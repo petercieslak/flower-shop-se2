@@ -43,6 +43,9 @@ public class Product {
     @Column
     private String flowerType;
 
+    @Column
+    private int quantity;
+
     @OneToMany(mappedBy = "product")
     @JsonIgnore
     List<CartProducts> carts;

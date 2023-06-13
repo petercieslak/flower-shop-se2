@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -46,15 +47,26 @@ public class ProductService {
     }
 
     public void createProduct(ProductDto product){
-        Product newProduct = Product.builder()
-                .productId(product.getProductId())
-                .name(product.getName())
-                .description(product.getDescription())
-                .image(product.getImage())
-                .price(product.getPrice())
-                .flowerType(product.getFlowerType())
-                .build();
-        productRepository.save(newProduct);
+
+        Product p = productRepository.findByName(product.getName());
+        if(p == null){
+            Product newProduct = Product.builder()
+                    .productId(product.getProductId())
+                    .name(product.getName())
+                    .description(product.getDescription())
+                    .image(product.getImage())
+                    .price(product.getPrice())
+                    .flowerType(product.getFlowerType())
+                    .quantity(product.getQuantity())
+                    .build();
+            productRepository.save(newProduct);
+        }
+        else {
+            ProductDto modifiedProduct = productMapper.toDto(p);
+            modifiedProduct.setQuantity(modifiedProduct.getQuantity() + product.getQuantity());
+            modifiedProduct.setPrice(product.getPrice());
+            modifyProduct(modifiedProduct, p.getProductId());
+        }
     }
 
     public void modifyProduct(ProductDto product, UUID productID){
@@ -64,6 +76,7 @@ public class ProductService {
         modifiedProduct.setImage(product.getImage());
         modifiedProduct.setPrice(product.getPrice());
         modifiedProduct.setFlowerType(product.getFlowerType());
+        modifiedProduct.setQuantity(product.getQuantity());
         productRepository.save(modifiedProduct);
     }
 
