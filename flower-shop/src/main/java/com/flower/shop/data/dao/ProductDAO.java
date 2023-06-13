@@ -10,4 +10,6 @@ import java.util.UUID;
 @Repository
 public interface ProductDAO extends JpaRepository<Product, UUID> {
     Page<Product> findByFlowerType(String type, Pageable pageable);
+    Product findByName(String name);
+
 }

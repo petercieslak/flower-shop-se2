@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService service;
@@ -38,7 +38,7 @@ public class AuthenticationController {
         return new ResponseEntity(HttpStatus.FORBIDDEN);
     }
     @CrossOrigin
-    @PostMapping(value="/authenticate")
+    @PostMapping(value="/log_in")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(service.authenticate(request));
     }

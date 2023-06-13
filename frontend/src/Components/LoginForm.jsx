@@ -16,7 +16,7 @@ function LoginForm() {
   const {id, setId} = useContext(IdContext);
 
   const loginHandling = () => {
-    fetch("http://localhost:8080/api/v1/auth/authenticate", {
+    fetch("http://localhost:8080/api/users/log_in", {
       method: "POST",
       body: JSON.stringify({
           "email": email,

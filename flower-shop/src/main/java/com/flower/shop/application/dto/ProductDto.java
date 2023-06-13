@@ -22,4 +22,7 @@ public class ProductDto {
 
     private double price;
     private String flowerType;
+
+    private int quantity;
 }
+

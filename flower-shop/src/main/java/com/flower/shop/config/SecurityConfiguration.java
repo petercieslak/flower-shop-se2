@@ -29,7 +29,7 @@ public class SecurityConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .antMatchers("/api/v1/auth/**", "/swagger-ui/**",
+                .antMatchers("/api/users/**", "/swagger-ui/**",
                         "/swagger-resources/**", "/webjars/**", "/v2/**",
                         "/api/products", "/api/orders", "/api/products/**", "/api/orders/**", "/utils/**")
                 .permitAll()
