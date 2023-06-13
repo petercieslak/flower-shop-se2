@@ -65,13 +65,13 @@ function LoginForm() {
         </button>
         <p className={`text-[#962b2b] mt-2 font-normal font-montserrat ${credInvalid ? "":"hidden"}`}>Wrong credentials!</p>
         <button
-          className="w-full h-12 mt-4 bg-[#014325] text-xl font-bold text-white rounded-xl font-montserrat"
+          className="hover:scale-105 ease-in-out duration-200 w-full h-12 mt-4 bg-[#014325] text-xl font-bold text-white rounded-xl font-montserrat"
         >
           Sign In
         </button>
         <p className=" font-montserrat font-light mt-2 text-[#3B1F2B]">
           Don't have an account?{" "}
-          <Link to={'/register'} className=" font-bold text-[#014325]">Sign up here</Link>
+          <Link to={'/register'} className="hover:font-extrabold ease-in-out duration-400 font-bold text-[#014325]">Sign up here</Link>
         </p>
       </form>
     </>

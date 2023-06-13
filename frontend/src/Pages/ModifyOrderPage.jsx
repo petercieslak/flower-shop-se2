@@ -52,13 +52,13 @@ function ModifyOrderPage() {
 
     return (
     <div className="bg-[#F8F2E9] w-screen h-screen flex justify-center items-center">
-        <div className="bg-white h-1/2 w-2/3 shadow-xl flex justify-center items-center font-montserrat">
-        <div className="w-4/5 mt-5">
+        <div className="bg-white py-10 w-2/3 shadow-xl flex justify-center items-center font-montserrat">
+        <div className="w-4/5 ">
             <input type="text" placeholder="Street" value={street} onChange={(e)=>{setStreet(e.target.value)}} className="w-full p-3 border mb-4" />
             <input type="text" placeholder="Zip Code" value={zipCode} onChange={(e)=>{setZipCode(e.target.value)}} className="w-full p-3 border mb-4"/>
             <input type="text" placeholder="City" value={city} onChange={(e)=>{setCity(e.target.value)}} className="w-full p-3 border mb-4 "/>
             <input type="text" placeholder="Country" value={country} onChange={(e)=>{setCountry(e.target.value)}} className="w-full p-3 border mb-4 "/>
-            <button onClick={submit} className="bg-[#014325] w-full h-16 text-white rounded-md">Modify</button>
+            <button onClick={submit} className="hover:scale-105 ease-in-out duration-200 bg-[#014325] w-full h-16 text-white rounded-md">Modify</button>
         </div>
         </div>
     </div>

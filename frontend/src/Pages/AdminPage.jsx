@@ -10,7 +10,7 @@ function AdminPage() {
         <h2 className="text-lg leading-6 font-medium text-gray-900">
           Products
         </h2>
-        <Link to="addproduct" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <Link to="addproduct" className="bg-[#014325]  hover:scale-105 ease-in-out duration-200 text-white font-bold py-2 px-4 rounded">
           Add Product
         </Link>
       </div>

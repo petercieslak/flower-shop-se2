@@ -9,7 +9,7 @@ function AdminNavbar() {
   const navigate = useNavigate();
 
   return (
-    <nav className="bg-white shadow-lg fixed top-0 w-screen">
+    <nav className="bg-[#F8F2E9] shadow-lg fixed top-0 w-screen">
       <div className="flex">
         <div className="ml-6 flex space-x-8">
           <NavLink

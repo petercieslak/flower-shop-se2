@@ -12,7 +12,7 @@ function ProductComponent(props) {
             <h1 className="font-montserrat font-bold text-[#3B1F2B] mr-5">${props.price}</h1>
         </div>
         <div className="flex justify-center pb-2">
-            <button className="bg-[#014325] text-[#F8F2E9] pl-10 pr-10 rounded-lg font-semibold	">Add to cart</button>
+            <button className="hover:scale-105 ease-in-out duration-200 bg-[#014325] text-[#F8F2E9] pl-10 pr-10 rounded-lg font-semibold	">Add to cart</button>
         </div>
     </div>
     );
