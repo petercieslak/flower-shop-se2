@@ -56,6 +56,12 @@ function AdminProductTable() {
               scope="col"
               className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
+              Quantity
+            </th>
+            <th
+              scope="col"
+              className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+            >
               Actions
             </th>
           </tr>
@@ -63,7 +69,7 @@ function AdminProductTable() {
 
         <tbody className="bg-white divide-y divide-gray-200">
         {products.map(product => (
-            <AdminProductRow productId={product.productId} description={product.description} name={product.name} price={product.price} image={product.image}/>
+            <AdminProductRow productId={product.productId} description={product.description} name={product.name} price={product.price} image={product.image} quantity={product.quantity}/>
         ))}
         </tbody>
       </table>
