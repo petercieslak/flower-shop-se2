@@ -69,7 +69,7 @@ function AdminOrderTable() {
 
         <tbody className="bg-white divide-y divide-gray-200">
         {orders.map(order => (
-            <AdminOrderRow status={order.status}/>
+            <AdminOrderRow order={order}/>
         ))}
         </tbody>
       </table>

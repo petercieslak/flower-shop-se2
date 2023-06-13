@@ -23,6 +23,7 @@ public class OrderMapper {
         orderDto.setDeliveryAddress(addressMapper
                 .toDto(order.getDeliveryAddress()));
         orderDto.setClientId(order.getClient().getId());
+        orderDto.setOrderId(order.getId());
         return orderDto;
     }
 }

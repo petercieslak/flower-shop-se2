@@ -3,23 +3,17 @@ package com.flower.shop.application.domain.services;
 import com.flower.shop.application.dto.*;
 import com.flower.shop.application.dto.mapper.OrderMapper;
 import com.flower.shop.application.dto.util.OrderStatus;
-import com.flower.shop.data.dao.CartDAO;
-import com.flower.shop.data.dao.ClientDAO;
-import com.flower.shop.data.dao.OrderDAO;
-import com.flower.shop.data.dao.ProductDAO;
+import com.flower.shop.data.dao.*;
 import com.flower.shop.data.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.*;
+import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import java.util.stream.Collectors;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Component
 public class OrderService {
@@ -40,13 +34,16 @@ public class OrderService {
     private ProductDAO productRepository;
 
     @Autowired
+    private DeliveryManDAO deliveryManRepository;
+
+    @Autowired
     private OrderStatus orderStatus;
 
     public List<OrderDto> getOrders(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         Page<Order> orders = orderRepository.findAll(pageable);
         List<Order> listOfOrders = orders.getContent();
-        List<OrderDto> result= listOfOrders.stream().
+        List<OrderDto> result = listOfOrders.stream().
                 map(p -> orderMapper.toDto(p)).
                 collect(Collectors.toList());
         return result;
@@ -87,7 +84,20 @@ public class OrderService {
                 .stream()
                 .map(p -> p.getProduct()).collect(Collectors.toList())));
         order.setDeliveryAddress(initAddress(address));
+        order.setDeliveryMan(getDeliveryMan(address.getCity()));
         return order;
+    }
+
+    private DeliveryMan getDeliveryMan(String city) {
+        List<DeliveryMan> availableDeliveryMen = deliveryManRepository.findAllByDeliveryCity(city);
+        return selectDeliveryMan(availableDeliveryMen);
+    }
+
+    private DeliveryMan selectDeliveryMan(List<DeliveryMan> availableDeliveryMen) {
+        return availableDeliveryMen.stream()
+                .sorted(Comparator.comparing(d -> orderRepository.countAllByDeliveryMan(d)))
+                .collect(Collectors.toList())
+                .get(0);
     }
 
     private List<Product> initOrderProducts(List<Product> products) {
@@ -100,9 +110,9 @@ public class OrderService {
 
     private Address initAddress(AddressDto addressDto) {
         Address address = new Address();
-        address.setCity(addressDto.getCity());
-        address.setStreet(addressDto.getStreet());
-        address.setCountry(addressDto.getCountry());
+        address.setCity(addressDto.getCity().toUpperCase());
+        address.setStreet(addressDto.getStreet().toUpperCase());
+        address.setCountry(addressDto.getCountry().toUpperCase());
         address.setPostalCode(addressDto.getPostalCode());
         return address;
     }

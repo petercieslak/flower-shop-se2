@@ -10,8 +10,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flower.shop.application.dto.AddressDto;
 import com.flower.shop.data.dao.CartDAO;
 import com.flower.shop.data.dao.ClientDAO;
+import com.flower.shop.data.dao.DeliveryManDAO;
 import com.flower.shop.data.models.Cart;
 import com.flower.shop.data.models.Client;
+import com.flower.shop.data.models.DeliveryMan;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.*;
@@ -56,15 +58,19 @@ public class ClientPlacingOrderTest {
     @Autowired
     private CartDAO cartRepository;
 
+    @Autowired
+    private DeliveryManDAO deliveryManRepository;
+
     @AfterAll
     private void teardown() {
-        JdbcTestUtils.deleteFromTables(jdbcTemplate, "orders", "cart", "client", "persons");
+        JdbcTestUtils.deleteFromTables(jdbcTemplate, "orders", "cart", "client", "delivery_man", "persons");
     }
 
 
     @BeforeAll
     public void setup() {
         mockMvc = webAppContextSetup(webApplicationContext).build();
+        deliveryManRepository.save(getDeliveryMan());
     }
 
     @Test
@@ -130,5 +136,11 @@ public class ClientPlacingOrderTest {
                 .street("Warszawska 4/23")
                 .build();
         return objectMapper.writeValueAsString(address);
+    }
+
+    private DeliveryMan getDeliveryMan() {
+        DeliveryMan deliveryMan = new DeliveryMan();
+        deliveryMan.setDeliveryCity("WARSZAWA");
+        return deliveryMan;
     }
 }
