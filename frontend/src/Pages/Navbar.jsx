@@ -15,6 +15,9 @@ function Navbar() {
 
   const [showDropdown, setShowDropdown] = useState(false);
 
+  //get hasNewsletter of cliient from db and replace false
+  const [hasNewsletter, setNewsletter] = useState(false);
+
   const toggleDropdown = () => {
     setShowDropdown(true);
   };
@@ -27,6 +30,10 @@ function Navbar() {
     setToken("");
     setName("");
     setId("");
+  };
+
+  const newsHandle = () => {
+    setNewsletter(!hasNewsletter);
   };
 
   const handleGardenClick = () => {
@@ -47,7 +54,7 @@ function Navbar() {
   return (
     <nav className=" bg-[#F8F2E9] w-screen fixed flex shadow-xl h-12 px-9 items-center justify-between font-montserrat font-medium text-lg">
       <NavLink to={"/"}>
-        <p className=" font-bold">KWIACIARNIA</p>
+        <p className="text-[#3B1F2B] font-bold">KWIACIARNIA</p>
       </NavLink>
       <ul className="flex gap-3">
         <li>
@@ -104,14 +111,27 @@ function Navbar() {
                 className="absolute right-0 mt-2 w-48 bg-[#F8F2E9] rounded-md shadow-lg border border-black"
                 onMouseLeave={hideDropdown}
               >
-                <li className="px-4 py-2">Hi, {name}!</li>
-                <hr className=" border-gray-300" />
-                <li className="px-4 py-2">
+                <li className="px-4 py-2 text-[#3B1F2B]" >Hi, {name}!</li>
+                <hr className="border-1 border-[#3B1F2B]" />
+                <li
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer rounded-b-lg"
+                  onClick={newsHandle}
+                >
+                {hasNewsletter ? (
+                <input checked disabled id="link-checkbox" type="checkbox" value="" class="w-4 h-4 mt-2 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-[#014325]"/>
+                ) : (
+                  <input disabled  id="link-checkbox" type="checkbox" value="" class="w-4 h-4 mt-2 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-[#014325]"/>
+                )}
+                  <label for="link-checkbox" class="ml-2 ">Newsletter</label>
+                </li>
+                <hr className=" border-b-gray-300" />
+                <li className="px-4 py-2  hover:bg-gray-100 cursor-pointer rounded-b-lg">
                   <NavLink to={"/orders"}>Orders</NavLink>
                 </li>
                 <hr className=" border-gray-300" />
                 <li
                   className="px-4 py-2 hover:bg-gray-100 cursor-pointer rounded-b-lg"
+                  
                   onClick={logoutHandle}
                 >
                   Logout
