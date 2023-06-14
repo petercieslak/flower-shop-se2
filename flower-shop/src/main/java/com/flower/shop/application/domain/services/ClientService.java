@@ -25,6 +25,7 @@ public class ClientService {
     }
 
     public UUID getClientIdByMail(String clientMail) {
+//        System.out.println(clientMail);
         return clientRepository.findByEmail(clientMail).get().getId();
     }
     public UUID getIds() {

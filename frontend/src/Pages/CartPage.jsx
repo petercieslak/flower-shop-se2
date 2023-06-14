@@ -1,24 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext, TokenContext } from "react";
 import CartItem from "../Components/CartItem";
 import { Link } from 'react-router-dom';
+import { MailContext } from "../ContextStore";
 
 
 function CartPage(props) {
-  const [total, setTotal] = useState(0)
-  const [change, setChange] = useState(false)
+  const [totalState, setTotalState] = useState(0.0)
+  const [productsCart, setProductsCart] = useState([])
+  const {mail} = useContext(MailContext);
+  let total = 0.0;
 
-  function calculateTotal(){
-    return (props.one.getAmount()*props.one.getPrice() + props.two.getAmount()*props.two.getPrice())
+  const calculateTotal = (data) => {
+    total = total + data;
+    setTotalState(total + totalState);
   }
 
-  function changeFun(){
-    setChange(true);
-  }
+  const fetchProductsCart = () => {
+    fetch(`http://localhost:8080/api/cart?mail=${mail}`)
+      .then(response => {
+        console.log(response);
+        return response.json();
+      })
+      .then((data) => {
+        setProductsCart(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
-    setTotal(calculateTotal());
-    setChange(false);
-  }),[change];
+    fetchProductsCart();
+  },[]);
 
   return (
   <div className="grid-rows-4 absolute top-40 left-1/4 font-montserrat">
@@ -28,17 +41,22 @@ function CartPage(props) {
       <p className="pl-4">Price</p>
     </div>
     <div className="flex-col justify-items-stretch">
-      <hr/>
-      <CartItem cartClass={props.one} changeFun={changeFun}/>
-      <CartItem cartClass={props.two} changeFun={changeFun}/>
+      <hr/> 
+      {productsCart.length > 0 && 
+        <div>
+          {productsCart.map(product => (<CartItem product_id={product.product_id} quantity={product.quantity} changeFun={calculateTotal}/>))}
+        </div>}
       <hr/>
     </div>
     <div className="relative left-40 text-center">
-      <p>Total: {total}</p>
-      <Link to={'/checkout'}>
+      <p>Total: {totalState}</p>
+      {totalState > 0 ?
+        <Link to={'/checkout'}>
         <button className="bg-zinc-300 rounded"> Checkout </button>
-      </Link>
-      
+        </Link>
+      :
+      <div/>
+      }
     </div>
   </div>
   );

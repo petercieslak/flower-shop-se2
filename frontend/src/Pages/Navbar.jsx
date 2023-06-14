@@ -1,7 +1,7 @@
 import User from "../Icons/User";
 import Cart from "../Icons/Cart";
 import { NavLink, useNavigate } from "react-router-dom";
-import { IdContext, NameContext, TokenContext, TypeContext } from "../ContextStore";
+import { IdContext, NameContext, TokenContext, TypeContext, MailContext } from "../ContextStore";
 import { useContext, useState } from "react";
 
 function Navbar() {
@@ -9,6 +9,7 @@ function Navbar() {
   const { token, setToken } = useContext(TokenContext);
   const { id, setId } = useContext(IdContext);
   const { type, setType } = useContext(TypeContext);
+  const { mail, setMail } = useContext(MailContext);
  
   const navigate = useNavigate();
 
@@ -26,6 +27,7 @@ function Navbar() {
     setToken("");
     setName("");
     setId("");
+    setMail("")
   };
 
   const handleGardenClick = () => {

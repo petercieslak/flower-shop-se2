@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import ProductComponent from "../Components/ProductComponent";
 import { TokenContext, TypeContext } from "../ContextStore";
 
-function ProductsPage() {
+function ProductsPage(props) {
   const [products, setProducts] = useState([]);
   const [pageNo, setPageNo] = useState(0);
   const [pageSize, setPageSize] = useState(5);

@@ -30,12 +30,6 @@ public class AuthenticationController {
     @CrossOrigin
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request){
-        System.out.println("doing");
-        System.out.println(request.getEmail());
-        System.out.println(request.getPassword());
-        System.out.println(request.getFirstname());
-        System.out.println(request.getLastname());
-        System.out.println(request.getHasNewsletterOn());
         if(!validCredentials(request))
         {
             System.out.println("credentials not valid");

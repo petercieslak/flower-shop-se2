@@ -13,6 +13,7 @@ import com.flower.shop.data.models.Product;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -69,5 +70,12 @@ public class ProductController {
         }
         productService.modifyProduct(product, ID);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @CrossOrigin
+    @GetMapping("/{productID}")
+    public ResponseEntity<Product> getProductById(String id){
+        UUID productId = UUID.fromString(id);
+        return ResponseEntity.ok(productService.getProductById(productId));
     }
 }

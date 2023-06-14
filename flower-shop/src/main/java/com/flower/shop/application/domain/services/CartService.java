@@ -1,5 +1,6 @@
 package com.flower.shop.application.domain.services;
 
+import com.flower.shop.application.dto.CartDto;
 import com.flower.shop.data.dao.CartDAO;
 import com.flower.shop.data.models.Cart;
 import com.flower.shop.data.models.CartPKId;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Tuple;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,21 +45,12 @@ public class CartService {
             cart.setCartPKId(cartPKId);
             cart.setClient(clientService.getClientByEmail(mail));
             cart.setProduct(productService.getProductByName(product_name));
-            cart.setQuantity(1);
-            System.out.println(cart);
+            cart.setQuantity(quantity);
             cartDAO.save(cart);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         }
         else {
             return ResponseEntity.status(HttpStatus.FOUND).build();
-//            int current_quntatity = cartDAO.checkQuantity(cart_id, product_id);
-//            if (current_quntatity + quantity > 0)
-//            {
-//                return cartDAO.changeQuantityInCart(cart_id, product_id, current_quntatity + quantity);
-//            }
-//            else {
-//                return cartDAO.deleteProductFromCart(cart_id, product_id);
-//            }
         }
     }
 
@@ -88,7 +81,7 @@ public class CartService {
         }
         else {
             cartDAO.deleteProductFromCart(cart_id, product_id);
-            return ResponseEntity.status(HttpStatus.GONE).build();
+            return ResponseEntity.status(HttpStatus.OK).build();
         }
     }
     public int checkIfExists(String mail, String product_name){

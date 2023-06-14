@@ -1,6 +1,7 @@
 package com.flower.shop.rest;
 
 import com.flower.shop.application.domain.services.CartService;
+import com.flower.shop.application.dto.CartDto;
 import com.flower.shop.data.models.Cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +16,13 @@ public class CartController {
     CartService cartService;
     @CrossOrigin
     @GetMapping()
-    public ResponseEntity<Map<UUID, Integer>> findClientCart(String mail) {
+    public ResponseEntity<List<CartDto>> findClientCart(String mail) {
         List<Cart> c = cartService.findClientCart(mail);
-        Map<UUID, Integer> map = new HashMap<>();
+        List<CartDto> list = new ArrayList<CartDto>();
         for (Cart cart : c) {
-            map.put(cart.getCartPKId().getProductId(),
-                    cart.getQuantity());
+            list.add(new CartDto(cart.getCartPKId().getProductId(), cart.getQuantity()));
         }
-        return ResponseEntity.ok(map);
+        return ResponseEntity.ok(list);
     }
     @CrossOrigin
     @PostMapping

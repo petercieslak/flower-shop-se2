@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import CheckoutItem from "../Components/CheckoutItem";
+import { MailContext } from "../ContextStore";
 
 function CheckoutPage(props) {
     const [name, setName] = useState("");
@@ -11,9 +12,19 @@ function CheckoutPage(props) {
     const [postalCode, setPostalcode] = useState("");
     const [address, setAddress] = useState("");
     const [address_2, setAddress_2] = useState("");
+    const {mail} = useContext(MailContext);
+    const [productsCheckout, setProductsCheckout] = useState([])
 
     const [issaved, setIssaved] = useState(false);
     const [buttonText, setButtonText] = useState("Save shipping information");
+
+    const [totalState, setTotalState] = useState(0.0);
+    let total = 0.0;
+
+    const calculateTotal = (data) => {
+        total = total + data;
+        setTotalState(total + totalState);
+    }
 
     const saveShippingInformation = function() {
         if(!issaved)
@@ -28,16 +39,33 @@ function CheckoutPage(props) {
         }
     }
 
-    function calculateTotal(){
-        return (props.one.getAmount()*props.one.getPrice() + props.two.getAmount()*props.two.getPrice())
-      }
+    const fetchProductsCheckout = () => {
+        fetch(`http://localhost:8080/api/cart?mail=${mail}`)
+          .then(response => {
+            console.log(response);
+            return response.json();
+          })
+          .then((data) => {
+            setProductsCheckout(data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
+    
 
+    useEffect(() => {
+        fetchProductsCheckout();
+    },[]);
+      
     return (
     <div className="bg-[#F8F2E9] w-screen h-screen flex font-montserrat">
         <div className="columns-1 absolute top-20 right-10">
-            <div><CheckoutItem cartClass={props.one}></CheckoutItem></div>
-            <div><CheckoutItem cartClass={props.two}></CheckoutItem></div>
-                <p className="absolute right-10">Total: {calculateTotal()}</p>
+            {productsCheckout.length && 
+            <div>
+                {productsCheckout.map(product => (<CheckoutItem product_id={product.product_id} quantity={product.quantity} changeFun={calculateTotal}/>))}
+            </div>}
+                <p className="absolute right-10">Total: {totalState}</p>
             <div className="flex justify-center items-center">
                 <button className="w-80 h-12 mt-8 bg-[#014325] text-xl font-bold text-white rounded-xl font-montserrat">Proceed to payment</button> 
             </div>  

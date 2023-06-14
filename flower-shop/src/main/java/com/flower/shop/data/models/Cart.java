@@ -1,6 +1,5 @@
 package com.flower.shop.data.models;
 
-import com.flower.shop.application.dto.CartDto;
 import lombok.*;
 import javax.persistence.*;
 import java.util.List;

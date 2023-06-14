@@ -1,18 +1,12 @@
 package com.flower.shop.data.dao;
 
-import com.flower.shop.application.dto.CartDto;
 import com.flower.shop.data.models.Cart;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.ColumnResult;
-import javax.persistence.ConstructorResult;
-import javax.persistence.NamedNativeQuery;
-import javax.persistence.SqlResultSetMapping;
+import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Map;
