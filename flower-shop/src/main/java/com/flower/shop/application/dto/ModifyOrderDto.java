@@ -1,5 +1,6 @@
 package com.flower.shop.application.dto;
 
+import com.flower.shop.data.models.OrderProducts;
 import lombok.*;
 
 import java.util.List;
@@ -14,6 +15,6 @@ public class ModifyOrderDto {
 
     private AddressDto deliveryAddress;
 
-    private List<UUID> products;
+    private List<OrderProducts> products;
 
 }

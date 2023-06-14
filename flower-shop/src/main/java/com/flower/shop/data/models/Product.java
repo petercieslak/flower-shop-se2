@@ -50,4 +50,8 @@ public class Product {
     @JsonIgnore
     List<CartProducts> carts;
 
+    @OneToMany(mappedBy = "product")
+    @JsonIgnore
+    List<OrderProducts> orders;
+
 }

@@ -14,11 +14,7 @@ public class OrderMapper {
 
     public OrderDto toDto(Order order) {
         OrderDto orderDto = new OrderDto();
-        orderDto.setProducts(order
-                .getProducts()
-                .stream()
-                .map(p -> productMapper.toDto(p))
-                .collect(Collectors.toList()));
+        orderDto.setProducts(order.getProducts());
         orderDto.setStatus(order.getStatus());
         orderDto.setDeliveryAddress(addressMapper
                 .toDto(order.getDeliveryAddress()));
