@@ -1,11 +1,12 @@
 import AdminPage from "../Pages/AdminPage.jsx";
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import { TokenContext } from "../ContextStore.jsx";
 
 function AdminOrderRow(props) {
   const [fullName, setFullName] = React.useState("");
+  const [status, setStatus] = React.useState(props.order.status);
   const {token, setToken} = React.useContext(TokenContext);
 
   const fetchName = () => {
@@ -24,7 +25,29 @@ function AdminOrderRow(props) {
         setFullName(data);
       });
   };
-  
+
+    const handleStatusChange = () => {
+        // Logic to change the order status
+        // For example, you can make an API call to update the status on the server
+
+        // Placeholder code to toggle the status between "Pending" and "Completed"
+
+        const newStatus = status == "ACTIVE" ? "ON HOLD" : "ACTIVE";
+        fetch(`http://localhost:8080/api/orders/${props.order.orderId}/status`, {
+            method: "PUT",
+            body: JSON.stringify({
+                "orderStatus": newStatus
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+                "Authorization": "Bearer " + token,
+            },
+        })
+            .then(response => {
+                console.log(response);
+            })
+        setStatus(newStatus);
+    }
   React.useEffect(() => {
     fetchName();
   }, []);
@@ -32,8 +55,8 @@ function AdminOrderRow(props) {
   return (
     <tr>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-      <div className="text-sm text-center font-medium text-gray-900">
-                {props.order.status}
+      <div className="text-sm text-center font-medium text-gray-900 cursor-pointer" onClick={handleStatusChange}>
+                {status}
             </div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">

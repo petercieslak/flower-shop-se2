@@ -8,7 +8,9 @@ function CartPage(props) {
   const [change, setChange] = useState(false)
 
   function calculateTotal(){
-    return (props.one.getAmount()*props.one.getPrice() + props.two.getAmount()*props.two.getPrice())
+    const rawTotal = props.one.getAmount() * props.one.getPrice() + props.two.getAmount() * props.two.getPrice();
+    const roundedTotal = Number(rawTotal.toFixed(2));
+    return roundedTotal;
   }
 
   function changeFun(){

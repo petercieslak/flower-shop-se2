@@ -75,6 +75,12 @@ public class OrderService {
 
     }
 
+    public void modifyOrderStatus(UUID orderId, ModifyOrderStatusDto orderdto) {
+        Order modifiedOrder = findOrder(orderId).get();
+        modifiedOrder.setStatus(orderdto.getOrderStatus());
+        orderRepository.save(modifiedOrder);
+    }
+
     public Optional<Order> findOrder(UUID orderId){
         return orderRepository.findById(orderId);
     }

@@ -29,7 +29,9 @@ function CheckoutPage(props) {
     }
 
     function calculateTotal(){
-        return (props.one.getAmount()*props.one.getPrice() + props.two.getAmount()*props.two.getPrice())
+        const rawTotal = props.one.getAmount() * props.one.getPrice() + props.two.getAmount() * props.two.getPrice();
+        const roundedTotal = Number(rawTotal.toFixed(2));
+        return roundedTotal;
       }
 
     return (
