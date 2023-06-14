@@ -1,5 +1,6 @@
 package com.flower.shop.data.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
@@ -37,7 +38,7 @@ public class Order {
     @JoinColumn(name = "delivery_man_id", nullable = false)
     private DeliveryMan deliveryMan;
 
-    @ManyToMany
-    private List<Product> products;
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<OrderProducts> products;
     
 }

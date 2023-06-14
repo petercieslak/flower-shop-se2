@@ -5,6 +5,7 @@ import com.flower.shop.application.dto.mapper.OrderMapper;
 import com.flower.shop.application.dto.util.OrderStatus;
 import com.flower.shop.data.dao.*;
 import com.flower.shop.data.models.*;
+import com.flower.shop.data.models.keys.OrderProductsId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -65,13 +66,15 @@ public class OrderService {
         orderRepository.save(order);
         return orderMapper.toDto(order);
     }
+
     public void modifyOrder(UUID orderId, ModifyOrderDto orderdto) {
         Order modifiedOrder = findOrder(orderId).get();
         modifiedOrder.setDeliveryAddress(initAddress(orderdto.getDeliveryAddress()));
-        modifiedOrder.setProducts(initProducts(orderdto.getProducts()));
+        modifiedOrder.setProducts(orderdto.getProducts());
         orderRepository.save(modifiedOrder);
 
     }
+
     public Optional<Order> findOrder(UUID orderId){
         return orderRepository.findById(orderId);
     }
@@ -80,9 +83,7 @@ public class OrderService {
         Order order = new Order();
         order.setClient(cart.get().getClient());
         order.setStatus(orderStatus.ACTIVE);
-        order.setProducts(initOrderProducts(cart.get().getProducts()
-                .stream()
-                .map(p -> p.getProduct()).collect(Collectors.toList())));
+        order.setProducts(initOrderProducts(cart.get().getProducts(), order));
         order.setDeliveryAddress(initAddress(address));
         order.setDeliveryMan(getDeliveryMan(address.getCity()));
         return order;
@@ -93,6 +94,7 @@ public class OrderService {
         return selectDeliveryMan(availableDeliveryMen);
     }
 
+    //fixme index out of bounds if no delivery man is available
     private DeliveryMan selectDeliveryMan(List<DeliveryMan> availableDeliveryMen) {
         return availableDeliveryMen.stream()
                 .sorted(Comparator.comparing(d -> orderRepository.countAllByDeliveryMan(d)))
@@ -100,10 +102,10 @@ public class OrderService {
                 .get(0);
     }
 
-    private List<Product> initOrderProducts(List<Product> products) {
-        List<Product> orderProducts = new ArrayList<>();
-        for(Product product : products) {
-            orderProducts.add(product);
+    private List<OrderProducts> initOrderProducts(List<CartProducts> products, Order order) {
+        List<OrderProducts> orderProducts = new ArrayList<>();
+        for(CartProducts product : products) {
+            orderProducts.add(mapToOrderProducts(product, order));
         }
         return orderProducts;
     }
@@ -117,12 +119,13 @@ public class OrderService {
         return address;
     }
 
-    private List<Product> initProducts(List<UUID> _products) {
-        List<Product> products = new ArrayList<>();
-        for (UUID prodId : _products) {
-            Optional<Product> newProd = productRepository.findById(prodId);
-            products.add(newProd.get());
-        }
-        return products;
+    private OrderProducts mapToOrderProducts(CartProducts cartProducts, Order order) {
+        OrderProducts orderProduct = new OrderProducts();
+        OrderProductsId orderProductsId = new OrderProductsId(order.getId(), cartProducts.getProduct().getProductId());
+        orderProduct.setOrderProductsId(orderProductsId);
+        orderProduct.setProduct(cartProducts.getProduct());
+        orderProduct.setOrders(order);
+        orderProduct.setQuantity(cartProducts.getQuantity());
+        return orderProduct;
     }
 }

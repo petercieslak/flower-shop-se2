@@ -2,6 +2,7 @@ package com.flower.shop.rest;
 
 import com.flower.shop.application.domain.services.CartProductsService;
 import com.flower.shop.data.models.Cart;
+import com.flower.shop.data.models.CartProducts;
 import com.flower.shop.data.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
