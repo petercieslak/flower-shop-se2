@@ -70,8 +70,9 @@ public class EmployeeRemovingProductTest {
     private final String SECRET_KEY = "4528482B4D6251655468576D597133743677397A24432646294A404E63526655";
 
 
-    @BeforeAll
+    @BeforeEach
     private void setTestDatabase(){
+        log.info("SETOWANIE");
         RegisterRequest empRequest = new RegisterRequest("admin", "admin", "admin@admin.com",
                 "admin", false);
 
@@ -90,7 +91,7 @@ public class EmployeeRemovingProductTest {
         clientRepository.save(user);
     }
 
-    @AfterAll
+    @AfterEach
     private void clearDatabase(){
         JdbcTestUtils.deleteFromTables(jdbcTemplate, "cart", "client", "employee", "persons", "product");
     }
@@ -130,7 +131,6 @@ public class EmployeeRemovingProductTest {
         HttpHeaders headers = new HttpHeaders();
 
         headers.add("Authorization", "Bearer " + token_admin);
-        UUID uuid = UUID.randomUUID();
         Product p = productRepository.findByName("test");
 
         HttpEntity<UUID> request = new HttpEntity<>(p.getProductId(), headers);
