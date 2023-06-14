@@ -41,7 +41,7 @@ public class ClientService {
         return clientNewRepository.findById(clientId).get();
     }
 
-    public void changeNewsletter(UUID clientId, boolean hasNewsletter){
+    public void changeNewsletter(UUID clientId, Boolean hasNewsletter){
         Client modifiedClient = findClient(clientId);
         modifiedClient.setHasNewsletterOn(hasNewsletter);
         clientNewRepository.save(modifiedClient);

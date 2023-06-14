@@ -24,7 +24,7 @@ public class ClientController {
 
     @CrossOrigin
     @PutMapping("/{client_id}")
-    public ResponseEntity<Void> modifyNewsletter(@PathVariable("client_id") UUID orderId, @RequestBody boolean hasNewsletter) {
+    public ResponseEntity<Void> modifyNewsletter(@PathVariable("client_id") UUID orderId, @RequestBody Boolean hasNewsletter) {
         clientService.changeNewsletter(orderId, hasNewsletter);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
