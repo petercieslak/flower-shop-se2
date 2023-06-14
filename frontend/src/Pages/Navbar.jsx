@@ -2,8 +2,8 @@ import User from "../Icons/User";
 import Cart from "../Icons/Cart";
 import contact from "../assets/contact.png"
 import { NavLink, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import { IdContext, NameContext, TokenContext, TypeContext } from "../ContextStore";
-import { useContext, useState } from "react";
 
 function Navbar() {
   const { name, setName } = useContext(NameContext);
@@ -15,10 +15,48 @@ function Navbar() {
 
   const [showDropdown, setShowDropdown] = useState(false);
 
-  //get hasNewsletter of cliient from db and replace false
   const [hasNewsletter, setNewsletter] = useState(false);
 
+
+  const fetchClient = () => {
+    fetch(
+      `http://localhost:8080/api/clients/${id}`)
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .then((data) => {
+        setNewsletter(data);
+      });
+  };
+
+  const editNewsletter = (updatedNewsletter) => {
+    fetch(`http://localhost:8080/api/clients/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8"
+      },
+      body: JSON.stringify(updatedNewsletter
+      ),
+    })
+      .then(response => {
+        console.log(response);
+      })
+  }
+
+
+  const newsHandle = () => {
+    const updatedNewsletter = !hasNewsletter;
+    setNewsletter(updatedNewsletter);
+    editNewsletter(updatedNewsletter);
+  };
+
+  
+
   const toggleDropdown = () => {
+    if(name !== ""){
+      fetchClient();
+    }
     setShowDropdown(true);
   };
 
@@ -32,9 +70,7 @@ function Navbar() {
     setId("");
   };
 
-  const newsHandle = () => {
-    setNewsletter(!hasNewsletter);
-  };
+  
 
   const handleGardenClick = () => {
     setType("garden");
@@ -50,6 +86,7 @@ function Navbar() {
     setType("potted");
     navigate("/products");
   };
+
 
   return (
     <nav className=" bg-[#F8F2E9] w-screen fixed flex shadow-xl h-12 px-9 items-center justify-between font-montserrat font-medium text-lg">
