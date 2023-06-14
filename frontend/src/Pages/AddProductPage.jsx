@@ -13,6 +13,7 @@ function AddProductPage() {
   const [price, setPrice] = useState(0);
   const [type, setType] = useState("");
   const [image, setImage] = useState("");
+  const [quantity, setQuantity] = useState(1);
 
   const {token, setToken} = useContext(TokenContext);
   const navigate = useNavigate();
@@ -25,7 +26,8 @@ function AddProductPage() {
           "description": description,
           "flowerType": type,
           "image": image,
-          "price": price
+          "price": price,
+          "quantity": quantity
       }),          
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -74,7 +76,10 @@ function AddProductPage() {
           </select>
           <input type="text" placeholder="Flower name" value={flowerName} onChange={(e)=>{setFlowerName(e.target.value)}} className="w-full p-3 border mb-4" />
           <input type="text" placeholder="Description" value={description} onChange={(e)=>{setDescription(e.target.value)}} className="w-full p-3 border mb-4"/>
-          <input type="number" placeholder="Price" value={price} onChange={(e)=>{setPrice(e.target.value)}} className="w-full p-3 border mb-4 "/>
+          <label htmlFor="price">Price:</label>
+          <input id="price" type="number" placeholder="Price" value={price} onChange={(e)=>{setPrice(e.target.value)}} className="w-full p-3 border mb-4 "/>
+          <label htmlFor="quantity">Quantity:</label>
+          <input id="quantity" type="number" placeholder="Quantity" value={quantity} onChange={(e)=>{setQuantity(e.target.value)}} className="w-full p-3 border mb-4 "/>
           <button onClick={addProduct} className="hover:scale-105 ease-in-out duration-200 bg-[#014325] w-full h-16 text-white rounded-md">Add</button>
         </div>
       </div>
