@@ -52,4 +52,12 @@ public class ComplaintService {
         return complaint1;
     }
 
+    public List<ComplaintDto> getComplaints(){
+        List<Complaint> complaints = complaintRepository.findAll();
+        List<ComplaintDto> result= complaints.stream().
+                map(p -> complaintMapper.toDto(p)).
+                toList();
+        return result;
+    }
+
 }
