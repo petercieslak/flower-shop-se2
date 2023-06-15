@@ -13,7 +13,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class ComplaintDto {
-    private UUID id;
     private String topic;
     private String description;
     private UUID clientId;
