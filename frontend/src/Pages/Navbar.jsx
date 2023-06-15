@@ -87,6 +87,10 @@ function Navbar() {
     navigate("/products");
   };
 
+  const handleComplaint = () => {
+    navigate("/complaint")
+  };
+
 
   return (
     <nav className=" bg-[#F8F2E9] w-screen fixed flex shadow-xl h-12 px-9 items-center justify-between font-montserrat font-medium text-lg">
@@ -164,6 +168,10 @@ function Navbar() {
                 <hr className=" border-b-gray-300" />
                 <li className="px-4 py-2  hover:bg-gray-100 cursor-pointer rounded-b-lg">
                   <NavLink to={"/orders"}>Orders</NavLink>
+                </li>
+                <hr className=" border-gray-300" />
+                <li className="px-4 py-2  hover:bg-gray-100 cursor-pointer rounded-b-lg" onClick={handleComplaint}>
+                    Complaint
                 </li>
                 <hr className=" border-gray-300" />
                 <li
