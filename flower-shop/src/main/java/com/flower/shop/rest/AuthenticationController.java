@@ -22,12 +22,6 @@ import java.util.regex.Pattern;
 public class AuthenticationController {
     private final AuthenticationService service;
 
-
-    private final String NAME_REGEX = "[a-zA-Z]+";
-
-    private final String EMAIL_REGEX = ".+[@]{1}.+";
-
-
     @CrossOrigin
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request){

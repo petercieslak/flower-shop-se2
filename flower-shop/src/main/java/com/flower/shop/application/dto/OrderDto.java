@@ -1,5 +1,6 @@
 package com.flower.shop.application.dto;
 
+import com.flower.shop.data.models.OrderProducts;
 import lombok.*;
 
 import java.util.List;
@@ -19,6 +20,6 @@ public class OrderDto {
 
     private UUID clientId;
 
-    private List<ProductDto> products;
+    private List<OrderProducts> products;
 
 }

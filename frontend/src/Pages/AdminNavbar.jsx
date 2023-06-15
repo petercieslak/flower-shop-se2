@@ -24,6 +24,12 @@ function AdminNavbar() {
           >
             Orders
           </NavLink>
+          <NavLink
+            to={"/admin/complaints"}
+            className="px-3 py-5 text-gray-900 font-medium hover:text-gray-700"
+          >
+            Complaints
+          </NavLink>
           <a
             href="#"
             className="px-3 py-5 text-gray-900 font-medium hover:text-gray-700"

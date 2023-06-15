@@ -16,6 +16,8 @@ import ModifyProductPage from "./Pages/ModifyProductPage";
 import {IdContext, TokenContext, NameContext, TypeContext } from "./ContextStore";
 import { useState } from "react";
 import ModifyOrderPage from "./Pages/ModifyOrderPage";
+import ComplaintForm from "./Pages/ComplaintForm";
+import AdminComplaintsPage from "./Pages/AdminComplaintsPage";
 
 function App() {
   const [token, setToken] = useState("");
@@ -30,6 +32,7 @@ function App() {
       {/* <Navbar /> */}
           <IdContext.Provider value={{ id, setId }}>
           <Routes>
+            <Route path="/complaint" element={<><Navbar /><ComplaintForm /></>} />
             <Route path="/products" element={<><Navbar /><ProductsPage /></>} />
             <Route path="/login" element={<><Navbar /><LoginPage /></>} />
             <Route path="/register" element={<><Navbar /><RegisterPage /></>} />
@@ -51,6 +54,7 @@ function App() {
                 <Route index element={<><AdminNavbar/><OrdersPage /></>}/> 
                 <Route path=":orderID" element={<><AdminNavbar/><ModifyOrderPage /></>} />
               </Route>
+              <Route path="complaints" element={<><AdminNavbar/><AdminComplaintsPage /></>}/>
             </Route>
           </Routes>
           </IdContext.Provider>

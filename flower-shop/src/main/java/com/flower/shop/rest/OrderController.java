@@ -5,10 +5,7 @@ import static com.flower.shop.rest.util.RegexMatcher.postalCodeMatcher;
 
 import com.flower.shop.application.domain.services.ClientService;
 import com.flower.shop.application.domain.services.OrderService;
-import com.flower.shop.application.dto.AddressDto;
-import com.flower.shop.application.dto.ModifyOrderDto;
-import com.flower.shop.application.dto.OrderDto;
-import com.flower.shop.application.dto.ProductDto;
+import com.flower.shop.application.dto.*;
 import com.flower.shop.data.dao.ClientDAO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +69,12 @@ public class OrderController {
             return ResponseEntity.badRequest().build();
 
         orderService.modifyOrder(orderId, orderdto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+    @CrossOrigin
+    @PutMapping("/{order_id}/status")
+    public ResponseEntity<Void> modifyOrderStatus(@PathVariable("order_id") UUID orderId, @RequestBody ModifyOrderStatusDto orderdto) {
+        orderService.modifyOrderStatus(orderId, orderdto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
