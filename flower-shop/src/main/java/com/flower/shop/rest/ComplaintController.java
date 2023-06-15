@@ -26,8 +26,11 @@ public class ComplaintController {
     private ComplaintService complaintService;
 
     @CrossOrigin
+    @PreAuthorize("hasAnyAuthority('USER')")
     @PostMapping("/add")
     public ResponseEntity<ComplaintDto> createComplaint(@RequestBody ComplaintDto complainDto) {
+        if(!clientService.clientExists(complainDto.getClientId()))
+            return ResponseEntity.badRequest().build();
         return new ResponseEntity<>(complaintService.createComplaint(complainDto), HttpStatus.CREATED);
     }
 
