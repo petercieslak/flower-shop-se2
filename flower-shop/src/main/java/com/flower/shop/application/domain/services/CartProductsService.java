@@ -14,10 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
@@ -34,20 +32,18 @@ public class CartProductsService {
     @Autowired
     private ProductDAO productDAO;
 
-    public List<Product> getProducts(UUID uuid) {
+    public List<CartProducts> getProducts(UUID uuid) {
         Client client = (Client)clientDAO.findById(uuid).get();
         return cartDAO.findCartByClient(client)
                 .get()
-                .getProducts()
-                .stream()
-                .map(p -> p.getProduct()).collect(Collectors.toList());
+                .getProducts();
     }
 
-    public Cart addProduct(UUID userId, UUID productId) {
+    public Cart addProduct(UUID userId, UUID productId, Integer quantity) {
         Product product = productDAO.findById(productId).get();
         Client client = (Client)clientDAO.findById(userId).get();
         Cart clientCart = cartDAO.findCartByClient(client).get();
-        clientCart = addProductToCart(clientCart, product);
+        clientCart = addProductToCart(clientCart, product, quantity);
         cartDAO.save(clientCart);
         return clientCart;
     }
@@ -64,40 +60,36 @@ public class CartProductsService {
     private Cart removeProductFromCart(Cart clientCart, Product product) {
         List<CartProducts> cartProducts = clientCart.getProducts();
         CartProducts cartProduct = getMatchingProduct(cartProducts, product);
-        cartProduct.setQuantity(cartProduct.getQuantity() - 1);
-        if(cartProduct.getQuantity() == 0)
-            cartProducts.remove(cartProduct);
-        else
-            cartProducts.set(cartProducts.indexOf(cartProduct), cartProduct);
+        cartProducts.remove(cartProduct);
         clientCart.setProducts(cartProducts);
         return clientCart;
     }
 
-    private Cart addProductToCart(Cart clientCart, Product product) {
+    private Cart addProductToCart(Cart clientCart, Product product, Integer quantity) {
         List<CartProducts> cartProducts = clientCart.getProducts();
         CartProducts cartProduct = getMatchingProduct(cartProducts, product);
         if(cartProduct.getQuantity() == 0)
-            cartProducts = addNewProduct(clientCart, cartProducts, product);
+            cartProducts = addNewProduct(clientCart, cartProducts, product, quantity);
         else
-            cartProducts = editQuantity(cartProducts, cartProduct);
+            cartProducts = editQuantity(cartProducts, cartProduct, quantity);
         clientCart.setProducts(cartProducts);
         return clientCart;
     }
 
-    private List<CartProducts> editQuantity(List<CartProducts> cartProducts, CartProducts cartProduct) {
+    private List<CartProducts> editQuantity(List<CartProducts> cartProducts, CartProducts cartProduct, Integer quantity) {
         int index = cartProducts.indexOf(cartProduct);
-        cartProduct.setQuantity(cartProduct.getQuantity() + 1);
+        cartProduct.setQuantity(cartProduct.getQuantity() + quantity);
         cartProducts.set(index, cartProduct);
         return cartProducts;
     }
 
     private List<CartProducts> addNewProduct(Cart clientCart,
-                                             List<CartProducts> cartProducts, Product product) {
+                                             List<CartProducts> cartProducts, Product product, Integer quantity) {
         CartProducts cartProduct = new CartProducts();
         cartProduct.setCartProductsId(new CartProductsId(clientCart.getId(), product.getProductId()));
         cartProduct.setCart(clientCart);
         cartProduct.setProduct(product);
-        cartProduct.setQuantity(1);
+        cartProduct.setQuantity(quantity);
         cartProducts.add(cartProduct);
         return cartProducts;
     }

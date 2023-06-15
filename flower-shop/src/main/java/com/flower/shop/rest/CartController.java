@@ -2,7 +2,7 @@ package com.flower.shop.rest;
 
 import com.flower.shop.application.domain.services.CartProductsService;
 import com.flower.shop.data.models.Cart;
-import com.flower.shop.data.models.Product;
+import com.flower.shop.data.models.CartProducts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,14 +21,14 @@ public class CartController {
 
     @CrossOrigin
     @GetMapping()
-    public ResponseEntity<List<Product>> getProducts(@RequestParam UUID userId) {
+    public ResponseEntity<List<CartProducts>> getProducts(@RequestParam UUID userId) {
         return ResponseEntity.ok(cartProductsService.getProducts(userId));
     }
 
     @CrossOrigin
-    @PostMapping
-    public ResponseEntity<Cart> addProduct(@RequestParam UUID userId, @RequestParam UUID productId) {
-        return ResponseEntity.ok(cartProductsService.addProduct(userId, productId));
+    @PutMapping
+    public ResponseEntity<Cart> addProduct(@RequestParam UUID userId, @RequestParam UUID productId, Integer quantity) {
+        return ResponseEntity.ok(cartProductsService.addProduct(userId, productId, quantity));
     }
 
     @CrossOrigin
