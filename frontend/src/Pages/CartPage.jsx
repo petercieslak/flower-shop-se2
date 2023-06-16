@@ -1,26 +1,44 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import CartItem from "../Components/CartItem";
 import { Link } from 'react-router-dom';
-
+import { IdContext, TokenContext } from "../ContextStore";
 
 function CartPage(props) {
-  const [total, setTotal] = useState(0)
-  const [change, setChange] = useState(false)
+  const [totalState, setTotalState] = useState(0.0)
+  const [productsCart, setProductsCart] = useState([])
+  const {id} = useContext(IdContext)
+  const {token} = useContext(TokenContext);
+  let total = 0.0;
 
-  function calculateTotal(){
-    const rawTotal = props.one.getAmount() * props.one.getPrice() + props.two.getAmount() * props.two.getPrice();
-    const roundedTotal = Number(rawTotal.toFixed(2));
-    return roundedTotal;
+  const calculateTotal = (data) => {
+    total = total + data;
+    setTotalState(total + totalState);
   }
 
-  function changeFun(){
-    setChange(true);
-  }
+  const fetchProductsCart = () => {
+    fetch(`http://localhost:8080/api/cart?userId=${id}`, {
+      headers: {
+      "Content-type": "application/json; charset=UTF-8",
+      "Authorization": "Bearer " + token}
+  },)
+      .then(response => {
+        console.log(response);
+        return response.json();
+      })
+      .then((data) => {
+        setProductsCart(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
 
   useEffect(() => {
-    setTotal(calculateTotal());
-    setChange(false);
-  }),[change];
+    if(id != ""){
+      fetchProductsCart();
+    }
+  }, []);
 
   return (
   <div className="grid-rows-4 absolute top-40 left-1/4 font-montserrat">
@@ -31,12 +49,14 @@ function CartPage(props) {
     </div>
     <div className="flex-col justify-items-stretch">
       <hr/>
-      <CartItem cartClass={props.one} changeFun={changeFun}/>
-      <CartItem cartClass={props.two} changeFun={changeFun}/>
+        {productsCart.length > 0 &&
+        <div>
+          {productsCart.map(product => (<CartItem product_id={product.cartProductsId.product} quantity={product.quantity} changeFun={calculateTotal}/>))}
+          </div>}
       <hr/>
     </div>
     <div className="relative left-40 text-center">
-      <p>Total: {total}</p>
+      <p>Total: {totalState}</p>
       <Link to={'/checkout'}>
         <button className="bg-zinc-300 rounded"> Checkout </button>
       </Link>

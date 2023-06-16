@@ -88,5 +88,5 @@ public class ProductService {
         productRepository.deleteById(productID);
     }
 
-
+    public Product getProductById(UUID id) { return findProduct(id).get(); }
 }
